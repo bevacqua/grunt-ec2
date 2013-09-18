@@ -1,0 +1,7 @@
+{
+    "AWS_DEFAULT_REGION": "us-east-1",
+    "AWS_IMAGE_ID": "ami-c30360aa",
+    "AWS_INSTANCE_TYPE": "t1.micro",
+    "AWS_SSH_USER": "ubuntu",
+    "AWS_RSYNC_USER": "ubuntu"
+}
