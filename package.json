@@ -7,6 +7,10 @@
     "email": "ng@bevacqua.io",
     "url": "http://bevacqua.io"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/grunt-ec2.git"
+  },
   "version": "0.2.1",
   "licenses": "MIT",
   "keywords": [
