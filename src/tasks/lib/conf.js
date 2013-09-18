@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var fs = require('fs');
+var path = require('path');
 var grunt = require('grunt');
 
 function Config () {
@@ -33,7 +33,7 @@ Config.prototype.resolve = function () {
     df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
 
     this._.SSH_KEYS_RELATIVE = path.relative(process.cwd(), this._.SSH_KEYS_FOLDER);
-}
+};
 
 function d (_, key, value) {
     if (_[key] === void 0) {

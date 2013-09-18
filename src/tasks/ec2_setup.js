@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var chalk = require('chalk');
+var util = require('util');
 var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 

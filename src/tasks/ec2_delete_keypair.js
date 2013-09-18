@@ -26,7 +26,7 @@ module.exports = function(grunt){
         exec('aws ec2 delete-key-pair --key-name %s', [name], removeFromDisk);
 
         function removeFromDisk () {
-            var dir = conf('SSH_KEYS_FOLDER')
+            var dir = conf('SSH_KEYS_FOLDER');
             var file = path.join(dir, name + '.pem');
 
             removeFile(file, function(){
