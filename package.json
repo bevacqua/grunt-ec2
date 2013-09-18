@@ -8,6 +8,17 @@
     "url": "http://bevacqua.io"
   },
   "version": "0.2.1",
+  "main": "Gruntfile.js",
+  "licenses": "MIT",
+  "keywords": [
+    "gruntplugin",
+    "aws",
+    "ec2",
+    "deploy",
+    "release",
+    "rsync",
+    "ssh"
+  ],
   "engines": {
     "node": "0.10.18",
     "npm": "1.2.x"
@@ -21,19 +32,8 @@
     "moment": "2.2.1",
     "ssh2": "0.2.12"
   },
-  "keywords": [
-    "gruntplugin",
-    "aws",
-    "ec2",
-    "deploy",
-    "release",
-    "rsync",
-    "ssh"
-  ],
-  "main": "Gruntfile.js",
-  "licenses": "MIT",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.6.4"
+    "grunt": "0.4.1",
+    "grunt-contrib-jshint": "0.6.4"
   }
 }
