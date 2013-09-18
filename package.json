@@ -26,6 +26,7 @@
     "node": "0.10.18",
     "npm": "1.2.x"
   },
+  "main": "Gruntfile.js",
   "dependencies": {
     "chalk": "0.2.1",
     "fs-extra": "0.6.4",
