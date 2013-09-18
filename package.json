@@ -8,7 +8,6 @@
     "url": "http://bevacqua.io"
   },
   "version": "0.2.1",
-  "main": "Gruntfile.js",
   "licenses": "MIT",
   "keywords": [
     "gruntplugin",
