@@ -1,0 +1,5 @@
+# vcs files
+.git
+
+# will `npm install --production` on the server
+node_modules

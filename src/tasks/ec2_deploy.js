@@ -10,13 +10,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ssh_deploy', function(name){
+    grunt.registerTask('ec2_deploy', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ssh_deploy:name')
+                'e.g: ' + chalk.yellow('grunt ec2_deploy:name')
             ].join('\n'));
         }
 
@@ -30,7 +30,7 @@ module.exports = function(grunt){
 
             var local = process.cwd();
             var project = conf('PROJECT_ID');
-            var remote = '/srv/rsync/io/latest/';
+            var remote = util.format('/srv/rsync/%s/latest/', project);
             var folder = path.relative(path.dirname(local), local);
             var remoteSync = remote + folder + '/';
             var exclude = conf('RSYNC_IGNORE');

@@ -24,21 +24,29 @@ Config.prototype.init = function (grunt) {
 };
 
 Config.prototype.resolve = function () {
-    if (this._.PROJECT_ID == void 0) {
-        this._.PROJECT_ID = 'ec2';
-    }
+    var _ = this._;
 
-    if (this._.NODE_SCRIPT === void 0) {
-        this._.NODE_SCRIPT = 'app.js';
-    }
+    d(_, 'PROJECT_ID', 'ec2');
+    d(_, 'NODE_SCRIPT', 'app.js');
 
-    if (this._.SSH_KEYS_FOLDER == void 0) {
-        this._.SSH_KEYS_FOLDER = path.resolve(__dirname, '../../private');
-    } else {
-        this._.SSH_KEYS_FOLDER = path.join(process.cwd(), this._.SSH_KEYS_FOLDER);
-    }
+    df(_, 'SSH_KEYS_FOLDER', '../../private');
+    df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
 
     this._.SSH_KEYS_RELATIVE = path.relative(process.cwd(), this._.SSH_KEYS_FOLDER);
+}
+
+function d (_, key, value) {
+    if (_[key] === void 0) {
+        _[key] = value;
+    }
+}
+
+function df (_, key, value) {
+    if (_[key] === void 0) {
+        _[key] = path.resolve(__dirname, value);
+    } else {
+        _[key] = path.join(process.cwd(), _[key]);
+    }
 }
 
 Config.prototype.get = function (key) {

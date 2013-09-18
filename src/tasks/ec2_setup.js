@@ -7,13 +7,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ssh_setup', function(name){
+    grunt.registerTask('ec2_setup', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ssh_deploy:name')
+                'e.g: ' + chalk.yellow('grunt ec2_setup:name')
             ].join('\n'));
         }
 

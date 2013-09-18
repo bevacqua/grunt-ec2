@@ -1,13 +1,13 @@
 {
   "name": "grunt-ec2",
-  "description": "",
+  "description": "Grunt tasks to create, terminate, and deploy to AWS EC2 instances",
   "homepage": "https://github.com/bevacqua/grunt-ec2",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "ng@bevacqua.io",
     "url": "http://bevacqua.io"
   },
-  "version": "0.1.0",
+  "version": "0.2.1",
   "engines": {
     "node": "0.10.18",
     "npm": "1.2.x"
