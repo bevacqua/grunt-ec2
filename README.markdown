@@ -157,7 +157,7 @@ Deploys to a running EC2 instance using `rsync` over SSH.
 
 - Connects to the instance through SSH
 - Uploads `cwd` to an `rsync` folder such as `/srv/rsync/example/latest`
-- Only transmits changed files, similar to how `git` operates
+- Only transmits changes, similar to how `git` operates
 - Using `pkg.version`, creates a folder with the newest version, like `/srv/apps/example/v/0.6.5`
 - Creates a link from `/srv/apps/example/v/0.6.5` to `/srv/apps/example/current`
 - Either starts the application, or reloads it with zero downtime, using `pm2`

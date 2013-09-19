@@ -24,7 +24,7 @@ module.exports = function(grunt){
                 grunt.fatal('This instance is refusing SSH connections for now');
             }
 
-            var command = util.format('ssh -i %s %s@%s', c.privateKeyFile, c.username, c.host);
+            var command = util.format('ssh -o StrictHostKeyChecking=no -i %s %s@%s', c.privateKeyFile, c.username, c.host);
 
             grunt.log.writeln('Connect to the %s instance using:', chalk.cyan(c.id));
             grunt.log.writeln(chalk.blue(command));

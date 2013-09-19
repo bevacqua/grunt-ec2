@@ -40,7 +40,7 @@ module.exports = function(grunt){
 
             grunt.log.writeln('Deploying %s to %s using rsync over ssh...', chalk.blue('v' + v), chalk.cyan(c.id));
 
-            exec('rsync -vaz --stats --progress --delete % -e "ssh -o StrictHostKeyChecking=no -i %s" %s %s@%s:%s', [
+            exec('rsync -vaz --stats --progress --delete %s -e "ssh -o StrictHostKeyChecking=no -i %s" %s %s@%s:%s', [
                 excludeFrom, c.privateKeyFile, local, user, c.host, remote
             ], deploy);
 
