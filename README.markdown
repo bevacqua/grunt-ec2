@@ -157,6 +157,10 @@ Returns a JSON list of running EC2 instances. Defaults to filtering by `running`
 
 ![ec2-list.png][5]
 
+## Describe an instance with `ec2_lookup`
+
+Similar to `ec2_list`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2_lookup:staging`.
+
 ## Get an SSH connection command for an instance `ec2_ssh:name`
 
 Gives you a command you can copy and paste to connect to an EC2 instance through SSH. Useful to get down and dirty.
@@ -186,7 +190,9 @@ grunt ec2_deploy:teddy
 
 ![ec2-deploy.png][4]
 
+## Feedback
 
+Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitHub issues for grunt-ec2") you encounter, and send any feedback you might have my way.
 
   [1]: http://i.imgur.com/VRDBk9a.png "SSH just became easier than ever"
   [2]: http://i.imgur.com/U0gN4ax.png "Shutting down an instance through Grunt"
