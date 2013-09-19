@@ -7,7 +7,7 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            everything: ['src/**/*.js', 'Gruntfile.js']
+            everything: ['tasks/**/*.js', 'Gruntfile.js']
         }
     });
 
