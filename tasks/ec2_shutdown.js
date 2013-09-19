@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var lookup = require('./lib/lookupEC2.js');
+var lookup = require('./lib/lookup.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){

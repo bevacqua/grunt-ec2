@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var lookup = require('./lookupEC2.js');
+var lookup = require('./lookup.js');
 var conf = require('./conf.js');
 var cache = {};
 
