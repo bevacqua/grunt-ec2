@@ -125,6 +125,8 @@ Launches an instance and sets it up.
 grunt ec2_launch:teddy
 ```
 
+![ec2-launch.png][3]
+
 ## Shutdown an EC2 instance `ec2_shutdown:name`
 
 Terminates an instance and deletes related objects
@@ -139,9 +141,13 @@ Terminates an instance and deletes related objects
 grunt ec2_shutdown:teddy
 ```
 
+![ec2-shutdown.png][2]
+
 ## List running EC2 instances `ec2_list`
 
 Returns a JSON list of running EC2 instances. Defaults to filtering by `running` state. You can use `ec2_list:all` to remove the filter, or pick another `instance-state-name` to filter by.
+
+![ec2-list.png][5]
 
 ## Get an SSH connection command for an instance `ec2_ssh:name`
 
@@ -150,6 +156,8 @@ Gives you a command you can copy and paste to connect to an EC2 instance through
 ```shell
 grunt ec2_ssh:teddy
 ```
+
+![ec2-ssh.png][1]
 
 ## Deploy to an EC2 instance `ec2_deploy`
 
@@ -167,3 +175,13 @@ Example:
 ```shell
 grunt ec2_deploy:teddy
 ```
+
+![ec2-deploy.png][4]
+
+
+
+  [1]: http://i.imgur.com/VRDBk9a.png "SSH just became easier than ever"
+  [2]: http://i.imgur.com/U0gN4ax.png "Shutting down an instance through Grunt"
+  [3]: http://i.imgur.com/CSRhe2b.png "Launching an instance single-handedly using Grunt"
+  [4]: http://i.imgur.com/0yH3E5k.png "Deploy from your command-line!"
+  [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list`"
