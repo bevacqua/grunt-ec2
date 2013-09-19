@@ -16,7 +16,14 @@ Config.prototype.init = function (grunt) {
     grunt.config.requires('ec2');
     grunt.config.requires('pkg.version');
 
-    _.assign(this._, require('../../cfg/defaults.json'), grunt.config('ec2'));
+    var defaults = require('../../cfg/defaults.json');
+    var user = grunt.config('ec2');
+
+    if (typeof user === 'string') {
+        user = grunt.file.readJSON(user);
+    }
+
+    _.assign(this._, defaults, user);
 
     this.resolve();
 

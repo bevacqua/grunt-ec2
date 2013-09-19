@@ -38,19 +38,27 @@ pip install awscli --upgrade
 ```js
 grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    ec2: {
-        "AWS_ACCESS_KEY_ID": "<redacted>",
-        "AWS_SECRET_ACCESS_KEY": "<redacted>",
-        "AWS_SECURITY_GROUP_NAME": "something"
-    }
+    ec2: 'path/to/whatever.json'
 });
 
 grunt.loadNpmTasks('grunt-ec2');
 ```
 
+Then, in your `whatever.json` file:
+
+```json
+{
+  "AWS_ACCESS_KEY_ID": "<redacted>",
+  "AWS_SECRET_ACCESS_KEY": "<redacted>",
+  "AWS_SECURITY_GROUP_NAME": "something"
+}
+```
+
 You'll need to get an access key pair for AWS, as well as create a security group on AWS by hand. Creating security groups through the CLI is not supported by this package yet.
 
 The `package.json` entry is used to take the `version` number when deploying.
+
+For the `ec2` configuration, I don't take an object directly to _encourage hiding away_ the deployment variables, granting them only to people who can actually perform deploys. You _could_ provide an object directly, but **it's strongly discouraged**.
 
 # Configuration
 
