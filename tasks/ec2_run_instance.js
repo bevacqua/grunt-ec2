@@ -23,14 +23,17 @@ module.exports = function(grunt){
 
         exec('aws ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s', [
             conf('AWS_IMAGE_ID'), conf('AWS_INSTANCE_TYPE'), 1, name, conf('AWS_SECURITY_GROUP_NAME')
-        ], createTag, true);
+        ], next, true);
 
-        function createTag (stdout) {
+        function next (stdout) {
             var result = JSON.parse(stdout);
             var id = result.Instances[0].InstanceId;
-            var task = util.format('ec2_create_tag:%s:%s', id, name);
+            var tasks = [
+                util.format('ec2_create_tag:%s:%s', id, name),
+                util.format('ec2_assign_address:%s', id),
+            ];
 
-            grunt.task.run(task);
+            grunt.task.run(tasks);
             done();
         }
     });
