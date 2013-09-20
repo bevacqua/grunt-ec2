@@ -17,7 +17,7 @@ module.exports = function(grunt){
             ].join('\n'));
         }
 
-        grunt.log.writeln('Allocating Elastic IP Address...', chalk.cyan(id, ip));
+        grunt.log.writeln('Allocating Elastic IP Address...');
 
         var done = this.async();
 
@@ -25,13 +25,11 @@ module.exports = function(grunt){
 
         function next (stdout) {
             var result = JSON.parse(stdout);
-            var ip = 'foo';
-
-            console.log(result);
+            var ip = result.PublicIp;
 
             grunt.log.writeln('Associating EC2 instance %s to IP %s', chalk.cyan(id), chalk.cyan(ip));
 
-            exec('aws ec2 associate-address -i %s %s', [id, ip], done);
+            exec('aws ec2 associate-address --instance-id %s --public-ip %s', [id, ip], done);
         }
     });
 };
