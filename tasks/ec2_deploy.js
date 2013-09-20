@@ -28,14 +28,14 @@ module.exports = function(grunt){
                 grunt.fatal('This instance is refusing SSH connections for now');
             }
 
-            var local = process.cwd();
+            var user = conf('AWS_RSYNC_USER');
             var project = conf('PROJECT_ID');
+            var local = process.cwd();
             var remote = util.format('/srv/rsync/%s/latest/', project);
-            var folder = path.relative(path.dirname(local), local);
-            var remoteSync = remote + folder + '/';
+            var parent = path.relative(path.dirname(local), local);
+            var remoteSync = remote + parent + '/';
             var exclude = conf('RSYNC_IGNORE');
             var excludeFrom = exclude ? util.format('--exclude-from "%s"', exclude) : '';
-            var user = conf('AWS_RSYNC_USER');
             var v = grunt.config('pkg.version');
 
             grunt.log.writeln('Deploying %s to %s using rsync over ssh...', chalk.blue('v' + v), chalk.cyan(c.id));
@@ -44,11 +44,14 @@ module.exports = function(grunt){
                 excludeFrom, c.privateKeyFile, local, user, c.host, remote
             ], deploy);
 
+            var root = util.format('/srv/apps/%s', project);
+
             function deploy () {
-                var dest = util.format('/srv/apps/%s/v/%s', project, v);
-                var target = util.format('/srv/apps/%s/current', project);
+                var dest = util.format('%s/v/%s', root, v);
+                var target = root + '/current';
                 var commands = [
                     util.format('sudo cp -r %s %s', remoteSync, dest),
+                    util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target), [
                         util.format('sudo pm2 start %s/%s -i 2 --name %s', target, conf('NODE_SCRIPT'), name),
