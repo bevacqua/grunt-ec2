@@ -24,7 +24,7 @@ module.exports = function(grunt){
         var tasks = [[
             util.format('echo "configuring up %s instance..."', name)
         ], [ // port forwarding
-            'cp /etc/sysctl.conf /tmp/'
+            'cp /etc/sysctl.conf /tmp/',
             'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
             'sudo cp /tmp/sysctl.conf /etc/',
             'sudo sysctl -p /etc/sysctl.conf',
