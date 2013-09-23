@@ -61,7 +61,7 @@ module.exports = function(grunt){
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
                     util.format('%s && sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already running."',
-                        stopped, env, target, conf('NODE_SCRIPT'), name
+                        stopped, target, conf('NODE_SCRIPT'), name, env
                     ),
                     util.format('%s || sudo pm2 reload all', stopped)
                 ];
