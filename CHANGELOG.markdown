@@ -1,3 +1,7 @@
+# 0.2.8 Elastic Band
+
+- Sets `NODE_ENV` to the name of the EC2 instance
+
 # 0.2.7 Sun Bed
 
 - Port forwarding from 80 to 8080

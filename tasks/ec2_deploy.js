@@ -45,6 +45,9 @@ module.exports = function(grunt){
             ], deploy);
 
             var root = util.format('/srv/apps/%s', project);
+            var env = {
+                NODE_ENV: name
+            };
 
             function deploy () {
                 var dest = util.format('%s/v/%s', root, v);
@@ -54,7 +57,7 @@ module.exports = function(grunt){
                     util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target), [
-                        util.format('sudo pm2 start %s/%s -i 2 --name %s', target, conf('NODE_SCRIPT'), name),
+                        util.format('sudo %s pm2 start %s/%s -i 2 --name %s', env, target, conf('NODE_SCRIPT'), name),
                         'sudo pm2 reload all'
                     ].join(' || ') // start or reload
                 ];
