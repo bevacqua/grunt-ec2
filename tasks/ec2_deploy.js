@@ -72,7 +72,15 @@ module.exports = function(grunt){
                 var url = util.format('http://%s/', c.ip);
                 var text = chalk.magenta(url);
                 grunt.log.writeln('You can access the instance via HTTP on %s', text);
-                done();
+                grunt.log.write('Will flush logs in 5s. ');
+
+                setTimeout(peek, 5000);
+            }
+
+            function peek () {
+                grunt.log.writeln('Flushing...');
+
+                ssh(['sudo pm2 flush'], name, done);
             }
         });
     });
