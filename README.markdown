@@ -192,6 +192,19 @@ grunt ec2_deploy:teddy
 
 ![ec2-deploy.png][4]
 
+## Reboot an instance with `ec2_reboot`
+
+Reboots the instance by the specified name.
+
+- Looks up instance id for instance tagged `name`.
+- Reboots it
+
+Example:
+
+```shell
+grunt ec2_reboot:teddy
+```
+
 ## Feedback
 
 Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitHub issues for grunt-ec2") you encounter, and send any feedback you might have my way.
