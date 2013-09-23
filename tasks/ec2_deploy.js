@@ -6,6 +6,7 @@ var path = require('path');
 var exec = require('./lib/exec.js');
 var sshCredentials = require('./lib/sshCredentials.js');
 var ssh = require('./lib/ssh.js');
+var parse = require('./lib/parse.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
@@ -45,9 +46,9 @@ module.exports = function(grunt){
             ], deploy);
 
             var root = util.format('/srv/apps/%s', project);
-            var env = {
+            var env = parse.env({
                 NODE_ENV: name
-            };
+            });
 
             function deploy () {
                 var dest = util.format('%s/v/%s', root, v);

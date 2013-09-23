@@ -182,6 +182,7 @@ Deploys to a running EC2 instance using `rsync` over SSH.
 - Using `pkg.version`, creates a folder with the newest version, like `/srv/apps/example/v/0.6.5`
 - Creates a link from `/srv/apps/example/v/0.6.5` to `/srv/apps/example/current`
 - Either starts the application, or reloads it with zero downtime, using `pm2`
+- Instance name can be accessed through `process.env.NODE_ENV`
 
 Example:
 
