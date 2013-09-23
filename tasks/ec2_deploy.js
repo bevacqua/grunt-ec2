@@ -60,8 +60,8 @@ module.exports = function(grunt){
                     util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
-                    util.format('%s && sudo pm2 reload all', running),
-                    util.format('%s || sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already running."',
+                    util.format('%s && sudo pm2 reload all || echo "pm2 not started."', running),
+                    util.format('%s || sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already started."',
                         running, target, conf('NODE_SCRIPT'), name, env
                     )
                 ];
