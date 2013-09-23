@@ -19,7 +19,7 @@ module.exports = function (name, done) {
 
         var result = cache[name] = {
             id: instance.InstanceId,
-            ip: instance.PublicIp,
+            ip: instance.PublicIpAddress,
             host: instance.PublicDnsName,
             port: 22,
             username: conf('AWS_SSH_USER'),
