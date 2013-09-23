@@ -2,6 +2,7 @@
 
 - Sets `NODE_ENV` to the name of the EC2 instance
 - Added `ec2_reboot:name` task
+- 
 
 # 0.2.7 Sun Bed
 

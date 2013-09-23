@@ -62,9 +62,15 @@ module.exports = function(grunt){
                         'sudo pm2 reload all'
                     ].join(' || ') // start or reload
                 ];
-                ssh(commands, name, done);
+                ssh(commands, name, log);
+            }
+
+            function log () {
+                var url = util.format('http://%s/', c.ip);
+                var text = chalk.magenta(url);
+                grunt.log.writeln('You can access the instance via HTTP on %s', text);
+                done();
             }
         });
-
     });
 };
