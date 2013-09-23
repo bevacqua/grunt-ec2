@@ -1,3 +1,7 @@
+# 0.2.9 Ice Age
+
+- Persist port forwarding configuration through reboots
+
 # 0.2.8 Elastic Band
 
 - Sets `NODE_ENV` to the name of the EC2 instance
