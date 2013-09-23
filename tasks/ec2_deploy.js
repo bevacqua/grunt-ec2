@@ -53,17 +53,17 @@ module.exports = function(grunt){
             function deploy () {
                 var dest = util.format('%s/v/%s', root, v);
                 var target = root + '/current';
-                var stopped = '[[ $(pm2 jlist) == "[]" ]]';
+                var running = '[[ $(pm2 jlist) != "[]" ]]';
 
                 var commands = [
                     util.format('sudo cp -r %s %s', remoteSync, dest),
                     util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
-                    util.format('%s && sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already running."',
-                        stopped, target, conf('NODE_SCRIPT'), name, env
-                    ),
-                    util.format('%s || sudo pm2 reload all', stopped)
+                    util.format('%s && sudo pm2 reload all', running),
+                    util.format('%s || sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already running."',
+                        running, target, conf('NODE_SCRIPT'), name, env
+                    )
                 ];
                 ssh(commands, name, log);
             }

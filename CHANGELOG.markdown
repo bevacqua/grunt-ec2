@@ -4,7 +4,7 @@
 - Added `ec2_reboot:name` task
 - Log HTTP url after deploys
 - Fixed `pm2` start/reload command
-- Peek at logs 5s after deploys
+- Peek at logs 5s after deploys using `pm2 flush`
 
 # 0.2.7 Sun Bed
 
