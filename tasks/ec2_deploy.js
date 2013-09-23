@@ -61,9 +61,9 @@ module.exports = function(grunt){
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
                     util.format('%s && sudo %s pm2 start %s/%s -i 2 --name %s || echo "pm2 is running."',
-                    util.format('%s || sudo pm2 reload all', stopped),
                         stopped, env, target, conf('NODE_SCRIPT'), name
-                    )
+                    ),
+                    util.format('%s || sudo pm2 reload all', stopped)
                 ];
                 ssh(commands, name, log);
             }
