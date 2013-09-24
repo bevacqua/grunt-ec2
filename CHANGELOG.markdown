@@ -1,3 +1,7 @@
+# 0.3.0 Sofa Cushion
+
+- Proxy `nginx` server in front of `Node`
+
 # 0.2.9 Ice Age
 
 - Persist port forwarding configuration through reboots

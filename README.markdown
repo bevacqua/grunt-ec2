@@ -113,6 +113,22 @@ node_modules
 
 The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to your `cwd`.
 
+### NGINX_ENABLED
+
+Whether to install and use `nginx`. If installed, the Node application **must** listen on port `3000`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
+
+### NGINX_SERVER_NAME
+
+The server name for your static server, for example: `bevacqua.io`.
+
+### NGINX_STATIC_URL
+
+The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
+
+### NGINX_STATIC_ERRORS
+
+The relative path to your error HTML views folder root. For example `bin/views/error`.
+
 # Tasks
 
 Although this package exposes quite a few different tasks, here are the ones you'll want to be using directly.

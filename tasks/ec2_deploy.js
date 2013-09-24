@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var chalk = require('chalk');
 var util = require('util');
 var path = require('path');
@@ -55,7 +56,11 @@ module.exports = function(grunt){
                 var target = root + '/current';
                 var running = '[[ $(pm2 jlist) != "[]" ]]';
 
-                var commands = [
+                function iif (value, commands) {
+                    return conf(value) ? commands : [];
+                }
+
+                var tasks = [[
                     util.format('sudo cp -r %s %s', remoteSync, dest),
                     util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
@@ -64,7 +69,11 @@ module.exports = function(grunt){
                     util.format('%s || sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already started."',
                         running, target, conf('NODE_SCRIPT'), name, env
                     )
-                ];
+                ], iif('NGINX_ENABLED', [
+                    'sudo nginx -s reload'
+                ])];
+
+                var commands = _.flatten(tasks);
                 ssh(commands, name, log);
             }
 

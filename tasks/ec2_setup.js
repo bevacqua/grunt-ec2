@@ -1,8 +1,11 @@
 'use strict';
 
 var _ = require('lodash');
-var chalk = require('chalk');
+var fs = require('fs');
+var path = require('path');
 var util = require('util');
+var chalk = require('chalk');
+var mustache = require('mustache');
 var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 
@@ -18,7 +21,12 @@ module.exports = function(grunt){
             ].join('\n'));
         }
 
-        // TODO nginx server, rsync user, node user, [nginx user?]
+        function iif (value, commands) {
+            return conf(value) ? commands : [];
+        }
+
+        // TODO rsync user, node user, nginx user?
+
         var done = this.async();
         var project = conf('PROJECT_ID');
         var tasks = [[
@@ -36,7 +44,9 @@ module.exports = function(grunt){
             util.format('sudo mkdir -p /srv/rsync/%s/latest', project),
             util.format('sudo mkdir -p /srv/apps/%s/v', project),
             util.format('sudo chown ubuntu /srv/rsync/%s/latest', project)
-        ], [ // node.js
+        ], iif('NGINX_ENABLED', // nginx
+            nginxConf()
+        ), [ // node.js
             'sudo apt-get install python-software-properties',
             'sudo add-apt-repository ppa:chris-lea/node.js -y',
             'sudo apt-get update',
@@ -46,6 +56,24 @@ module.exports = function(grunt){
             'sudo npm install -g pm2',
             'sudo pm2 startup'
         ]];
+
+        function nginxConf () {
+            var remote = util.format('/srv/apps/%s/nginx.conf', project);
+            var file = path.resolve(__dirname, '../cfg/nginx.conf');
+            var template = fs.readFileSync(file, { encoding: 'utf8' });
+            var data = mustache.render(template, conf());
+
+            return [
+                'sudo apt-get install nginx -y',
+                'sudo service nginx start',
+                util.format('sudo ln -s /srv/apps/%s/nginx.conf /etc/nginx/sites-enabled/%s.conf', project, project),
+                sshSend(data, remote)
+            ];
+        }
+
+        function sshSend(data, location) {
+            return util.format('echo "%s" > %s', data.replace(/"/g, '\"', location);
+        }
 
         var commands = _.flatten(tasks);
         ssh(commands, name, done);
