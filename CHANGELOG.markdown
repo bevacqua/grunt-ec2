@@ -7,6 +7,13 @@
 - New task `ec2_node_restart` restarts `pm2`
 - New task `ec2_node_start` starts node through `pm2`
 - New task `ec2_node_stop` stops `pm2`
+- New task `ec2_nginx_reload` reloads `nginx` server
+- New task `ec2_nginx_restart` restarts `nginx`
+- New task `ec2_nginx_start` starts the `nginx` service
+- New task `ec2_nginx_stop` stops the `nginx` service
+- New task `ec2_logs_nginx_access` displays `nginx` access logs
+- New task `ec2_logs_nginx_error` displays `nginx` error logs
+- New task `ec2_logs_node` flushes `pm2` logs
 
 # 0.3.0 Sofa Cushion
 
