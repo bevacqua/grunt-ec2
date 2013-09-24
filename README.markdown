@@ -234,11 +234,39 @@ Example:
 grunt ec2_reboot:teddy
 ```
 
-## Check what's going on in your instances
+# Complete Task Reference
 
-|Task|Usage|Purpose|
-|---|---|---|
-|**ec2_version**|`grunt ec2_version:name`|Get the version number currently deployed to production|
+Task|Usage|Purpose
+---:|---|---
+**ec2_assign_address**|`grunt ec2_assign_address:id`|Allocates an IP and assigns it to your instance
+**ec2_create_keypair**|`grunt ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
+**ec2_create_tag**|`grunt ec2_create_tag:id:name`|Tags an instance with the provided name
+**ec2_delete_keypair**|`grunt ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
+**ec2_deploy**|`grunt ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+**ec2_launch**|`grunt ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
+**ec2_list**|`grunt ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
+**ec2_logs_node**|`grunt ec2_logs_node:name`|Gets `pm2` logs
+**ec2_logs_nginx**|`grunt ec2_logs_nginx:name`|Gets `nginx` logs
+**ec2_lookup**|`grunt ec2_lookup:name`|Gets instance filtered by name tag
+**ec2_nginx_stop**|`grunt ec2_nginx_stop:name`|Stops `nginx`
+**ec2_nginx_start**|`grunt ec2_nginx_start:name`|Starts `nginx`
+**ec2_nginx_reload**|`grunt ec2_nginx_reload:name`|Reloads `nginx`
+**ec2_nginx_restart**|`grunt ec2_nginx_restart:name`|Restarts `nginx`
+**ec2_node_list**|`grunt ec2_node_list:name`|Returns output for `pm2 prettylist`
+**ec2_node_monit**|`grunt ec2_node_monit:name`|Runs `pm2 monit`
+**ec2_node_restart**|`grunt ec2_node_restart:name`|Restarts app using `pm2 restart all`
+**ec2_node_reload**|`grunt ec2_node_reload:name`|Reloads app using `pm2 reload all`
+**ec2_node_stop**|`grunt ec2_node_stop:name`|Stops app using `pm2 stop all`
+**ec2_node_start**|`grunt ec2_node_start:name`|Starts app using parameterized `pm2 start`
+**ec2_reboot**|`grunt ec2_reboot:name`|Reboots the EC2 instance
+**ec2_release_address**|`grunt ec2_release_address:ip`|Releases an IP address
+**ec2_run_instance**|`grunt ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
+**ec2_setup**|`grunt ec2_setup:name`|Sets up port forwarding, installs `rsync`, `nginx`, `node`, and `pm2`
+**ec2_shutdown**|`grunt ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair and IP address
+**ec2_ssh**|`grunt ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
+**ec2_terminate_instance**|`grunt ec2_terminate_instance:id`|Terminates an instance
+**ec2_version**|`grunt ec2_version:name`|Get the version number currently deployed to production
+**ec2_wait**|`grunt ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
 
 ## Feedback
 
