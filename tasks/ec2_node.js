@@ -1,12 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var chalk = require('chalk');
-var util = require('util');
-var sshCredentials = require('./lib/sshCredentials.js');
-var ssh = require('./lib/ssh.js');
-var conf = require('./lib/conf.js');
 var commands = require('./lib/commands.js');
+var sshTask = require('./lib/sshTask.js');
 
 module.exports = function(grunt){
 
@@ -19,34 +15,5 @@ module.exports = function(grunt){
         { name: 'ec2_node_stop', command: 'sudo pm2 stop all' }
     ];
 
-    _.each(tasks, register);
-
-    function register (task) {
-
-        grunt.registerTask(task.name, function(name){
-            conf.init(grunt);
-
-            if (arguments.length === 0) {
-                grunt.fatal([
-                    'You should provide an instance name.',
-                    'e.g: ' + chalk.yellow(util.format('grunt %s:name', task.name))
-                ].join('\n'));
-            }
-
-            var done = this.async();
-
-            sshCredentials(name, function (c) {
-
-                if (!c) {
-                    grunt.fatal('This instance is refusing SSH connections for now');
-                }
-
-                var command = typeof task.command === 'string' ?
-                    task.command :
-                    task.command.call(null, name);
-
-                ssh([command], name, done);
-            });
-        });
-    }
+    _.each(tasks, sshTask.register);
 };
