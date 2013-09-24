@@ -26,10 +26,6 @@ module.exports = function(grunt){
         }
 
         // TODO rsync user, node user, nginx user?
-        // TODO tasks to nginx [start|stop|restart|reload]
-        // TODO tasks for pm2 [start|stop|reload]
-        // TODO task for logs [nginx|pm2,tails]
-        // TODO task to get current version
 
         var done = this.async();
         var project = conf('PROJECT_ID');
