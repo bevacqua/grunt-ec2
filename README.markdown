@@ -133,6 +133,14 @@ The relative path to your static folder root, for example: `bin/public`. Used to
 
 The relative path to your error HTML views folder root. For example `bin/views/error`.
 
+### NGINX_USER
+
+The user to configure and run `nginx` with.
+
+### NGINX_WORKERS
+
+The amount of workers processes used by `nginx`.
+
 # Tasks
 
 Although this package exposes quite a few different tasks, here are the ones you'll want to be using directly.
