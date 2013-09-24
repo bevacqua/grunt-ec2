@@ -76,12 +76,11 @@ module.exports = function(grunt){
 
         function nginxConf () {
 
-            nginxTemplate('http', 'nginx');
-            nginxTemplate('server', 'sites-enabled/' + project);
-
             return [
                 'sudo apt-get install nginx -y',
-                'sudo service nginx start || echo "foo"'
+                nginxTemplate('http', 'nginx'),
+                nginxTemplate('server', 'sites-enabled/' + project),
+                'sudo service nginx start'
             ];
         }
 
