@@ -84,7 +84,7 @@ module.exports = function(grunt){
                 'sudo apt-get install nginx -y',
                 nginxTemplate('http', 'nginx'),
                 nginxTemplate('server', 'sites-enabled/' + project),
-                'sudo service nginx start'
+                'sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'
             ];
         }
 
