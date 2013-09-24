@@ -248,7 +248,8 @@ Usage|Purpose
 `grunt ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
 `grunt ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
 `grunt ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
-`grunt ec2_logs_nginx:name`|Gets `nginx` logs
+`grunt ec2_logs_nginx_access:name`|Gets `nginx` access logs
+`grunt ec2_logs_nginx_error:name`|Gets `nginx` error logs
 `grunt ec2_logs_node:name`|Gets `pm2` logs
 `grunt ec2_lookup:name`|Gets instance filtered by name tag
 `grunt ec2_nginx_reload:name`|Reloads `nginx`

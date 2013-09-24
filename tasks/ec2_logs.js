@@ -1,14 +1,13 @@
 'use strict';
 
 var _ = require('lodash');
-var commands = require('./lib/commands.js');
-var sshTask = require('./lib/sshTask.js');
 
 module.exports = function(grunt){
-
+    var sshTask = require('./lib/sshTask.js')(grunt);
     var tasks = [
         { name: 'ec2_logs_node', command: 'sudo pm2 flush' },
-        { name: 'ec2_logs_nginx', command: 'sudo pm2 monit' }
+        { name: 'ec2_logs_nginx_access', command: 'tail -20 /var/log/nginx/access.log' },
+        { name: 'ec2_logs_nginx_error', command: 'tail -20 /var/log/nginx/error.log' }
     ];
 
     _.each(tasks, sshTask.register);
