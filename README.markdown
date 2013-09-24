@@ -234,6 +234,12 @@ Example:
 grunt ec2_reboot:teddy
 ```
 
+## Check what's going on in your instances
+
+|Task|Usage|Purpose|
+|---|---|---|
+|**ec2_version**|`grunt ec2_version:name`|Get the version number currently deployed to production|
+
 ## Feedback
 
 Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitHub issues for grunt-ec2") you encounter, and send any feedback you might have my way.

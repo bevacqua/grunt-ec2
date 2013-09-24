@@ -1,3 +1,7 @@
+# 0.3.1 Gold Meadow
+
+- `ec2_version` to find out currently deployed app version
+
 # 0.3.0 Sofa Cushion
 
 - Proxy `nginx` server in front of `Node`

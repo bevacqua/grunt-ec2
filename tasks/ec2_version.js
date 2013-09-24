@@ -34,7 +34,7 @@ module.exports = function(grunt){
 
             var project = conf('PROJECT_ID');
             var commands = [
-                util.format('readlink -f /srv/apps/%s/current | sed -e "s/.*v\///"', project)
+                util.format('readlink -f /srv/apps/%s/current | sed -e "s/.*v\\///"', project)
             ];
 
             ssh(commands, name, done);
