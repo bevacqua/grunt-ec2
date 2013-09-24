@@ -62,17 +62,16 @@ module.exports = function(grunt){
             var file = path.resolve(__dirname, '../cfg/nginx.conf');
             var template = fs.readFileSync(file, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
+            var escaped = data.replace(/"/g, '\"');
 
             return [
                 'sudo apt-get install nginx -y',
-                'sudo service nginx start',
-                util.format('sudo ln -s /srv/apps/%s/nginx.conf /etc/nginx/sites-enabled/%s.conf', project, project),
-                sshSend(data, remote)
+                util.format('sudo touch %s', remote),
+                util.format('sudo chown ubuntu %s', remote),
+                util.format('sudo ln -s %s /etc/nginx/sites-enabled/%s.conf', remote, project),
+                util.format('echo "%s" > %s', escaped, remote),
+                'sudo service nginx start'
             ];
-        }
-
-        function sshSend(data, location) {
-            return util.format('echo "%s" > %s', data.replace(/"/g, '\"', location);
         }
 
         var commands = _.flatten(tasks);
