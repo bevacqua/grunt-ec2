@@ -25,12 +25,12 @@ Config.prototype.init = function (grunt) {
 
     _.assign(this._, defaults, user);
 
-    this.resolve();
+    this.defaults();
 
     Object.freeze(this._);
 };
 
-Config.prototype.resolve = function () {
+Config.prototype.defaults = function () {
     var _ = this._;
 
     d(_, 'PROJECT_ID', 'ec2');

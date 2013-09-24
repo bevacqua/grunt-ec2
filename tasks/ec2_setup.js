@@ -62,7 +62,9 @@ module.exports = function(grunt){
             var file = path.resolve(__dirname, '../cfg/nginx.conf');
             var template = fs.readFileSync(file, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
-            var escaped = data.replace(/"/g, '\"');
+            var escaped = data
+                .replace(/"/g, '\\"')
+                .replace(/\$/g, '\\$');
 
             return [
                 'sudo apt-get install nginx -y',
