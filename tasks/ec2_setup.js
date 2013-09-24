@@ -57,9 +57,9 @@ module.exports = function(grunt){
             'sudo pm2 startup'
         ]];
 
-        function nginxConf () {
-            var remote = util.format('/srv/apps/%s/nginx.conf', project);
-            var file = path.resolve(__dirname, '../cfg/nginx.conf');
+        function nginxTemplate (name, where) {
+            var remote = util.format('/srv/apps/%s/%s.conf', project, name);
+            var file = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
             var template = fs.readFileSync(file, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
             var escaped = data
@@ -67,12 +67,21 @@ module.exports = function(grunt){
                 .replace(/\$/g, '\\$');
 
             return [
-                'sudo apt-get install nginx -y',
                 util.format('sudo touch %s', remote),
                 util.format('sudo chown ubuntu %s', remote),
-                util.format('sudo ln -s %s /etc/nginx/sites-enabled/%s.conf', remote, project),
-                util.format('echo "%s" > %s', escaped, remote),
-                'sudo service nginx start'
+                util.format('sudo ln -s %s /etc/nginx/%s.conf', remote, where),
+                util.format('echo "%s" > %s', escaped, remote)
+            ];
+        }
+
+        function nginxConf () {
+
+            nginxTemplate('http', 'nginx');
+            nginxTemplate('server', 'sites-enabled/' + project);
+
+            return [
+                'sudo apt-get install nginx -y',
+                'sudo service nginx start || echo "foo"'
             ];
         }
 

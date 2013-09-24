@@ -115,7 +115,11 @@ The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to 
 
 ### NGINX_ENABLED
 
-Whether to install and use `nginx`. If installed, the Node application **must** listen on port `3000`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
+Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
+
+### NGINX_PROXY_PORT
+
+This is the port where `nginx` will proxy requests to, when it won't handle them by itself. This is the same port you'll want to use to listen with your Node application.
 
 ### NGINX_SERVER_NAME
 
