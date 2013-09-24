@@ -20,7 +20,8 @@
     "deploy",
     "release",
     "rsync",
-    "ssh"
+    "ssh",
+    "nginx"
   ],
   "engines": {
     "node": "0.10.18",

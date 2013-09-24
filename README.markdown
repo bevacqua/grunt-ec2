@@ -17,6 +17,7 @@ This is pretty feature packed
 - Use `pm2` to deploy and do hot code swaps!
 - Works after reboots, too
 - [Introduced at Pony Foo](http://blog.ponyfoo.com/2013/09/19/deploying-node-apps-to-aws-using-grunt "Deploying Node apps to AWS using Grunt")
+- Put an `nginx` proxy server in front of Node
 
 # Installation
 
