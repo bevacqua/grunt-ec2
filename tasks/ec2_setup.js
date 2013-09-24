@@ -26,6 +26,10 @@ module.exports = function(grunt){
         }
 
         // TODO rsync user, node user, nginx user?
+        // TODO tasks to nginx [start|stop|restart|reload]
+        // TODO tasks for pm2 [start|stop|reload]
+        // TODO task for logs [nginx|pm2,tails]
+        // TODO task to get current version
 
         var done = this.async();
         var project = conf('PROJECT_ID');
@@ -69,7 +73,7 @@ module.exports = function(grunt){
             return [
                 util.format('sudo touch %s', remote),
                 util.format('sudo chown ubuntu %s', remote),
-                util.format('sudo ln -s %s /etc/nginx/%s.conf', remote, where),
+                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', remote, where),
                 util.format('echo "%s" > %s', escaped, remote)
             ];
         }
