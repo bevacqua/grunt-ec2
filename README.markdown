@@ -1,6 +1,6 @@
 # grunt-ec2
 
-> Grunt tasks to create, terminate, and deploy to AWS EC2 instances
+> Grunt tasks to create, terminate, and deploy Node applications to AWS EC2 instances, then proxy with nginx
 
 Abstracts away [**aws-cli**](https://github.com/aws/aws-cli) allowing you to easily launch, terminate, and deploy to AWS EC2 instances.
 
