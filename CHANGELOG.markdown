@@ -1,6 +1,12 @@
 # 0.3.1 Gold Meadow
 
-- `ec2_version` to find out currently deployed app version
+- New task `ec2_version` to find out currently deployed app version
+- New task `ec2_node_list` prints a list of `node` processes
+- New task `ec2_node_monit` prints diagnostics information
+- New task `ec2_node_reload` hot code reload with `pm2`
+- New task `ec2_node_restart` restarts `pm2`
+- New task `ec2_node_start` starts node through `pm2`
+- New task `ec2_node_stop` stops `pm2`
 
 # 0.3.0 Sofa Cushion
 

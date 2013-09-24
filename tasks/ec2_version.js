@@ -1,13 +1,9 @@
 'use strict';
 
-var _ = require('lodash');
 var chalk = require('chalk');
 var util = require('util');
-var path = require('path');
-var exec = require('./lib/exec.js');
 var sshCredentials = require('./lib/sshCredentials.js');
 var ssh = require('./lib/ssh.js');
-var parse = require('./lib/parse.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){

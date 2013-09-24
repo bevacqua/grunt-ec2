@@ -7,8 +7,8 @@ var path = require('path');
 var exec = require('./lib/exec.js');
 var sshCredentials = require('./lib/sshCredentials.js');
 var ssh = require('./lib/ssh.js');
-var parse = require('./lib/parse.js');
 var conf = require('./lib/conf.js');
+var commands = require('./lib/commands.js');
 
 module.exports = function(grunt){
 
@@ -47,17 +47,13 @@ module.exports = function(grunt){
             ], deploy);
 
             var root = util.format('/srv/apps/%s', project);
-            var env = parse.env({
-                NODE_ENV: name
-            });
 
             function deploy () {
                 var dest = util.format('%s/v/%s', root, v);
                 var target = root + '/current';
-                var running = '[[ $(pm2 jlist) != "[]" ]]';
 
-                function iif (value, commands) {
-                    return conf(value) ? commands : [];
+                function iif (value, cmd) {
+                    return conf(value) ? cmd : [];
                 }
 
                 var tasks = [[
@@ -65,16 +61,14 @@ module.exports = function(grunt){
                     util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
-                    util.format('%s && sudo pm2 reload all || echo "pm2 not started."', running),
-                    util.format('%s || sudo pm2 start %s/%s -i 2 --name %s -- %s || echo "pm2 already started."',
-                        running, target, conf('NODE_SCRIPT'), name, env
-                    )
+                    commands.pm2_reload(),
+                    commands.pm2_start(name)
                 ], iif('NGINX_ENABLED', [
                     'sudo nginx -s reload'
                 ])];
 
-                var commands = _.flatten(tasks);
-                ssh(commands, name, log);
+                var cmd = _.flatten(tasks);
+                ssh(cmd, name, log);
             }
 
             function log () {
