@@ -43,7 +43,8 @@ Config.prototype.defaults = function () {
 
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
     _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
-    _.SRV_RSYNC = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
+    _.SRV_RSYNC_SETUP = util.format('/srv/rsync/%s/setup', _.PROJECT_ID);
+    _.SRV_RSYNC_LATEST = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
     _.SRV_CURRENT = _.SRV_ROOT + '/current';
     _.SRV_VERSIONS = _.SRV_ROOT + '/v';
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';

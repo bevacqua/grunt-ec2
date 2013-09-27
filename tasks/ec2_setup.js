@@ -29,7 +29,7 @@ module.exports = function(grunt){
 
         var done = this.async();
         var project = conf('PROJECT_ID');
-        var rsync = conf('SRV_RSYNC');
+        var rsync = conf('SRV_RSYNC_LATEST');
         var versions = conf('SRV_VERSIONS');
         var tasks = [[
             util.format('echo "configuring up %s instance..."', name)
