@@ -31,16 +31,11 @@ module.exports = function(grunt){
         var project = conf('PROJECT_ID');
         var tasks = [[
             util.format('echo "configuring up %s instance..."', name)
-        ], [ // port forwarding
-            'cp /etc/sysctl.conf /tmp/',
-            'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
-            'sudo cp /tmp/sysctl.conf /etc/',
-            'sudo sysctl -p /etc/sysctl.conf',
-            'sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080',
-            'sudo iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT',
-            'sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT',
-            'sudo iptables-save'
-        ], [ // rsync
+        ], [ // forward port 80
+            forwardPort(80, 8080)
+        ], iif('SSL_ENABLED', // forward port 443
+            forwardPort(443, 8433)
+        ), [ // rsync
             util.format('sudo mkdir -p /srv/rsync/%s/latest', project),
             util.format('sudo mkdir -p /srv/apps/%s/v', project),
             util.format('sudo chown ubuntu /srv/rsync/%s/latest', project)
@@ -57,6 +52,18 @@ module.exports = function(grunt){
             'sudo pm2 startup'
         ]];
 
+        function forwardPort(from, to) {
+            return [
+                'cp /etc/sysctl.conf /tmp/',
+                'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
+                'sudo cp /tmp/sysctl.conf /etc/',
+                'sudo sysctl -p /etc/sysctl.conf',
+                util.format('sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport %s -j REDIRECT --to-port %s', from, to),
+                util.format('sudo iptables -A INPUT -p tcp -m tcp --sport %s -j ACCEPT', from),
+                util.format('sudo iptables -A OUTPUT -p tcp -m tcp --dport %s -j ACCEPT', from),
+                'sudo iptables-save'
+            ];
+        }
         function nginxTemplate (name, where) {
             var remote = util.format('/srv/apps/%s/%s.conf', project, name);
             var file = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
@@ -75,7 +82,6 @@ module.exports = function(grunt){
         }
 
         function nginxConf () {
-
             return [
                 'sudo apt-get install nginx -y',
                 nginxTemplate('http', 'nginx'),

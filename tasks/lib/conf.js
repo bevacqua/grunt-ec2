@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var path = require('path');
 var grunt = require('grunt');
+var cwd = process.cwd();
 
 function Config () {
 }
@@ -39,7 +40,12 @@ Config.prototype.defaults = function () {
     df(_, 'SSH_KEYS_FOLDER', '../../private');
     df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
 
-    this._.SSH_KEYS_RELATIVE = path.relative(process.cwd(), this._.SSH_KEYS_FOLDER);
+    _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
+
+    if (_.SSL_ENABLED) {
+        _.SSL_CERTIFICATE = relative(_.SSL_CERTIFICATE);
+        _.SSL_CERTIFICATE_KEY = relative(_.SSL_CERTIFICATE_KEY);
+    }
 };
 
 function d (_, key, value) {
@@ -52,8 +58,12 @@ function df (_, key, value) {
     if (_[key] === void 0) {
         _[key] = path.resolve(__dirname, value);
     } else {
-        _[key] = path.join(process.cwd(), _[key]);
+        _[key] = path.join(cwd, _[key]);
     }
+}
+
+function relative(to) {
+    return path.relative(cwd, to);
 }
 
 Config.prototype.get = function (key) {

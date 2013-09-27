@@ -21,6 +21,7 @@ This is pretty feature packed
 - [Introduced at Pony Foo](http://blog.ponyfoo.com/2013/09/19/deploying-node-apps-to-aws-using-grunt "Deploying Node apps to AWS using Grunt")
 - Put an `nginx` proxy server in front of Node
 - Get tons of Grunt tasks to manipulate your EC2 instances
+- Supports turning on `ssl` and `spdy` in your `nginx` server!
 
 # Installation
 
@@ -69,81 +70,29 @@ For the `ec2` configuration, I don't take an object directly to _encourage hidin
 
 If you're confident enough, you can use the tool with just those options. Here is the full set of options and their defaults.
 
-### AWS_DEFAULT_REGION
-
-Passed to the CLI directly, defaults to `"us-east-1"`
-
-### AWS_IMAGE_ID
-
-Used when creating a new instance with the `ec2_create_instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
-
-### AWS_INSTANCE_TYPE
-
-The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
-
-### AWS_SECURITY_GROUP_NAME
-
-The security group used for new instances. You'll have to create this one yourself.
-
-### AWS_SSH_USER
-
-The user used to SSH into the instance when setting it up for the first time, after creating it.
-
-### AWS_RSYNC_USER
-
-The user to SSH into the instance when deploying through `rsync`.
-
-### SSH_KEYS_FOLDER
-
-The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.
-
-### PROJECT_ID
-
-Just an identifier for your project, in case you're hosting multiple ones, for some stupid reason, in the same instance. Defaults to `ec2`. This is used when creating folders inside the instance.
-
-### RSYNC_IGNORE
-
-Relative path to an rsync exclusion patterns file. These are used to exclude files from being uploaded to the server during `rsync` on deploys. Defaults to ignoring `.git` and `node_modules`.
-
-```
-# vcs files
-.git
-
-# will `npm install --production` on the server
-node_modules
-```
-
-### NODE_SCRIPT
-
-The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to your `cwd`.
-
-### NGINX_ENABLED
-
-Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
-
-### NGINX_PROXY_PORT
-
-This is the port where `nginx` will proxy requests to, when it won't handle them by itself. This is the same port you'll want to use to listen with your Node application.
-
-### NGINX_SERVER_NAME
-
-The server name for your static server, for example: `bevacqua.io`.
-
-### NGINX_STATIC_URL
-
-The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
-
-### NGINX_STATIC_ERRORS
-
-The relative path to your error HTML views folder root. For example `bin/views/error`.
-
-### NGINX_USER
-
-The user to configure and run `nginx` with.
-
-### NGINX_WORKERS
-
-The amount of workers processes used by `nginx`.
+Variable Name|Purpose
+---|---
+`"AWS_DEFAULT_REGION"`|Passed to the CLI directly, defaults to `"us-east-1"`
+`"AWS_IMAGE_ID"`|Used when creating a new instance with the `ec2_create_instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
+`"AWS_INSTANCE_TYPE"`|The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
+`"AWS_SECURITY_GROUP_NAME"`|The security group used for new instances. You'll have to create this one yourself.
+`"AWS_SSH_USER"`|The user used to SSH into the instance when setting it up for the first time, after creating it.
+`"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
+`"SSH_KEYS_FOLDER"`|The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.
+`"PROJECT_ID"`|Just an identifier for your project, in case you're hosting multiple ones, for some stupid reason, in the same instance. Defaults to `ec2`. This is used when creating folders inside the instance.
+`"RSYNC_IGNORE"`|Relative path to an rsync exclusion patterns file. These are used to exclude files from being uploaded to the server during `rsync` on deploys. Defaults to ignoring `.git` and `node_modules`.
+`"NODE_SCRIPT"`|The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to your `cwd`.
+`"NGINX_ENABLED"`|Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
+`"NGINX_PROXY_PORT"`|This is the port where `nginx` will proxy requests to, when it won't handle them by itself. This is the same port you'll want to use to listen with your Node application.
+`"NGINX_SERVER_NAME"`|The server name for your static server, for example: `bevacqua.io`.
+`"NGINX_STATIC_URL"`|The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
+`"NGINX_STATIC_ERRORS"`|The relative path to your error HTML views folder root. For example `bin/views/error`.
+`"NGINX_USER"`|The user to configure and run `nginx` with.
+`"NGINX_WORKERS"`|The amount of workers processes used by `nginx`.
+`"SSL_ENABLED"`|Enables SSL configuration on `nginx`. Learn [how to set it up](https://konklone.com/post/switch-to-https-now-for-free) for free.
+`"SSL_CERTIFICATE"`|Relative path to your unified SSL certificate.
+`"SSL_CERTIFICATE_KEY"`|Relative path to your private certificate key.
+`"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
 
 # Tasks
 
@@ -239,38 +188,38 @@ grunt ec2_reboot:teddy
 
 # Complete Task Reference
 
-Usage|Purpose
+Task and Target(s)|Purpose
 ---|---
-`grunt ec2_assign_address:id`|Allocates an IP and assigns it to your instance
-`grunt ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
-`grunt ec2_create_tag:id:name`|Tags an instance with the provided name
-`grunt ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
-`grunt ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
-`grunt ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
-`grunt ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
-`grunt ec2_logs_nginx_access:name`|Gets `nginx` access logs
-`grunt ec2_logs_nginx_error:name`|Gets `nginx` error logs
-`grunt ec2_logs_node:name`|Gets `pm2` logs
-`grunt ec2_lookup:name`|Gets instance filtered by name tag
-`grunt ec2_nginx_reload:name`|Reloads `nginx`
-`grunt ec2_nginx_restart:name`|Restarts `nginx`
-`grunt ec2_nginx_start:name`|Starts `nginx`
-`grunt ec2_nginx_stop:name`|Stops `nginx`
-`grunt ec2_node_list:name`|Returns output for `pm2 list`
-`grunt ec2_node_monit:name`|Runs `pm2 monit`
-`grunt ec2_node_reload:name`|Reloads app using `pm2 reload all`
-`grunt ec2_node_restart:name`|Restarts app using `pm2 restart all`
-`grunt ec2_node_start:name`|Starts app using parameterized `pm2 start`
-`grunt ec2_node_stop:name`|Stops app using `pm2 stop all`
-`grunt ec2_reboot:name`|Reboots the EC2 instance
-`grunt ec2_release_address:ip`|Releases an IP address
-`grunt ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
-`grunt ec2_setup:name`|Sets up port forwarding, installs `rsync`, `nginx`, `node`, and `pm2`
-`grunt ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair and IP address
-`grunt ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
-`grunt ec2_terminate_instance:id`|Terminates an instance
-`grunt ec2_version:name`|Get the version number currently deployed to production
-`grunt ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
+`ec2_assign_address:id`|Allocates an IP and assigns it to your instance
+`ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
+`ec2_create_tag:id:name`|Tags an instance with the provided name
+`ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
+`ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+`ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
+`ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
+`ec2_logs_nginx_access:name`|Gets `nginx` access logs
+`ec2_logs_nginx_error:name`|Gets `nginx` error logs
+`ec2_logs_node:name`|Gets `pm2` logs
+`ec2_lookup:name`|Gets instance filtered by name tag
+`ec2_nginx_reload:name`|Reloads `nginx`
+`ec2_nginx_restart:name`|Restarts `nginx`
+`ec2_nginx_start:name`|Starts `nginx`
+`ec2_nginx_stop:name`|Stops `nginx`
+`ec2_node_list:name`|Returns output for `pm2 list`
+`ec2_node_monit:name`|Runs `pm2 monit`
+`ec2_node_reload:name`|Reloads app using `pm2 reload all`
+`ec2_node_restart:name`|Restarts app using `pm2 restart all`
+`ec2_node_start:name`|Starts app using parameterized `pm2 start`
+`ec2_node_stop:name`|Stops app using `pm2 stop all`
+`ec2_reboot:name`|Reboots the EC2 instance
+`ec2_release_address:ip`|Releases an IP address
+`ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
+`ec2_setup:name`|Sets up port forwarding, installs `rsync`, `nginx`, `node`, and `pm2`
+`ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair and IP address
+`ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
+`ec2_terminate_instance:id`|Terminates an instance
+`ec2_version:name`|Get the version number currently deployed to production
+`ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
 
 ## Feedback
 

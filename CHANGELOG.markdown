@@ -1,3 +1,7 @@
+# 0.3.2 Green Padlock
+
+- Support added for HTTPS on `nginx`!
+
 # 0.3.1 Gold Meadow
 
 - New task `ec2_version` to find out currently deployed app version
