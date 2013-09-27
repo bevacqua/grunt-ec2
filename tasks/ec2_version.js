@@ -28,9 +28,9 @@ module.exports = function(grunt){
 
             grunt.log.writeln('Querying %s to get current version number over ssh...', chalk.cyan(c.id));
 
-            var project = conf('PROJECT_ID');
+            var current = conf('SRV_CURRENT');
             var commands = [
-                util.format('readlink -f /srv/apps/%s/current | sed -e "s/.*v\\///"', project)
+                util.format('readlink -f %s | sed -e "s/.*v\\///"', current)
             ];
 
             ssh(commands, name, done);

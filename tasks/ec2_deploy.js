@@ -31,10 +31,9 @@ module.exports = function(grunt){
             }
 
             var user = conf('AWS_RSYNC_USER');
-            var project = conf('PROJECT_ID');
             var local = process.cwd();
-            var remote = util.format('/srv/rsync/%s/latest/', project);
             var parent = path.relative(path.dirname(local), local);
+            var remote = conf('SRV_RSYNC');
             var remoteSync = remote + parent + '/';
             var exclude = conf('RSYNC_IGNORE');
             var excludeFrom = exclude ? util.format('--exclude-from "%s"', exclude) : '';
@@ -46,11 +45,11 @@ module.exports = function(grunt){
                 excludeFrom, c.privateKeyFile, local, user, c.host, remote
             ], deploy);
 
-            var root = util.format('/srv/apps/%s', project);
-
             function deploy () {
-                var dest = util.format('%s/v/%s', root, v);
-                var target = root + '/current';
+                var target = conf('SRV_CURRENT');
+                var versions = conf('SRV_VERSIONS');
+                var versions = conf('SRV_VERSION');
+                var dest = util.format(version, v);
 
                 function iif (value, cmd) {
                     return conf(value) ? cmd : [];
@@ -58,7 +57,7 @@ module.exports = function(grunt){
 
                 var tasks = [[
                     util.format('sudo cp -r %s %s', remoteSync, dest),
-                    util.format('sudo rm -rf `ls -t %s | tail -n +11`', root + '/v'),
+                    util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
                     util.format('sudo npm --prefix %s install --production', dest),
                     util.format('sudo ln -sfn %s %s', dest, target),
                     commands.pm2_reload(),

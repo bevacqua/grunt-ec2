@@ -1,6 +1,7 @@
 # 0.3.2 Green Padlock
 
 - Support added for HTTPS on `nginx`!
+- `/srv` paths are now all sitting in `conf.js`
 
 # 0.3.1 Gold Meadow
 

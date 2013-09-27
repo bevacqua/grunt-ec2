@@ -29,6 +29,8 @@ module.exports = function(grunt){
 
         var done = this.async();
         var project = conf('PROJECT_ID');
+        var rsync = conf('SRV_RSYNC');
+        var versions = conf('SRV_VERSIONS');
         var tasks = [[
             util.format('echo "configuring up %s instance..."', name)
         ], [ // forward port 80
@@ -36,9 +38,9 @@ module.exports = function(grunt){
         ], iif('SSL_ENABLED', // forward port 443
             forwardPort(443, 8433)
         ), [ // rsync
-            util.format('sudo mkdir -p /srv/rsync/%s/latest', project),
-            util.format('sudo mkdir -p /srv/apps/%s/v', project),
-            util.format('sudo chown ubuntu /srv/rsync/%s/latest', project)
+            util.format('sudo mkdir -p %s', rsync),
+            util.format('sudo mkdir -p %s', versions),
+            util.format('sudo chown ubuntu %s', rsync)
         ], iif('NGINX_ENABLED', // nginx
             nginxConf()
         ), [ // node.js
@@ -66,7 +68,7 @@ module.exports = function(grunt){
         }
 
         function nginxTemplate (name, where) {
-            var remote = util.format('/srv/apps/%s/%s.conf', project, name);
+            var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
             var file = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
             var template = fs.readFileSync(file, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
@@ -84,7 +86,7 @@ module.exports = function(grunt){
 
         function nginxConf () {
             return [
-                'sudo add-apt-repository ppa:chris-lea/nginx-devel.js -y',
+                'sudo add-apt-repository ppa:chris-lea/nginx-devel -y',
                 'sudo apt-get update',
                 'sudo apt-get install nginx nginx-common nginx-full -y',
                 nginxTemplate('http', 'nginx'),

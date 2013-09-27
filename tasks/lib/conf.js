@@ -42,12 +42,15 @@ Config.prototype.defaults = function () {
     df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
 
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
-
-    var srv = util.format('/srv/apps/%s/current', _.PROJECT_ID);
+    _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
+    _.SRV_RSYNC = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
+    _.SRV_CURRENT = _.SRV_ROOT + '/current';
+    _.SRV_VERSIONS = _.SRV_ROOT + '/v';
+    _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
 
     if (_.SSL_ENABLED) {
-        _.SSL_CERTIFICATE = path.join(srv, _.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = path.join(srv, _.SSL_CERTIFICATE_KEY);
+        _.SSL_CERTIFICATE = path.join(._SRV_CURRENT, _.SSL_CERTIFICATE);
+        _.SSL_CERTIFICATE_KEY = path.join(._SRV_CURRENT, _.SSL_CERTIFICATE_KEY);
     }
 };
 
