@@ -56,7 +56,7 @@ Then, in your `whatever.json` file:
 {
   "AWS_ACCESS_KEY_ID": "<redacted>",
   "AWS_SECRET_ACCESS_KEY": "<redacted>",
-  "AWS_SECURITY_GROUP_NAME": "something"
+  "AWS_SECURITY_GROUP": "something"
 }
 ```
 
@@ -75,7 +75,7 @@ Variable Name|Purpose
 `"AWS_DEFAULT_REGION"`|Passed to the CLI directly, defaults to `"us-east-1"`
 `"AWS_IMAGE_ID"`|Used when creating a new instance with the `ec2_create_instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
 `"AWS_INSTANCE_TYPE"`|The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
-`"AWS_SECURITY_GROUP_NAME"`|The security group used for new instances. You'll have to create this one yourself.
+`"AWS_SECURITY_GROUP"`|The security group used for new instances. You'll have to create this one yourself.
 `"AWS_SSH_USER"`|The user used to SSH into the instance when setting it up for the first time, after creating it.
 `"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
 `"SSH_KEYS_FOLDER"`|The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.

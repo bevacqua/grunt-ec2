@@ -1,7 +1,11 @@
-# 0.3.2 Green Padlock
+# 0.4.0 Green Padlock
 
 - Support added for HTTPS on `nginx`!
 - `/srv` paths are now all sitting in `conf.js`
+
+**BREAKING**
+
+- Changed `AWS_SECURITY_GROUP_NAME` to `AWS_SECURITY_GROUP`
 
 # 0.3.1 Gold Meadow
 

@@ -22,7 +22,7 @@ module.exports = function(grunt){
         var done = this.async();
 
         exec('aws ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s', [
-            conf('AWS_IMAGE_ID'), conf('AWS_INSTANCE_TYPE'), 1, name, conf('AWS_SECURITY_GROUP_NAME')
+            conf('AWS_IMAGE_ID'), conf('AWS_INSTANCE_TYPE'), 1, name, conf('AWS_SECURITY_GROUP')
         ], next, true);
 
         function next (stdout) {
