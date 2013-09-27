@@ -49,8 +49,8 @@ Config.prototype.defaults = function () {
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
 
     if (_.SSL_ENABLED) {
-        _.SSL_CERTIFICATE = path.join(._SRV_CURRENT, _.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = path.join(._SRV_CURRENT, _.SSL_CERTIFICATE_KEY);
+        _.SSL_CERTIFICATE = path.join(_.SRV_CURRENT, _.SSL_CERTIFICATE);
+        _.SSL_CERTIFICATE_KEY = path.join(_.SRV_CURRENT, _.SSL_CERTIFICATE_KEY);
     }
 };
 
