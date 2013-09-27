@@ -48,7 +48,7 @@ module.exports = function(grunt){
             function deploy () {
                 var target = conf('SRV_CURRENT');
                 var versions = conf('SRV_VERSIONS');
-                var versions = conf('SRV_VERSION');
+                var version = conf('SRV_VERSION');
                 var dest = util.format(version, v);
 
                 function iif (value, cmd) {
