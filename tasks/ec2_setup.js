@@ -64,6 +64,7 @@ module.exports = function(grunt){
                 'sudo iptables-save'
             ];
         }
+
         function nginxTemplate (name, where) {
             var remote = util.format('/srv/apps/%s/%s.conf', project, name);
             var file = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
