@@ -71,10 +71,12 @@ module.exports = function(grunt){
                 ssh(cmd, name, log);
             }
 
+            var scheme = conf('SSL_ENABLED') ? 'https' : 'http';
+
             function log () {
-                var url = util.format('http://%s/', c.ip);
+                var url = util.format('%s://%s/', scheme, c.ip);
                 var text = chalk.magenta(url);
-                grunt.log.writeln('You can access the instance via HTTP on %s', text);
+                grunt.log.writeln('You can access the instance via %s on %s', scheme.toUpperCase(), text);
                 grunt.log.write('Will flush logs in 5s. ');
 
                 setTimeout(peek, 5000);
