@@ -84,7 +84,9 @@ module.exports = function(grunt){
 
         function nginxConf () {
             return [
-                'sudo apt-get install nginx -y',
+                'sudo add-apt-repository ppa:chris-lea/nginx-devel.js -y',
+                'sudo apt-get update',
+                'sudo apt-get install nginx nginx-common nginx-full -y',
                 nginxTemplate('http', 'nginx'),
                 nginxTemplate('server', 'sites-enabled/' + project),
                 'sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'

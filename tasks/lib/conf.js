@@ -42,9 +42,11 @@ Config.prototype.defaults = function () {
 
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
 
+    var srv = util.format('/srv/apps/%s/current', _.PROJECT_ID);
+
     if (_.SSL_ENABLED) {
-        _.SSL_CERTIFICATE = absolute(_.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = absolute(_.SSL_CERTIFICATE_KEY);
+        _.SSL_CERTIFICATE = path.join(srv, _.SSL_CERTIFICATE);
+        _.SSL_CERTIFICATE_KEY = path.join(srv, _.SSL_CERTIFICATE_KEY);
     }
 };
 
