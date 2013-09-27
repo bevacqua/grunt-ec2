@@ -43,8 +43,8 @@ Config.prototype.defaults = function () {
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
 
     if (_.SSL_ENABLED) {
-        _.SSL_CERTIFICATE = relative(_.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = relative(_.SSL_CERTIFICATE_KEY);
+        _.SSL_CERTIFICATE = absolute(_.SSL_CERTIFICATE);
+        _.SSL_CERTIFICATE_KEY = absolute(_.SSL_CERTIFICATE_KEY);
     }
 };
 
@@ -58,12 +58,16 @@ function df (_, key, value) {
     if (_[key] === void 0) {
         _[key] = path.resolve(__dirname, value);
     } else {
-        _[key] = path.join(cwd, _[key]);
+        _[key] = absolute(_[key]);
     }
 }
 
 function relative(to) {
     return path.relative(cwd, to);
+}
+
+function absolute(to) {
+    return path.join(cwd, to);
 }
 
 Config.prototype.get = function (key) {
