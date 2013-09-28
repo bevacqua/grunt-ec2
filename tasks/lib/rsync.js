@@ -17,9 +17,9 @@ module.exports = function(name, opts, done){
 
         var user = conf('AWS_RSYNC_USER');
         var include = clud(opts.includes, 'include');
-        var includeFrom = clud(opts.includeFrom, 'include-from');
+        var includeFrom = cludFrom(opts.includeFrom, 'include');
         var exclude = clud(opts.excludes, 'exclude');
-        var excludeFrom = clud(opts.excludeFrom, 'exclude-from');
+        var excludeFrom = cludFrom(opts.excludeFrom, 'exclude');
 
         grunt.log.writeln('Deploying %s to %s using rsync over ssh...', chalk.blue(opts.name), chalk.cyan(c.id));
 
@@ -36,6 +36,15 @@ module.exports = function(name, opts, done){
                 return util.format(' --%s "%s"', type, pattern);
             });
             return option.join('');
+        }
+
+        return '';
+    }
+
+    function cludFrom (file, type) {
+
+        if (file) {
+            return util.format(' --%s-from "%s"', type, file);
         }
 
         return '';
