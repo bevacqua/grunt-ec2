@@ -54,10 +54,9 @@ Config.prototype.defaults = function () {
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
 
     if (_.SSL_ENABLED) {
-        _.NGINX_SSL_CERTIFICATE = path.join(_.SRV_RSYNC_CERT, _.SSL_CERTIFICATE);
-        _.NGINX_SSL_CERTIFICATE_KEY = path.join(_.SRV_RSYNC_CERT, _.SSL_CERTIFICATE_KEY);
-        _.SSL_CERTIFICATE = absolute(_.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = absolute(_.SSL_CERTIFICATE_KEY);
+        _.SSL_CERTIFICATE_DIRECTORY = path.resolve(cwd, _.SSL_CERTIFICATE_DIRECTORY);
+        _.NGINX_SSL_CERTIFICATE = path.join(_.SRV_CERT, _.SSL_CERTIFICATE);
+        _.NGINX_SSL_CERTIFICATE_KEY = path.join(_.SRV_CERT, _.SSL_CERTIFICATE_KEY);
     }
 };
 

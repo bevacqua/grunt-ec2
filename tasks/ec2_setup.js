@@ -55,10 +55,11 @@ module.exports = function(grunt){
         ]), iif('SSL_ENABLED', { // send certificates
             rsync: {
                 name: 'cert',
-                local: process.cwd(),
+                local: conf('SSL_CERTIFICATE_DIRECTORY'),
                 remote: conf('SRV_RSYNC_CERT'),
                 dest: conf('SRV_CERT'),
                 includes: [
+                    '*/',
                     conf('SSL_CERTIFICATE'),
                     conf('SSL_CERTIFICATE_KEY')
                 ],

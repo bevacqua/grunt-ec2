@@ -20,7 +20,7 @@ module.exports = function (steps, name, done, fatal) {
 
         function move () {
             var parent = path.relative(path.dirname(r.local), r.local);
-            var remoteSync = r.remote + parent + '/';
+            var remoteSync = r.remote + '/' + parent + '/';
 
             ssh([ util.format('sudo cp -r %s %s', remoteSync, r.dest) ], name, next, fatal);
         }
