@@ -3,11 +3,11 @@
 var _ = require('lodash');
 var chalk = require('chalk');
 var util = require('util');
-var path = require('path');
-var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 var commands = require('./lib/commands.js');
-var rsync = require('./lib/rsync.js');
+var remote = require('./lib/remote.js');
+var ssh = require('./lib/ssh.js');
+var sshCredentials = require('./lib/sshCredentials.js');
 
 module.exports = function(grunt){
 
@@ -22,41 +22,47 @@ module.exports = function(grunt){
         }
 
         var done = this.async();
+        var target = conf('SRV_CURRENT');
+        var versions = conf('SRV_VERSIONS');
+        var version = conf('SRV_VERSION');
         var v = grunt.config('pkg.version');
-        var settings = {
+        var dest = util.format(version, v);
+        var rsync = {
             name: 'v' + v,
             local: process.cwd(),
-            remote: conf('SRV_RSYNC_LATEST')
+            remote: conf('SRV_RSYNC_LATEST'),
+            dest: dest,
+            includes: conf('RSYNC_INCLUDES').map(env),
+            excludeFrom: conf('RSYNC_IGNORE')
         };
 
-        rsync(name, settings, deploy);
-
-        function deploy (c) {
-            var parent = path.relative(path.dirname(settings.local), settings.local);
-            var remoteSync = settings.remote + parent + '/';
-            var target = conf('SRV_CURRENT');
-            var versions = conf('SRV_VERSIONS');
-            var version = conf('SRV_VERSION');
-            var dest = util.format(version, v);
-
-            function iif (value, cmd) {
-                return conf(value) ? cmd : [];
-            }
-
-            var tasks = [[
-                util.format('sudo cp -r %s %s', remoteSync, dest),
-                util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
-                util.format('sudo npm --prefix %s install --production', dest),
-                util.format('sudo ln -sfn %s %s', dest, target),
-                commands.pm2_reload(),
-                commands.pm2_start(name)
-            ], iif('NGINX_ENABLED', [
-                'sudo nginx -s reload'
-            ])];
-
-            var cmd = _.flatten(tasks);
-            ssh(cmd, name, log.bind(null, c));
+        function env (pattern) {
+            return pattern.replace('%NODE_ENV%', name);
         }
+
+        function iif (value, cmd) {
+            return conf(value) ? cmd : [];
+        }
+
+        var tasks = [{
+            rsync: rsync
+        }, [
+            util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
+            util.format('sudo npm --prefix %s install --production', dest),
+            util.format('sudo ln -sfn %s %s', dest, target),
+            commands.pm2_reload(),
+            commands.pm2_start(name)
+        ], iif('NGINX_ENABLED', [
+            'sudo nginx -s reload'
+        ])];
+
+        var cmd = _.flatten(tasks);
+
+        remote(cmd, name, function () {
+            sshCredentials(name, function (c) {
+                log(c);
+            });
+        });
 
         var scheme = conf('SSL_ENABLED') ? 'https' : 'http';
 
@@ -64,7 +70,7 @@ module.exports = function(grunt){
             var url = util.format('%s://%s/', scheme, c.ip);
             var text = chalk.magenta(url);
             grunt.log.writeln('You can access the instance via %s on %s', scheme.toUpperCase(), text);
-            grunt.log.write('Will flush logs in 5s. ');
+            grunt.log.write('Will tail nginx error logs and flush pm2 logs in 5s.');
 
             setTimeout(peek, 5000);
         }
@@ -72,7 +78,10 @@ module.exports = function(grunt){
         function peek () {
             grunt.log.writeln('Flushing...');
 
-            ssh(['sudo pm2 flush'], name, done);
+            ssh([
+                'tail -3 /var/log/nginx/error.log',
+                'sudo pm2 flush'
+            ], name, done);
         }
     });
 };

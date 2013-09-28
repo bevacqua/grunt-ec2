@@ -2,6 +2,7 @@
 
 - Support added for HTTPS on `nginx`!
 - `/srv` paths are now all sitting in `conf.js`
+- Better configurability of what gets excluded and included by `rsync` during deployments.
 
 **BREAKING**
 

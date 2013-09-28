@@ -41,17 +41,19 @@ Config.prototype.defaults = function () {
     df(_, 'SSH_KEYS_FOLDER', '../../private');
     df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
 
+    _.RSYNC_INCLUDES = _.RSYNC_INCLUDES || [];
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
     _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
-    _.SRV_RSYNC_SETUP = util.format('/srv/rsync/%s/setup', _.PROJECT_ID);
+    _.SRV_RSYNC_CERT = util.format('/srv/rsync/%s/cert', _.PROJECT_ID);
     _.SRV_RSYNC_LATEST = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
     _.SRV_CURRENT = _.SRV_ROOT + '/current';
+    _.SRV_CERT = _.SRV_ROOT + '/cert';
     _.SRV_VERSIONS = _.SRV_ROOT + '/v';
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
 
     if (_.SSL_ENABLED) {
-        _.SSL_CERTIFICATE = path.join(_.SRV_CURRENT, _.SSL_CERTIFICATE);
-        _.SSL_CERTIFICATE_KEY = path.join(_.SRV_CURRENT, _.SSL_CERTIFICATE_KEY);
+        _.NGINX_SSL_CERTIFICATE = path.join(_.SRV_RSYNC_CERT, _.SSL_CERTIFICATE);
+        _.NGINX_SSL_CERTIFICATE_KEY = path.join(_.SRV_RSYNC_CERT, _.SSL_CERTIFICATE_KEY);
     }
 };
 

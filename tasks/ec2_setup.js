@@ -6,8 +6,8 @@ var path = require('path');
 var util = require('util');
 var chalk = require('chalk');
 var mustache = require('mustache');
-var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
+var remote = require('./lib/remote.js');
 
 module.exports = function(grunt){
 
@@ -29,7 +29,9 @@ module.exports = function(grunt){
 
         var done = this.async();
         var project = conf('PROJECT_ID');
-        var rsync = conf('SRV_RSYNC_LATEST');
+        var cert = conf('SRV_RSYNC_CERT');
+        var certStore = conf('SRV_CERT');
+        var latest = conf('SRV_RSYNC_LATEST');
         var versions = conf('SRV_VERSIONS');
         var tasks = [[
             util.format('echo "configuring up %s instance..."', name)
@@ -38,10 +40,26 @@ module.exports = function(grunt){
         ], iif('SSL_ENABLED', // forward port 443
             forwardPort(443, 8433)
         ), [ // rsync
-            util.format('sudo mkdir -p %s', rsync),
             util.format('sudo mkdir -p %s', versions),
-            util.format('sudo chown ubuntu %s', rsync)
-        ], iif('NGINX_ENABLED', // nginx
+            util.format('sudo mkdir -p %s', cert),
+            util.format('sudo chown ubuntu %s', cert),
+            util.format('sudo mkdir -p %s', latest),
+            util.format('sudo chown ubuntu %s', latest)
+        ], iif('SSL_ENABLED', // create cert store
+            util.format('sudo mkdir -p %s', certStore)
+        ), iif('SSL_ENABLED', { // send certificates
+            rsync: {
+                name: 'cert',
+                local: process.cwd(),
+                remote: conf('SRV_RSYNC_CERT'),
+                dest: conf('SRV_CERT'),
+                includes: [
+                    conf('SSL_CERTIFICATE'),
+                    conf('SSL_CERTIFICATE_KEY')
+                ],
+                excludes: ['*']
+            }
+        }), iif('NGINX_ENABLED', // nginx
             nginxConf()
         ), [ // node.js
             'sudo apt-get install python-software-properties',
@@ -68,19 +86,19 @@ module.exports = function(grunt){
         }
 
         function nginxTemplate (name, where) {
-            var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
-            var file = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
-            var template = fs.readFileSync(file, { encoding: 'utf8' });
+            var conf = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
+            var local = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
+            var template = fs.readFileSync(local, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
             var escaped = data
                 .replace(/"/g, '\\"')
                 .replace(/\$/g, '\\$');
 
             return [
-                util.format('sudo touch %s', remote),
-                util.format('sudo chown ubuntu %s', remote),
-                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', remote, where),
-                util.format('echo "%s" > %s', escaped, remote)
+                util.format('sudo touch %s', conf),
+                util.format('sudo chown ubuntu %s', conf),
+                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', conf, where),
+                util.format('echo "%s" > %s', escaped, conf)
             ];
         }
 
@@ -96,6 +114,6 @@ module.exports = function(grunt){
         }
 
         var commands = _.flatten(tasks);
-        ssh(commands, name, done);
+        remote(commands, name, done);
     });
 };
