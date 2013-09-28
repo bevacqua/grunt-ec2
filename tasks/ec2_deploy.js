@@ -33,7 +33,7 @@ module.exports = function(grunt){
             remote: conf('SRV_RSYNC_LATEST'),
             dest: dest,
             includes: conf('RSYNC_INCLUDES').map(env),
-            includeFrom: conf('RSYNC_INCLUDE_FROM')
+            includeFrom: conf('RSYNC_INCLUDE_FROM'),
             excludes: conf('RSYNC_INCLUDES').map(env),
             excludeFrom: conf('RSYNC_EXCLUDE_FROM')
         };
