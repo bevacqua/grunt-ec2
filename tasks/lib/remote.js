@@ -9,7 +9,7 @@ var rsync = require('./rsync.js');
 
 module.exports = function (steps, name, done, fatal) {
 
-    async.series(steps, function (step, next) {
+    async.eachSeries(steps, function (step, next) {
         var r = step.rsync;
         if (r) {
             rsync(name, r, move);
