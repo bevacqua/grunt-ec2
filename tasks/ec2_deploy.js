@@ -34,7 +34,7 @@ module.exports = function(grunt){
             dest: dest,
             includes: conf('RSYNC_INCLUDES').map(env),
             includeFrom: conf('RSYNC_INCLUDE_FROM'),
-            excludes: conf('RSYNC_INCLUDES').map(env),
+            excludes: conf('RSYNC_EXCLUDES').map(env),
             excludeFrom: conf('RSYNC_EXCLUDE_FROM')
         };
 

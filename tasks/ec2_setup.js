@@ -30,7 +30,6 @@ module.exports = function(grunt){
         var done = this.async();
         var project = conf('PROJECT_ID');
         var cert = conf('SRV_RSYNC_CERT');
-        var certStore = conf('SRV_CERT');
         var latest = conf('SRV_RSYNC_LATEST');
         var versions = conf('SRV_VERSIONS');
         var steps = [[
@@ -50,9 +49,7 @@ module.exports = function(grunt){
             util.format('sudo chown ubuntu %s', cert),
             util.format('sudo mkdir -p %s', latest),
             util.format('sudo chown ubuntu %s', latest)
-        ], iif('SSL_ENABLED', [ // create cert store
-            util.format('sudo mkdir -p %s', certStore)
-        ]), iif('SSL_ENABLED', { // send certificates
+        ], iif('SSL_ENABLED', { // send certificates
             rsync: {
                 name: 'cert',
                 local: conf('SSL_CERTIFICATE_DIRECTORY'),

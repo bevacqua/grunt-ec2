@@ -12,10 +12,14 @@ module.exports = function (steps, name, done, fatal) {
     async.eachSeries(steps, function (step, next) {
         var r = step.rsync;
         if (r) {
-            rsync(name, r, move);
+            ssh([ util.format('sudo mkdir -p %s', r.dest) ], name, transfer, fatal);
         } else {
             var commands = _.flatten(step);
             ssh(commands, name, next, fatal);
+        }
+
+        function transfer () {
+            rsync(name, r, move);
         }
 
         function move () {
