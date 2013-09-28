@@ -39,7 +39,7 @@ Config.prototype.defaults = function () {
     d(_, 'NODE_SCRIPT', 'app.js');
 
     df(_, 'SSH_KEYS_FOLDER', '../../private');
-    df(_, 'RSYNC_IGNORE', '../../cfg/.rsyncignore');
+    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/.rsyncignore');
 
     _.RSYNC_INCLUDES = _.RSYNC_INCLUDES || [];
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);

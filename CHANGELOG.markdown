@@ -1,12 +1,12 @@
 # 0.4.0 Green Padlock
 
 - Support added for HTTPS on `nginx`!
-- `/srv` paths are now all sitting in `conf.js`
 - Better configurability of what gets excluded and included by `rsync` during deployments.
 
 **BREAKING**
 
 - Changed `AWS_SECURITY_GROUP_NAME` to `AWS_SECURITY_GROUP`
+- Changed `RSYNC_IGNORE` to `RSYNC_EXCLUDE_FROM`
 
 # 0.3.1 Gold Meadow
 
