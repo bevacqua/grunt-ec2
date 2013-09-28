@@ -35,6 +35,11 @@ module.exports = function(grunt){
         var versions = conf('SRV_VERSIONS');
         var steps = [[
             util.format('echo "configuring up %s instance..."', name)
+        ], [ // enable forwarding
+            'cp /etc/sysctl.conf /tmp/',
+            'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
+            'sudo cp /tmp/sysctl.conf /etc/',
+            'sudo sysctl -p /etc/sysctl.conf'
         ], [ // forward port 80
             forwardPort(80, 8080)
         ], iif('SSL_ENABLED', // forward port 443
@@ -45,9 +50,9 @@ module.exports = function(grunt){
             util.format('sudo chown ubuntu %s', cert),
             util.format('sudo mkdir -p %s', latest),
             util.format('sudo chown ubuntu %s', latest)
-        ], iif('SSL_ENABLED', // create cert store
+        ], iif('SSL_ENABLED', [ // create cert store
             util.format('sudo mkdir -p %s', certStore)
-        ), iif('SSL_ENABLED', { // send certificates
+        ]), iif('SSL_ENABLED', { // send certificates
             rsync: {
                 name: 'cert',
                 local: process.cwd(),
@@ -74,10 +79,6 @@ module.exports = function(grunt){
 
         function forwardPort(from, to) {
             return [
-                'cp /etc/sysctl.conf /tmp/',
-                'echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf',
-                'sudo cp /tmp/sysctl.conf /etc/',
-                'sudo sysctl -p /etc/sysctl.conf',
                 util.format('sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport %s -j REDIRECT --to-port %s', from, to),
                 util.format('sudo iptables -A INPUT -p tcp -m tcp --sport %s -j ACCEPT', from),
                 util.format('sudo iptables -A OUTPUT -p tcp -m tcp --dport %s -j ACCEPT', from),
