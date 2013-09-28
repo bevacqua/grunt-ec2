@@ -5,7 +5,7 @@ var chalk = require('chalk');
 var util = require('util');
 var conf = require('./lib/conf.js');
 var commands = require('./lib/commands.js');
-var remote = require('./lib/remote.js');
+var workflow = require('./lib/workflow.js');
 var ssh = require('./lib/ssh.js');
 var sshCredentials = require('./lib/sshCredentials.js');
 
@@ -58,7 +58,7 @@ module.exports = function(grunt){
             'sudo nginx -s reload'
         ])];
 
-        remote(steps, name, function () {
+        workflow(steps, name, function () {
             sshCredentials(name, function (c) {
                 log(c);
             });

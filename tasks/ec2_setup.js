@@ -7,7 +7,7 @@ var util = require('util');
 var chalk = require('chalk');
 var mustache = require('mustache');
 var conf = require('./lib/conf.js');
-var remote = require('./lib/remote.js');
+var workflow = require('./lib/workflow.js');
 
 module.exports = function(grunt){
 
@@ -86,7 +86,7 @@ module.exports = function(grunt){
         }
 
         function nginxTemplate (name, where) {
-            var conf = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
+            var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
             var local = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
             var template = fs.readFileSync(local, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
@@ -95,10 +95,10 @@ module.exports = function(grunt){
                 .replace(/\$/g, '\\$');
 
             return [
-                util.format('sudo touch %s', conf),
-                util.format('sudo chown ubuntu %s', conf),
-                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', conf, where),
-                util.format('echo "%s" > %s', escaped, conf)
+                util.format('sudo touch %s', remote),
+                util.format('sudo chown ubuntu %s', remote),
+                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', remote, where),
+                util.format('echo "%s" > %s', escaped, remote)
             ];
         }
 
@@ -113,6 +113,6 @@ module.exports = function(grunt){
             ];
         }
 
-        remote(steps, name, done);
+        workflow(steps, name, done);
     });
 };
