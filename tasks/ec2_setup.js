@@ -33,7 +33,7 @@ module.exports = function(grunt){
         var certStore = conf('SRV_CERT');
         var latest = conf('SRV_RSYNC_LATEST');
         var versions = conf('SRV_VERSIONS');
-        var tasks = [[
+        var steps = [[
             util.format('echo "configuring up %s instance..."', name)
         ], [ // forward port 80
             forwardPort(80, 8080)
@@ -113,7 +113,6 @@ module.exports = function(grunt){
             ];
         }
 
-        var commands = _.flatten(tasks);
-        remote(commands, name, done);
+        remote(steps, name, done);
     });
 };

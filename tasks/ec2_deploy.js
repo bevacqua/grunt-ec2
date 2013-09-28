@@ -46,7 +46,7 @@ module.exports = function(grunt){
             return conf(value) ? cmd : [];
         }
 
-        var tasks = [{
+        var steps = [{
             rsync: rsync
         }, [
             util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
@@ -58,9 +58,7 @@ module.exports = function(grunt){
             'sudo nginx -s reload'
         ])];
 
-        var cmd = _.flatten(tasks);
-
-        remote(cmd, name, function () {
+        remote(steps, name, function () {
             sshCredentials(name, function (c) {
                 log(c);
             });

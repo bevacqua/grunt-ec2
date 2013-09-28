@@ -14,7 +14,8 @@ module.exports = function (steps, name, done, fatal) {
         if (r) {
             rsync(name, r, move);
         } else {
-            ssh(_.flatten(step), name, next, fatal);
+            var commands = _.flatten(step);
+            ssh(commands, name, next, fatal);
         }
 
         function move () {
