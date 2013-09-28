@@ -32,10 +32,10 @@ module.exports = function(name, opts, done){
     function clud (option, type) {
 
         if (option) {
-            option.map(function (pattern) {
+
+            return option.map(function (pattern) {
                 return util.format(' --%s "%s"', type, pattern);
-            });
-            return option.join('');
+            }).join('');
         }
 
         return '';
