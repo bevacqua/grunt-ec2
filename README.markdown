@@ -1,4 +1,4 @@
-# grunt-ec2
+# grunt-ec2 [![Dependency Status](https://gemnasium.com/bevacqua/grunt-ec2.png)](https://gemnasium.com/bevacqua/grunt-ec2)
 
 > Grunt tasks to create, terminate, and deploy Node applications to AWS EC2 instances, then proxy with nginx
 
