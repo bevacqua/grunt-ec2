@@ -1,6 +1,7 @@
 # 0.4.1 Gray Goose
 
-- Either use HTTP or HTTPS. _Never both_.
+- Either use HTTP or HTTPS. _Never both_
+- Fix: Use `pm2@latest`, which doesn't break `process.cwd`
 
 # 0.4.0 Green Padlock
 
