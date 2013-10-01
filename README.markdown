@@ -197,6 +197,7 @@ Task and Target(s)|Purpose
 `ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
 `ec2_create_tag:id:name`|Tags an instance with the provided name
 `ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
+`ec2_delete_tag:id:name`|Deletes the associated name tag for an instance if it matches `name`
 `ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
 `ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
 `ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
@@ -218,7 +219,7 @@ Task and Target(s)|Purpose
 `ec2_release_address:ip`|Releases an IP address
 `ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
 `ec2_setup:name`|Sets up port forwarding, installs `rsync`, `nginx`, `node`, and `pm2`
-`ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair and IP address
+`ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
 `ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
 `ec2_terminate_instance:id`|Terminates an instance
 `ec2_version:name`|Get the version number currently deployed to production

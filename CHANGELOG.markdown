@@ -1,3 +1,7 @@
+# 0.4.2 People Skills
+
+- When shutting down an instance, delete its name tag
+
 # 0.4.1 Gray Goose
 
 - Either use HTTP or HTTPS. _Never both_
