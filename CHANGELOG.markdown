@@ -1,3 +1,7 @@
+# 0.4.1 Gray Goose
+
+- Either use HTTP or HTTPS. _Never both_.
+
 # 0.4.0 Green Padlock
 
 - Support added for HTTPS on `nginx`!
