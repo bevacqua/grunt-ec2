@@ -103,9 +103,14 @@ module.exports = function(grunt){
 
         function nginxConf () {
             return [
-                'sudo add-apt-repository ppa:chris-lea/nginx-devel -y',
-                'sudo apt-get update',
-                'sudo apt-get install nginx nginx-common nginx-full -y',
+                iif('SSL_ENABLED', [ // ssl enabled
+                    'sudo add-apt-repository ppa:chris-lea/nginx-devel -y',
+                    'sudo apt-get update',
+                    'sudo apt-get install nginx nginx-common nginx-full -y',
+                ]),
+                iif('SSL_ENABLED', [ // ssl disabled
+                    'sudo apt-get install nginx -y',
+                ], true),
                 nginxTemplate('http', 'nginx'),
                 nginxTemplate('server', 'sites-enabled/' + project),
                 'sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'

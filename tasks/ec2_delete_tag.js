@@ -6,10 +6,10 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_delete_tag', function(id, name){
+    grunt.registerTask('ec2_delete_tag', function(id){
         conf.init(grunt);
 
-        if (arguments.length < 2) {
+        if (arguments.length < 1) {
             grunt.fatal([
                 'You should provide an instance id.',
                 'e.g: ' + chalk.yellow('grunt ec2_delete_tag:id')
