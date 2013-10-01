@@ -1,6 +1,7 @@
 # 0.4.2 People Skills
 
 - When shutting down an instance, delete its name tag
+- Run `sudo pm2 list` after deploys, to make sure we notice things like _a spike of process restarts_
 
 # 0.4.1 Gray Goose
 

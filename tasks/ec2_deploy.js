@@ -80,7 +80,8 @@ module.exports = function(grunt){
 
             ssh([
                 'tail -3 /var/log/nginx/error.log',
-                'sudo pm2 flush'
+                'sudo pm2 flush',
+                'sudo pm2 list'
             ], name, done);
         }
     });
