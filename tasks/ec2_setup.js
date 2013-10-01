@@ -25,6 +25,10 @@ module.exports = function(grunt){
             return conf(value) ? commands : [];
         }
 
+        function iif_not (value, commands) {
+            return conf(value) ? [] : commands;
+        }
+
         // TODO rsync user, node user, nginx user?
 
         var done = this.async();
@@ -108,9 +112,9 @@ module.exports = function(grunt){
                     'sudo apt-get update',
                     'sudo apt-get install nginx nginx-common nginx-full -y',
                 ]),
-                iif('SSL_ENABLED', [ // ssl disabled
+                iif_not('SSL_ENABLED', [ // ssl disabled
                     'sudo apt-get install nginx -y',
-                ], true),
+                ]),
                 nginxTemplate('http', 'nginx'),
                 nginxTemplate('server', 'sites-enabled/' + project),
                 'sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'
