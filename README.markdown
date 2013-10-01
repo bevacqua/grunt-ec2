@@ -197,7 +197,7 @@ Task and Target(s)|Purpose
 `ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
 `ec2_create_tag:id:name`|Tags an instance with the provided name
 `ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
-`ec2_delete_tag:id:name`|Deletes the associated name tag for an instance if it matches `name`
+`ec2_delete_tag:id`|Deletes the associated name tag for an instance
 `ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
 `ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
 `ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter

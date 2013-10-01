@@ -26,7 +26,7 @@ module.exports = function(grunt){
             grunt.task.run([
                 'ec2_terminate_instance:' + id,
                 'ec2_delete_keypair:' + name,
-                'ec2_delete_tag:' + id + ':' + name,
+                'ec2_delete_tag:' + id,
                 'ec2_release_address:' + ip
             ]);
 
