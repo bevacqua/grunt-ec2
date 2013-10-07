@@ -1,3 +1,7 @@
+# 0.4.3 Wild Boar
+
+- Collect insights with the Google PageSpeed service on deploys through [grunt-pagespeed](https://github.com/jrcryer/grunt-pagespeed)
+
 # 0.4.2 People Skills
 
 - When shutting down an instance, delete its name tag
