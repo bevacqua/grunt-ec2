@@ -9,7 +9,7 @@ module.exports = function(name, done){
 
     grunt.log.writeln('Looking up EC2 instances named %s...', chalk.cyan(name));
 
-    exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], parse, true);
+    exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], { pipe: false }, parse);
 
     function parse(stdout){
         var result = JSON.parse(stdout);
