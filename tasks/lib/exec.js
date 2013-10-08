@@ -13,7 +13,7 @@ module.exports = function(command, args, done, suppress){
 
     grunt.log.writeln(chalk.magenta(cmd));
 
-    var proc = exec(cmd, { maxBuffer: 10000 * 1024, env: conf() }, callback);
+    var proc = exec(cmd, { env: conf() }, callback);
 
     if (suppress !== true) {
         proc.stdout.on('data', function (data) {
