@@ -97,7 +97,8 @@ Variable Name|Purpose
 `"SSL_CERTIFICATE_KEY"`|Relative path to your private certificate key.
 `"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
 `"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth). Requires you to setup `grunt-pagespeed` locally, in your own `Gruntfile.js`.
-
+`"ELASTIC_IP"`|Boolean, enable AWS Elastic IP support.
+`"ENV"`| {VAR_ONE: val, VAR_TWO: val2, ..etc} Variables to set in the local environement before the app starts. Usefull for stting up DB credentials for example.
 # Tasks
 
 Although this package exposes quite a few different tasks, here are the ones you'll want to be using directly.
