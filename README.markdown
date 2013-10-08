@@ -96,7 +96,7 @@ Variable Name|Purpose
 `"SSL_CERTIFICATE"`|Relative path to your unified SSL certificate.
 `"SSL_CERTIFICATE_KEY"`|Relative path to your private certificate key.
 `"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
-`"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth).
+`"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth). Requires you to setup `grunt-pagespeed` locally, in your own `Gruntfile.js`.
 
 # Tasks
 

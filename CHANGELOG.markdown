@@ -1,6 +1,7 @@
 # 0.4.3 Wild Boar
 
 - Collect insights with the Google PageSpeed service on deploys through [grunt-pagespeed](https://github.com/jrcryer/grunt-pagespeed)
+- Also available through `ec2_pagespeed:ip` (`ip` could also be a domain such as `example.com`)
 
 # 0.4.2 People Skills
 

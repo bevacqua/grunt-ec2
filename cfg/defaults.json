@@ -4,5 +4,5 @@
     "AWS_INSTANCE_TYPE": "t1.micro",
     "AWS_SSH_USER": "ubuntu",
     "AWS_RSYNC_USER": "ubuntu",
-    "PAGESPEED_API_KEY": false
+    "PAGESPEED_ENABLED": false
 }

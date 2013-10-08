@@ -69,25 +69,11 @@ module.exports = function(grunt){
         function log (c) {
             var url = util.format('%s://%s/', scheme, c.ip);
             var text = chalk.magenta(url);
-            var pagespeed = conf('PAGESPEED_API_KEY');
+
+            grunt.task.run('ec2_pagespeed:' + c.ip);
 
             grunt.log.writeln('You can access the instance via %s on %s', scheme.toUpperCase(), text);
             grunt.log.write('Will tail nginx error logs and flush pm2 logs in 5s.');
-
-            if (pagespeed) {
-                grunt.log.write('Later, will try to connect via HTTP using the PageSpeed API.');
-
-                grunt.config.set('pagespeed.options.key', pagespeed);
-                grunt.config.set('pagespeed.ec2_' + name, {
-                    url: url,
-                    locale: 'en_US',
-                    strategy: 'desktop',
-                    threshold: 80
-                });
-                grunt.task.run('pagespeed:ec2_' + name);
-            } else {
-                grunt.log.write('You could provide "PAGESPEED_API_KEY", and get insights on every deploy');
-            }
 
             setTimeout(peek, 5000);
         }
