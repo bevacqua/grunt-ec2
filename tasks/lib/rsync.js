@@ -15,7 +15,7 @@ module.exports = function(name, opts, done){
             grunt.fatal('This instance is refusing SSH connections for now');
         }
 
-        var verbosity = conf('RSYNC_VERBOSITY');
+        var verbosity = conf('VERBOSITY_RSYNC');
         var user = conf('AWS_RSYNC_USER');
         var include = clud(opts.includes, 'include');
         var includeFrom = cludFrom(opts.includeFrom, 'include');

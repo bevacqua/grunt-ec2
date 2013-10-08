@@ -46,11 +46,12 @@ module.exports = function(grunt){
             return conf(value) ? cmd : [];
         }
 
+        var verbosity = conf('VERBOSITY_NPM');
         var steps = [{
             rsync: rsync
         }, [
             util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
-            util.format('sudo npm --prefix %s install --production', dest),
+            util.format('sudo npm --prefix %s install --production --loglevel %s', dest, verbosity),
             util.format('sudo ln -sfn %s %s', dest, target),
             commands.pm2_reload(),
             commands.pm2_start(name)
