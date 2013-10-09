@@ -42,13 +42,14 @@ Config.prototype.defaults = function () {
     df(_, 'SSH_KEYS_FOLDER', '../../private');
     df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/defaults.rsyncignore');
 
+    _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
+
     _.ENV = _.ENV || {};
     _.RSYNC_EXCLUDES = _.RSYNC_EXCLUDES || [];
     _.RSYNC_INCLUDE_FROM = _.RSYNC_INCLUDE_FROM ? absolute(_.RSYNC_INCLUDE_FROM) : false;
     _.RSYNC_INCLUDES = _.RSYNC_INCLUDES || [];
     _.SRV_CERT = _.SRV_ROOT + '/cert';
     _.SRV_CURRENT = _.SRV_ROOT + '/current';
-    _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
     _.SRV_RSYNC_CERT = util.format('/srv/rsync/%s/cert', _.PROJECT_ID);
     _.SRV_RSYNC_LATEST = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
