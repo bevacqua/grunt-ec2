@@ -52,6 +52,7 @@ Config.prototype.defaults = function () {
     _.SRV_CERT = _.SRV_ROOT + '/cert';
     _.SRV_VERSIONS = _.SRV_ROOT + '/v';
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
+    _.ENV = _.ENV || {}
 
     if (_.SSL_ENABLED) {
         _.SSL_CERTIFICATE_DIRECTORY = path.resolve(cwd, _.SSL_CERTIFICATE_DIRECTORY);

@@ -4,12 +4,12 @@ var _ = require('lodash');
 var util = require('util');
 
 module.exports = {
-    args: function (dictionary) {
+    args: function (dictionary,var_prefix) {
         var pairs = [];
-
+        var_prefix = var_prefix || ''
         _.forIn(dictionary, function (value, key) {
             var json = JSON.stringify(value);
-            var pair = util.format('--%s=%s', key, json);
+            var pair = util.format('%s%s=%s',var_prefix, key, json);
             pairs.push(pair);
         });
 
