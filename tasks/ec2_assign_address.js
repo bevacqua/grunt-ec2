@@ -20,7 +20,7 @@ module.exports = function(grunt){
 
         var done = this.async();
 
-        exec('aws ec2 allocate-address', [], next, true);
+        exec('aws ec2 allocate-address', [], { pipe: false }, next);
 
         function next (stdout) {
             var result = JSON.parse(stdout);

@@ -39,20 +39,21 @@ Config.prototype.defaults = function () {
     d(_, 'NODE_SCRIPT', 'app.js');
 
     df(_, 'SSH_KEYS_FOLDER', '../../private');
-    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/defaults.rsyncignore');
+    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/.rsyncignore');
 
+    _.RSYNC_EXCLUDES = _.RSYNC_EXCLUDES || [];
     _.RSYNC_INCLUDE_FROM = _.RSYNC_INCLUDE_FROM ? absolute(_.RSYNC_INCLUDE_FROM) : false;
     _.RSYNC_INCLUDES = _.RSYNC_INCLUDES || [];
-    _.RSYNC_EXCLUDES = _.RSYNC_EXCLUDES || [];
-    _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
+    _.SRV_CERT = _.SRV_ROOT + '/cert';
+    _.SRV_CURRENT = _.SRV_ROOT + '/current';
     _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
     _.SRV_RSYNC_CERT = util.format('/srv/rsync/%s/cert', _.PROJECT_ID);
     _.SRV_RSYNC_LATEST = util.format('/srv/rsync/%s/latest', _.PROJECT_ID);
-    _.SRV_CURRENT = _.SRV_ROOT + '/current';
-    _.SRV_CERT = _.SRV_ROOT + '/cert';
-    _.SRV_VERSIONS = _.SRV_ROOT + '/v';
     _.SRV_VERSION = _.SRV_ROOT + '/v/%s';
-    _.ENV = _.ENV || {}
+    _.SRV_VERSIONS = _.SRV_ROOT + '/v';
+    _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
+    _.VERBOSITY_NPM = verify(_.VERBOSITY_NPM, 'silent win error warn verbose silly'.split(' '), 'info');
+    _.VERBOSITY_RSYNC = verify(_.VERBOSITY_RSYNC, 'v vv vvv'.split(' '), '');
 
     if (_.SSL_ENABLED) {
         _.SSL_CERTIFICATE_DIRECTORY = path.resolve(cwd, _.SSL_CERTIFICATE_DIRECTORY);
@@ -75,11 +76,15 @@ function df (_, key, value) {
     }
 }
 
-function relative(to) {
+function verify (option, possible, value) {
+    return possible.indexOf(option) !== -1 ? option : value;
+}
+
+function relative (to) {
     return path.relative(cwd, to);
 }
 
-function absolute(to) {
+function absolute (to) {
     return path.join(cwd, to);
 }
 
