@@ -4,6 +4,7 @@ var _ = require('lodash');
 var path = require('path');
 var util = require('util');
 var grunt = require('grunt');
+var moment = require('moment');
 var cwd = process.cwd();
 
 function Config () {
@@ -61,6 +62,8 @@ Config.prototype.defaults = function () {
         _.NGINX_SSL_CERTIFICATE = path.join(_.SRV_CERT, _.SSL_CERTIFICATE);
         _.NGINX_SSL_CERTIFICATE_KEY = path.join(_.SRV_CERT, _.SSL_CERTIFICATE_KEY);
     }
+
+    moment.defaultFormat = 'Do HH:mm:ss';
 };
 
 function d (_, key, value) {
