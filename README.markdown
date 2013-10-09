@@ -88,7 +88,7 @@ Variable Name|Purpose
 `"NGINX_ENABLED"`|Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
 `"NGINX_PROXY_PORT"`|This is the port where `nginx` will proxy requests to, when it won't handle them by itself. This is the same port you'll want to use to listen with your Node application.
 `"NGINX_SERVER_NAME"`|The server name for your static server, for example: `bevacqua.io`.
-`"NGINX_STATIC_URL"`|The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
+`"NGINX_STATIC_ROOT"`|The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
 `"NGINX_STATIC_ERRORS"`|The relative path to your error HTML views folder root. For example `bin/views/error`.
 `"NGINX_USER"`|The user to configure and run `nginx` with.
 `"NGINX_WORKERS"`|The amount of workers processes used by `nginx`.
