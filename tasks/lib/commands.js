@@ -21,7 +21,7 @@ module.exports = {
         _.assign(env, defaults, user);
 
         return util.format('%s || sudo %s pm2 start %s/%s -i 2 --name %s || echo "pm2 already started."',
-            running, env, conf('SRV_CURRENT'), conf('NODE_SCRIPT'), name
+            running, parse.toPairs(env), conf('SRV_CURRENT'), conf('NODE_SCRIPT'), name
         );
     }
 };

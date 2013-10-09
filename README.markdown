@@ -97,7 +97,7 @@ Variable Name|Purpose
 `"SSL_CERTIFICATE_KEY"`|Relative path to your private certificate key.
 `"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
 `"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth). Requires you to setup `grunt-pagespeed` locally, in your own `Gruntfile.js`.
-`"ELASTIC_IP"`|Boolean, enable AWS Elastic IP support.
+`"ELASTIC_IP"`|Assign an AWS Elastic IP to new instances, and release it when terminating them. Defaults to `true`.
 `"ENV"`| Provided as a JSON object. Variables to set in the local environment before the app starts. Useful for setting up DB credentials for example.
 `"VERBOSITY_RSYNC"`|Determines the output verbosity for `rsync`. Possible values limited to `'v'`, `'vv'`, and `'vvv'`. Defaults to `''` (not verbose at all, my friend).
 `"VERBOSITY_NPM"`|Determines the output verbosity for `npm` during deployments, values are limited to `loglevel` option values for `npm`. Defaults to `info`, just like `npm` does.

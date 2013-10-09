@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var util = require('util');

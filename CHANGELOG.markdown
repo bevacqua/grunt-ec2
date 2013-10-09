@@ -5,6 +5,7 @@
 - `npm` verbosity can be set with the `VERBOSITY_NPM` option
 - Fixed bug when defaulting to use the `defaults.rsyncignore` file
 - Elastic IP assignment is now _optional_, but enabled by default
+- Ability to provide `ENV` option which is passed to `pm2` as environment variables
 
 # 0.4.3 Wild Boar
 

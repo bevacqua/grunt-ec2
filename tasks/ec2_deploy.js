@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var chalk = require('chalk');
 var util = require('util');
 var conf = require('./lib/conf.js');

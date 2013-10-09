@@ -30,7 +30,7 @@ module.exports = function(name, opts, done){
         if (verbosity) {
             eo.buffer = 20000 * 1024;
             args.push(verbosity);
-        };
+        }
 
         exec('rsync -%s --stats --delete %s -e "ssh -o StrictHostKeyChecking=no -i %s" %s %s@%s:%s', [
             args.join(''),
