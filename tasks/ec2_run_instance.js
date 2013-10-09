@@ -26,13 +26,15 @@ module.exports = function(grunt){
         ], { pipe: false }, next);
 
         function next (stdout) {
+            var elastic = conf('ELASTIC_IP');
             var result = JSON.parse(stdout);
             var id = result.Instances[0].InstanceId;
             var tasks = [
                 util.format('ec2_create_tag:%s:%s', id, name)
             ];
-            if (conf('ELASTIC_IP')) {
-                tasks.push(util.format('ec2_assign_address:%s', id))
+
+            if (elastic) {
+                tasks.push('ec2_assign_address:' + id);
             }
 
             grunt.task.run(tasks);

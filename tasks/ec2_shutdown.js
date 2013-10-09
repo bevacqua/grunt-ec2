@@ -19,20 +19,21 @@ module.exports = function(grunt){
         var done = this.async();
 
         lookup(name, function (instance) {
+            var elastic = conf('ELASTIC_IP');
             var id = instance.InstanceId;
             var ip = instance.PublicIpAddress;
-
-            grunt.log.writeln('Queuing termination task for instance %s...', chalk.red(id));
-            grunt.task.run([
+            var tasks = [
                 'ec2_terminate_instance:' + id,
                 'ec2_delete_keypair:' + name,
                 'ec2_delete_tag:' + id
-            ]);
-            if (conf('ELASTIC_IP')) {
-                grunt.task.run([
-                    'ec2_release_address:' + ip
-                ])
+            ];
+
+            if (elastic) {
+                tasks.push('ec2_release_address:' + ip);
             }
+
+            grunt.log.writeln('Queuing termination task for instance %s...', chalk.red(id));
+            grunt.task.run(tasks);
             done();
         });
 
