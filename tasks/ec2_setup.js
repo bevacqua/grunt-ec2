@@ -113,6 +113,7 @@ module.exports = function(grunt){
                     'sudo apt-get install nginx nginx-common nginx-full -y',
                 ]),
                 iif_not('SSL_ENABLED', [ // ssl disabled
+                    'sudo apt-get update',
                     'sudo apt-get install nginx -y',
                 ]),
                 nginxTemplate('http', 'nginx'),

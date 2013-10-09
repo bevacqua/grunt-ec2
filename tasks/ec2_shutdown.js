@@ -26,10 +26,13 @@ module.exports = function(grunt){
             grunt.task.run([
                 'ec2_terminate_instance:' + id,
                 'ec2_delete_keypair:' + name,
-                'ec2_delete_tag:' + id,
-                'ec2_release_address:' + ip
+                'ec2_delete_tag:' + id
             ]);
-
+            if (conf('ELASTIC_IP')) {
+                grunt.task.run([
+                    'ec2_release_address:' + ip
+                ])
+            }
             done();
         });
 
