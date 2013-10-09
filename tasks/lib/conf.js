@@ -39,8 +39,9 @@ Config.prototype.defaults = function () {
     d(_, 'NODE_SCRIPT', 'app.js');
 
     df(_, 'SSH_KEYS_FOLDER', '../../private');
-    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/.rsyncignore');
+    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/defaults.rsyncignore');
 
+    _.ENV = _.ENV || {};
     _.RSYNC_EXCLUDES = _.RSYNC_EXCLUDES || [];
     _.RSYNC_INCLUDE_FROM = _.RSYNC_INCLUDE_FROM ? absolute(_.RSYNC_INCLUDE_FROM) : false;
     _.RSYNC_INCLUDES = _.RSYNC_INCLUDES || [];
@@ -54,7 +55,6 @@ Config.prototype.defaults = function () {
     _.SSH_KEYS_RELATIVE = relative(_.SSH_KEYS_FOLDER);
     _.VERBOSITY_NPM = verify(_.VERBOSITY_NPM, 'silent win error warn verbose silly'.split(' '), 'info');
     _.VERBOSITY_RSYNC = verify(_.VERBOSITY_RSYNC, 'v vv vvv'.split(' '), '');
-    _.ENV = _.ENV || {}
 
     if (_.SSL_ENABLED) {
         _.SSL_CERTIFICATE_DIRECTORY = path.resolve(cwd, _.SSL_CERTIFICATE_DIRECTORY);

@@ -3,7 +3,7 @@
 - `rsync` uses a larger buffer than regular commands we `exec`
 - `rsync` verbosity can be set with the `VERBOSITY_RSYNC` option
 - `npm` verbosity can be set with the `VERBOSITY_NPM` option
-- Fixed bug when using `defaults.rsyncignore`
+- Fixed bug when defaulting to use the `defaults.rsyncignore` file
 - Elastic IP assignment is now _optional_, but enabled by default
 
 # 0.4.3 Wild Boar
