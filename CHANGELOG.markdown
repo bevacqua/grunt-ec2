@@ -1,6 +1,7 @@
 # 0.4.5 Engine X
 
 - Separated `nginx` configuration into independant task
+- Verbose logging on some code paths (using `--verbose`)
 
 # 0.4.4 Sam Black
 

@@ -3,7 +3,9 @@
 var _ = require('lodash');
 var path = require('path');
 var util = require('util');
+var chalk = require('chalk');
 var async = require('async');
+var grunt = require('grunt');
 var conf = require('./conf.js');
 var ssh = require('./ssh.js');
 var rsync = require('./rsync.js');
@@ -17,8 +19,14 @@ function iif_not (value, commands) {
 }
 
 var api = function (steps, name, done, fatal) {
+    var i = 0;
+
+    grunt.verbose.writeln('Following a workflow with %s steps', chalk.cyan(steps.length));
 
     async.eachSeries(steps, function (step, next) {
+
+        grunt.verbose.writeln('Executing workflow step %s...', chalk.cyan(++i));
+
         var r = step.rsync;
         if (r) {
             ssh([ util.format('sudo mkdir -p %s', r.dest) ], name, transfer, fatal);

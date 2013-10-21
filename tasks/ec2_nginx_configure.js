@@ -10,7 +10,7 @@ var workflow = require('./lib/workflow.js');
 
 module.exports = function (grunt){
 
-    grunt.registerTask('ec2_nginx_configure', function(name){
+    grunt.registerTask('ec2_nginx_configure', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -19,6 +19,8 @@ module.exports = function (grunt){
                 'e.g: ' + chalk.yellow('grunt ec2_nginx_configure:name')
             ].join('\n'));
         }
+
+        var done = this.async();
 
         function nginxTemplate (name, where) {
             var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
@@ -56,13 +58,15 @@ module.exports = function (grunt){
             ];
         }
 
-        var steps = nginxConf();
         var enabled = conf('NGINX_ENABLED');
         if (enabled) {
             grunt.log.writeln('Configuring %s server...', chalk.cyan('nginx'));
-            workflow(steps, name, this.async);
+
+            workflow([nginxConf()], name, done);
+
         } else {
             grunt.log.writeln('%s server is disabled, skipping.', chalk.cyan('nginx'));
+            done();
         }
     });
 };

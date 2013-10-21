@@ -15,6 +15,8 @@ module.exports = function(commands, name, done, fatal){
         c.on('error', grunt.fatal);
     }
 
+    grunt.verbose.writeln('Executing some command(s) over ssh\n', commands);
+
     sshCredentials(name, function(credentials) {
 
         if (!credentials) {
