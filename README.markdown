@@ -210,6 +210,7 @@ Task and Target(s)|Purpose
 `ec2_logs_nginx_error:name`|Gets `nginx` error logs
 `ec2_logs_node:name`|Gets `pm2` logs
 `ec2_lookup:name`|Gets instance filtered by name tag
+`ec2_nginx_configure:name`|Installs `nginx` if necessary, updates its configuration files
 `ec2_nginx_reload:name`|Reloads `nginx`
 `ec2_nginx_restart:name`|Restarts `nginx`
 `ec2_nginx_start:name`|Starts `nginx`
@@ -224,7 +225,7 @@ Task and Target(s)|Purpose
 `ec2_reboot:name`|Reboots the EC2 instance
 `ec2_release_address:ip`|Releases an IP address
 `ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
-`ec2_setup:name`|Sets up port forwarding, installs `rsync`, `nginx`, `node`, and `pm2`
+`ec2_setup:name`|Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`
 `ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
 `ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
 `ec2_terminate_instance:id`|Terminates an instance

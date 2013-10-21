@@ -4,10 +4,19 @@ var _ = require('lodash');
 var path = require('path');
 var util = require('util');
 var async = require('async');
+var conf = require('./conf.js');
 var ssh = require('./ssh.js');
 var rsync = require('./rsync.js');
 
-module.exports = function (steps, name, done, fatal) {
+function iif (value, commands) {
+    return conf(value) ? commands : [];
+}
+
+function iif_not (value, commands) {
+    return conf(value) ? [] : commands;
+}
+
+var api = function (steps, name, done, fatal) {
 
     async.eachSeries(steps, function (step, next) {
         var r = step.rsync;
@@ -31,3 +40,8 @@ module.exports = function (steps, name, done, fatal) {
     }, done);
 
 };
+
+api.if_has = iif;
+api.if_not = iif_not;
+
+module.exports = api;

@@ -1,3 +1,7 @@
+# 0.4.5 Engine X
+
+- Separated `nginx` configuration into independant task
+
 # 0.4.4 Sam Black
 
 - `rsync` uses a larger buffer than regular commands we `exec`

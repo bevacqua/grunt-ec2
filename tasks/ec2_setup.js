@@ -20,18 +20,9 @@ module.exports = function(grunt){
             ].join('\n'));
         }
 
-        function iif (value, commands) {
-            return conf(value) ? commands : [];
-        }
-
-        function iif_not (value, commands) {
-            return conf(value) ? [] : commands;
-        }
-
         // TODO rsync user, node user, nginx user?
 
         var done = this.async();
-        var project = conf('PROJECT_ID');
         var cert = conf('SRV_RSYNC_CERT');
         var latest = conf('SRV_RSYNC_LATEST');
         var versions = conf('SRV_VERSIONS');
@@ -44,7 +35,7 @@ module.exports = function(grunt){
             'sudo sysctl -p /etc/sysctl.conf'
         ], [ // forward port 80
             forwardPort(80, 8080)
-        ], iif('SSL_ENABLED', // forward port 443
+        ], workflow.if_has('SSL_ENABLED', // forward port 443
             forwardPort(443, 8433)
         ), [ // rsync
             util.format('sudo mkdir -p %s', versions),
@@ -52,7 +43,7 @@ module.exports = function(grunt){
             util.format('sudo chown ubuntu %s', cert),
             util.format('sudo mkdir -p %s', latest),
             util.format('sudo chown ubuntu %s', latest)
-        ], iif('SSL_ENABLED', { // send certificates
+        ], workflow.if_has('SSL_ENABLED', { // send certificates
             rsync: {
                 name: 'cert',
                 local: conf('SSL_CERTIFICATE_DIRECTORY'),
@@ -65,9 +56,7 @@ module.exports = function(grunt){
                 ],
                 excludes: ['*']
             }
-        }), iif('NGINX_ENABLED', // nginx
-            nginxConf()
-        ), [ // node.js
+        }), [ // node.js
             'sudo apt-get install python-software-properties',
             'sudo add-apt-repository ppa:chris-lea/node.js -y',
             'sudo apt-get update',
@@ -87,40 +76,12 @@ module.exports = function(grunt){
             ];
         }
 
-        function nginxTemplate (name, where) {
-            var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
-            var local = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
-            var template = fs.readFileSync(local, { encoding: 'utf8' });
-            var data = mustache.render(template, conf());
-            var escaped = data
-                .replace(/"/g, '\\"')
-                .replace(/\$/g, '\\$');
+        workflow(steps, name, next);
 
-            return [
-                util.format('sudo touch %s', remote),
-                util.format('sudo chown ubuntu %s', remote),
-                util.format('sudo ln -sfn %s /etc/nginx/%s.conf', remote, where),
-                util.format('echo "%s" > %s', escaped, remote)
-            ];
+        function next () {
+            grunt.log.writeln('Enqueued task for %s configuration.', chalk.cyan('nginx'));
+            grunt.task.run('ec2_nginx_configure:' + name);
+            done();
         }
-
-        function nginxConf () {
-            return [
-                iif('SSL_ENABLED', [ // ssl enabled
-                    'sudo add-apt-repository ppa:chris-lea/nginx-devel -y',
-                    'sudo apt-get update',
-                    'sudo apt-get install nginx nginx-common nginx-full -y',
-                ]),
-                iif_not('SSL_ENABLED', [ // ssl disabled
-                    'sudo apt-get update',
-                    'sudo apt-get install nginx -y',
-                ]),
-                nginxTemplate('http', 'nginx'),
-                nginxTemplate('server', 'sites-enabled/' + project),
-                'sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)'
-            ];
-        }
-
-        workflow(steps, name, done);
     });
 };
