@@ -2,7 +2,7 @@
 
 - Separated `nginx` configuration into independant task
 - Verbose logging on some code paths (using `--verbose`)
-- `nginx` now compressing images, just run `ec2_nginx_configure:something` to update
+- `nginx` now minifying favicons, just run `ec2_nginx_configure:something` to update
 
 # 0.4.4 Sam Black
 
