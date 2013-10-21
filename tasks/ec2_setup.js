@@ -1,10 +1,7 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
 var util = require('util');
 var chalk = require('chalk');
-var mustache = require('mustache');
 var conf = require('./lib/conf.js');
 var workflow = require('./lib/workflow.js');
 

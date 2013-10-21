@@ -56,6 +56,7 @@ module.exports = function (grunt){
             ];
         }
 
+        var steps = nginxConf();
         var enabled = conf('NGINX_ENABLED');
         if (enabled) {
             grunt.log.writeln('Configuring %s server...', chalk.cyan('nginx'));
