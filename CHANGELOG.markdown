@@ -1,6 +1,7 @@
 # 0.4.6 English Teacher
 
 - Added description to all Grunt tasks exposed by `grunt-ec2`
+- Little prefix to differentiate commands run locally from those run over ssh
 
 # 0.4.5 Engine X
 
