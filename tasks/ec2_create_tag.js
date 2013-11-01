@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_create_tag', function(id, name){
+    grunt.registerTask('ec2_create_tag', 'Tags an instance with the provided name', function(id, name){
         conf.init(grunt);
 
         if (arguments.length < 2) {

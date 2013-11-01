@@ -229,7 +229,7 @@ Task and Target(s)|Purpose
 `ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
 `ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
 `ec2_terminate_instance:id`|Terminates an instance
-`ec2_version:name`|Get the version number currently deployed to production
+`ec2_version:name`|Get the version number currently deployed to EC2
 `ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
 
 ## Feedback

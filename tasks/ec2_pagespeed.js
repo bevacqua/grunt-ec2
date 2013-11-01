@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_pagespeed', function(ip){
+    grunt.registerTask('ec2_pagespeed', 'Requests the Google PageSpeed API, prints insights', function(ip){
         conf.init(grunt);
 
         if (arguments.length === 0) {

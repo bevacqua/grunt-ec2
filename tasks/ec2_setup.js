@@ -7,7 +7,7 @@ var workflow = require('./lib/workflow.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_setup', function(name){
+    grunt.registerTask('ec2_setup', 'Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

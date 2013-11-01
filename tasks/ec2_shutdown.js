@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_shutdown', function(name){
+    grunt.registerTask('ec2_shutdown', 'Terminates an instance, deleting its associated key-pair, IP address, and name tag', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

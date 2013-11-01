@@ -1,3 +1,7 @@
+# 0.4.6 English Teacher
+
+- Added description to all Grunt tasks exposed by `grunt-ec2`
+
 # 0.4.5 Engine X
 
 - Separated `nginx` configuration into independant task

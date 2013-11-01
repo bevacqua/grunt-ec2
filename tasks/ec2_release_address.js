@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_release_address', function(ip){
+    grunt.registerTask('ec2_release_address', 'Releases an IP address', function(ip){
         conf.init(grunt);
 
         if (arguments.length === 0) {

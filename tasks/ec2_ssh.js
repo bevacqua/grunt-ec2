@@ -7,7 +7,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_ssh', function(name){
+    grunt.registerTask('ec2_ssh', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_lookup', function(name){
+    grunt.registerTask('ec2_lookup', 'Gets instance filtered by name tag', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

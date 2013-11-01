@@ -8,7 +8,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_version', function(name){
+    grunt.registerTask('ec2_version', 'Get the version number currently deployed to EC2', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

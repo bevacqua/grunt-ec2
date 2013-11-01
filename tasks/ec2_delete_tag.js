@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_delete_tag', function(id){
+    grunt.registerTask('ec2_delete_tag', 'Deletes the associated name tag for an instance', function(id){
         conf.init(grunt);
 
         if (arguments.length < 1) {

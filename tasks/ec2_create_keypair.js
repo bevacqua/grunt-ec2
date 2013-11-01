@@ -9,7 +9,7 @@ var cwd = process.cwd();
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_create_keypair', function(name){
+    grunt.registerTask('ec2_create_keypair', 'Generates an RSA key pair and uploads the public key to AWS', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

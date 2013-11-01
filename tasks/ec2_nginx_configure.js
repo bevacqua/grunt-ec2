@@ -10,7 +10,7 @@ var workflow = require('./lib/workflow.js');
 
 module.exports = function (grunt){
 
-    grunt.registerTask('ec2_nginx_configure', function (name) {
+    grunt.registerTask('ec2_nginx_configure', 'Installs `nginx` if necessary, updates its configuration files', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

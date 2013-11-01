@@ -7,7 +7,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_reboot', function(name){
+    grunt.registerTask('ec2_reboot', 'Reboots the EC2 instance', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

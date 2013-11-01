@@ -9,7 +9,7 @@ var cwd = process.cwd();
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_delete_keypair', function(name){
+    grunt.registerTask('ec2_delete_keypair', 'Removes the remote and the local copies of the RSA key', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {

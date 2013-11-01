@@ -6,7 +6,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_assign_address', function(id){
+    grunt.registerTask('ec2_assign_address', 'Allocates an IP and assigns it to your instance', function(id){
         conf.init(grunt);
 
         if (arguments.length === 0) {
