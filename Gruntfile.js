@@ -12,10 +12,11 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-
-    grunt.registerTask('default', ['jshint']);
+    require('load-grunt-tasks')(grunt);
 
     grunt.loadTasks('tasks');
+
+    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('ci', ['jshint']);
 
 };
