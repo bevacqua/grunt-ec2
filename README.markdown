@@ -242,4 +242,4 @@ Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitH
   [3]: http://i.imgur.com/CSRhe2b.png "Launching an instance single-handedly using Grunt"
   [4]: http://i.imgur.com/0yH3E5k.png "Deploy from your command-line!"
   [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list`"
-  [6]: https//api.flattr.com/button/flattr-badge-large.png
+  [6]: https://api.flattr.com/button/flattr-badge-large.png
