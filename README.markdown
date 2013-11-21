@@ -1,4 +1,5 @@
-# grunt-ec2 [![Dependency Status](https://gemnasium.com/bevacqua/grunt-ec2.png)](https://gemnasium.com/bevacqua/grunt-ec2)
+# grunt-ec2 [![Dependency Status](https://gemnasium.com/bevacqua/grunt-ec2.png)](https://gemnasium.com/bevacqua/grunt-ec2) [![flattr.png][6]](https://flattr.com/submit/auto?user_id=nzgb&url=https%3A%2F%2Fgithub.com%2Fbevacqua%2Fgrunt-ec2)
+
 
 > Grunt tasks to create, terminate, and deploy Node applications to AWS EC2 instances, then proxy with nginx
 
@@ -241,3 +242,4 @@ Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitH
   [3]: http://i.imgur.com/CSRhe2b.png "Launching an instance single-handedly using Grunt"
   [4]: http://i.imgur.com/0yH3E5k.png "Deploy from your command-line!"
   [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list`"
+  [6]: https//api.flattr.com/button/flattr-badge-large.png
