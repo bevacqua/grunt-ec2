@@ -64,6 +64,11 @@ function exec (c, command, options, done) {
             }
 
         });
+
+        options.cancel = function (done) {
+            stream.once('close', done);
+            stream.end();
+        };
     });
 
     function blown () {
@@ -78,10 +83,13 @@ function exec (c, command, options, done) {
     }
 }
 
-function stream (c) {
+function stream (c, options) {
+
+    options = options || {};
 
     var busy = true;
     var commands = [];
+    var latest;
 
     function enqueue (command) {
         commands.push(command);
@@ -98,11 +106,14 @@ function stream (c) {
             return;
         }
 
-        exec(c, command, { fatal: false }, pwd.bind(null, next));
+        latest = { fatal: false };
+        (options.dequeued || function () {})();
+        exec(c, command, latest, pwd.bind(null, next));
     }
 
     function pwd (done) {
-        exec(c, 'pwd', { fatal: false, chalk: 'magenta' }, prompt);
+        latest = { fatal: false, chalk: 'magenta' };
+        exec(c, 'pwd', latest, prompt);
 
         function prompt () {
             var message = chalk.cyan('> ');
@@ -121,13 +132,22 @@ function stream (c) {
         dequeue();
     }
 
+    function kill (done) {
+        if (latest && latest.cancel && busy) {
+            latest.cancel(done);
+        } else {
+            done();
+        }
+    }
+
     pwd(next);
 
     return {
         get busy () { return busy; },
         commands: commands,
         enqueue: enqueue,
-        dequeue: dequeue
+        dequeue: dequeue,
+        kill: kill
     };
 }
 

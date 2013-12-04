@@ -20,18 +20,46 @@ module.exports = function(grunt){
 
         ssh.connect({ name: name }, function (c) {
 
-            grunt.log.ok('Connection established! Use ctrl+c to exit ssh session');
+            grunt.log.ok('Connection established! Use ctrl+c twice to exit ssh session');
 
-            var stream = ssh.stream(c);
+            var stream = ssh.stream(c, {
+                dequeued: dequeued
+            });
 
             process.stdin.resume();
             process.stdin.on('data', stream.enqueue);
 
+            var allowed = false;
+
             process.on('SIGINT', function() {
-                grunt.log.writeln();
-                grunt.log.ok('Exiting ssh session...');
-                c.end();
+                if (!allowed) {
+
+                    stream.kill(function () {
+                        grunt.log.write('\nEnter %s again to exit session\n%s',
+                            chalk.red('ctrl+c'),
+                            chalk.cyan('> ')
+                        );
+                    });
+
+                    process.nextTick(function () {
+                        allowed = true;
+
+                    });
+                }
+
+                process.once('SIGINT', function() {
+                    if (allowed) {
+                        allowed = false;
+                        grunt.log.writeln();
+                        grunt.log.ok('Exiting ssh session...');
+                        c.end();
+                    }
+                });
             });
+
+            function dequeued () {
+                allowed = false;
+            }
 
         }, done);
 
