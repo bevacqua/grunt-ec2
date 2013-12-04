@@ -13,7 +13,7 @@ function prepare (options, ready, done) {
     var c = new Connection();
 
     c.on('ready', ready.bind(null, c));
-    c.on('close', done);
+    c.on('end', done);
 
     if (options.fatal !== false) {
         c.on('error', grunt.fatal);
