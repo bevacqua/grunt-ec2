@@ -1,5 +1,13 @@
 # 0.6.0
 
+Known Issues
+
+- Changing directories under `ec2_ssh` is unsupported at the moment
+
+Fixes
+
+- Proper `ssh` session termination
+
 **BREAKING**
 
 - `ec2_ssh` renamed as `ec2_ssh_text`
