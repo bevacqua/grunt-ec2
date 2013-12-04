@@ -154,12 +154,12 @@ Returns a JSON list of running EC2 instances. Defaults to filtering by `running`
 
 Similar to `ec2_list_json`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2_lookup:staging`.
 
-## Get an SSH connection command for an instance `ec2_ssh:name`
+## Get an SSH connection command for an instance `ec2_ssh_text:name`
 
 Gives you a command you can copy and paste to connect to an EC2 instance through SSH. Useful to get down and dirty.
 
 ```shell
-grunt ec2_ssh:teddy
+grunt ec2_ssh_text:teddy
 ```
 
 ![ec2-ssh.png][1]
@@ -235,7 +235,8 @@ Task and Target(s)|Purpose
 `ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
 `ec2_setup:name`|Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`
 `ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
-`ec2_ssh:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
+`ec2_ssh:name`|Establishes an `ssh` connection to the instance, you can emit commands to your EC2 instance
+`ec2_ssh_text:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
 `ec2_terminate_instance:id`|Terminates an instance
 `ec2_version:name`|Get the version number currently deployed to EC2
 `ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
