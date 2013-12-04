@@ -1,5 +1,6 @@
 'use strict';
 
+var chalk = require('chalk');
 var colorState = {
     pending: 'blue',
     running: 'green',

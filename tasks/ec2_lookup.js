@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
@@ -7,7 +8,7 @@ var prettyprint = require('./lib/prettyprint.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_lookup_json', 'Gets instance filtered by name tag', function(name){
+    grunt.registerTask('ec2_lookup', 'Gets instance filtered by name tag', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {
