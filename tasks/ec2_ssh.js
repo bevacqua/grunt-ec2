@@ -22,14 +22,13 @@ module.exports = function(grunt){
 
             grunt.log.ok('Connection established! Use ctrl+c twice to exit ssh session');
 
+            var allowed = false;
             var stream = ssh.stream(c, {
                 dequeued: dequeued
             });
 
             process.stdin.resume();
             process.stdin.on('data', stream.enqueue);
-
-            var allowed = false;
 
             process.on('SIGINT', function() {
                 if (!allowed) {
@@ -43,7 +42,6 @@ module.exports = function(grunt){
 
                     process.nextTick(function () {
                         allowed = true;
-
                     });
                 }
 
