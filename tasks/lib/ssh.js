@@ -116,7 +116,7 @@ function stream (c, options) {
         exec(c, 'pwd', latest, prompt);
 
         function prompt () {
-            var message = chalk.cyan('> ');
+            var message = chalk.cyan('» ');
 
             if (commands.length) {
                 message += util.format('(%s queued command(s) pending)', chalk.magenta(commands.length));

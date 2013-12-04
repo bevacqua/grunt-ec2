@@ -36,7 +36,7 @@ module.exports = function(grunt){
                     stream.kill(function () {
                         grunt.log.write('\nEnter %s again to exit session\n%s',
                             chalk.red('ctrl+c'),
-                            chalk.cyan('> ')
+                            chalk.cyan('» ')
                         );
                     });
 
