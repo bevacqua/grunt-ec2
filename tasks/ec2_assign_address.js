@@ -1,5 +1,6 @@
 'use strict';
 
+var util = require('util');
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
@@ -25,10 +26,9 @@ module.exports = function(grunt){
         function next (stdout) {
             var result = JSON.parse(stdout);
             var ip = result.PublicIp;
+            var assignment = util.format('ec2_assign_existing_address:%s:%s', id, ip);
 
-            grunt.log.writeln('Associating EC2 instance %s to IP %s', chalk.cyan(id), chalk.cyan(ip));
-
-            exec('aws ec2 associate-address --instance-id %s --public-ip %s', [id, ip], done);
+            grunt.task.run(assignment);
         }
     });
 };

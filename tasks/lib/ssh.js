@@ -35,7 +35,7 @@ module.exports = function(commands, name, done, fatal){
 
             grunt.log.writeln(chalk.underline(chalk.yellow('[ssh]')), chalk.magenta(command));
 
-            c.exec(command, function (err, stream) {
+            c.exec(command, { pty: true }, function (err, stream) {
                 if (err) { grunt.fatal(err); }
 
                 stream.on('data', function (data, extended) {

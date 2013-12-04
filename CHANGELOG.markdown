@@ -1,3 +1,16 @@
+# 0.5.0 Spring Cleaning
+
+- `ec2_elb_attach:name:elb?` attaches an instance to an ELB
+- `ec2_elb_detach:name:elb?` detaches an instance from an ELB
+- ELB is optional, if not found, default value `"AWS_ELB_NAME"` is used
+- `ec2_list_addresses` lists IP addresses and instances assigned to them
+- `ec2_assign_existing_address:id:ip` assigns an IP address to an instance without allocating a new one
+
+**BREAKING**
+
+- `ec2_list` now lists instances in one liners containing important information
+- Previous `ec2_list` functionality renamed as `ec2_list_json`
+
 # 0.4.6 English Teacher
 
 - Added description to all Grunt tasks exposed by `grunt-ec2`

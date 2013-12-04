@@ -78,6 +78,7 @@ Variable Name|Purpose
 `"AWS_SECURITY_GROUP"`|The security group used for new instances. You'll have to create this one yourself.
 `"AWS_SSH_USER"`|The user used to SSH into the instance when setting it up for the first time, after creating it.
 `"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
+`"AWS_ELB_NAME"`|The default Elastic Load Balancer you want to use with `ec2_elb_attach` and `ec2_elb_detach`.
 `"SSH_KEYS_FOLDER"`|The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.
 `"PROJECT_ID"`|Just an identifier for your project, in case you're hosting multiple ones, for some stupid reason, in the same instance. Defaults to `ec2`. This is used when creating folders inside the instance.
 `"RSYNC_EXCLUDES"`|An array of file patterns to explicitly exclude during deploys. The `%NODE_ENV%` string will be replaced by the name tag. Unset by default.
@@ -199,13 +200,17 @@ grunt ec2_reboot:teddy
 Task and Target(s)|Purpose
 ---|---
 `ec2_assign_address:id`|Allocates an IP and assigns it to your instance
+`ec2_assign_existing_address:id:ip`|Assigns an IP address to an instance without allocating a new one
 `ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
 `ec2_create_tag:id:name`|Tags an instance with the provided name
 `ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
 `ec2_delete_tag:id`|Deletes the associated name tag for an instance
 `ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+`ec2_elb_attach:instance-name:elb-name?`|Attaches an instance to an ELB
+`ec2_elb_detach:instance-name:elb-name?`|Detaches an instance from an ELB
 `ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
 `ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
+`ec2_list_json:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints results in JSON
 `ec2_logs_nginx_access:name`|Gets `nginx` access logs
 `ec2_logs_nginx_error:name`|Gets `nginx` error logs
 `ec2_logs_node:name`|Gets `pm2` logs
