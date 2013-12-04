@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 
             if (arguments.length === 0) {
                 grunt.fatal([
-                'You should provide an instance name. ELB name parameter is optional.',
+                    'You should provide an instance name. ELB name parameter is optional.',
                     'e.g: ' + chalk.yellow(util.format('grunt %s:instance-name:elb-name?', taskName))
                 ].join('\n'));
             }
@@ -37,11 +37,11 @@ module.exports = function (grunt) {
             exec('aws elb %s --load-balancer-name %s --instances %s', [
                 map[action], balancer, name
             ], function () {
-                grunt.log.writeln('Done! Instance %sed.', action, chalk.cyan(num));
+                grunt.log.writeln('Done! Instance %sed.', action);
                 done();
             });
         });
-    };
+    }
 
     register('attach');
     register('detach');

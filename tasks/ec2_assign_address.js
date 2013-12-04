@@ -29,6 +29,7 @@ module.exports = function(grunt){
             var assignment = util.format('ec2_assign_existing_address:%s:%s', id, ip);
 
             grunt.task.run(assignment);
+            done();
         }
     });
 };

@@ -21,11 +21,11 @@ module.exports = function(grunt){
             stopped: 'magenta',
             'shutting-down': 'yellow',
             terminated: 'red'
-        }
+        };
 
         grunt.log.writeln('Getting EC2 instances filtered by %s state...', chalk.cyan(value || 'any'));
 
-        exec('aws ec2 describe-instances', [], { pipe: false }, function (stdout) {
+        exec('aws ec2 describe-instances' + filter, [], { pipe: false }, function (stdout) {
             var result = JSON.parse(stdout);
             var instances = _.pluck(result.Reservations, 'Instances');
             var flat = _.flatten(instances);
