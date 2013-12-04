@@ -4,6 +4,7 @@ var _ = require('lodash');
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
+var prettyprint = require('./lib/prettyprint.js');
 
 module.exports = function(grunt){
 
@@ -14,14 +15,6 @@ module.exports = function(grunt){
         var defaultState = 'running';
         var value = state === 'all' ? '' : state || defaultState;
         var filter = value ? ' --filters Name=instance-state-name,Values=' + value : '';
-        var colorState = {
-            pending: 'blue',
-            running: 'green',
-            stopping: 'yellow',
-            stopped: 'magenta',
-            'shutting-down': 'yellow',
-            terminated: 'red'
-        };
 
         grunt.log.writeln('Getting EC2 instances filtered by %s state...', chalk.cyan(value || 'any'));
 
@@ -32,15 +25,7 @@ module.exports = function(grunt){
 
             console.log('Found %s EC2 Instance(s)', flat.length);
 
-            _.each(flat, function (instance) {
-                console.log('%s %s (%s) [%s] on %s',
-                    chalk.magenta(instance.InstanceId),
-                    chalk.magenta(instance.ImageId),
-                    chalk[colorState[instance.State.Name]](instance.State.Name),
-                    chalk.cyan(instance.KeyName),
-                    chalk.underline(instance.PublicIpAddress)
-                );
-            });
+            _.each(flat, prettyprint.instance);
 
             done();
         });

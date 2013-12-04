@@ -217,6 +217,7 @@ Task and Target(s)|Purpose
 `ec2_logs_nginx_error:name`|Gets `nginx` error logs
 `ec2_logs_node:name`|Gets `pm2` logs
 `ec2_lookup:name`|Gets instance filtered by name tag
+`ec2_lookup_json:name`|Gets instance filtered by name tag. Prints results in JSON
 `ec2_nginx_configure:name`|Installs `nginx` if necessary, updates its configuration files
 `ec2_nginx_reload:name`|Reloads `nginx`
 `ec2_nginx_restart:name`|Restarts `nginx`

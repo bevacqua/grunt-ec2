@@ -15,7 +15,9 @@ Fixes
 **BREAKING**
 
 - `ec2_list` now lists instances in one liners containing important information
+- `ec2_lookup` now lists instances in one liners containing important information
 - Previous `ec2_list` functionality renamed as `ec2_list_json`
+- Previous `ec2_lookup` functionality renamed as `ec2_list_json`
 
 # 0.4.6 English Teacher
 

@@ -3,7 +3,6 @@
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
-var prettyprint = require('./lib/prettyprint.js');
 
 module.exports = function(grunt){
 
@@ -13,7 +12,7 @@ module.exports = function(grunt){
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_lookup:name')
+                'e.g: ' + chalk.yellow('grunt ec2_lookup_json:name')
             ].join('\n'));
         }
 
@@ -21,16 +20,6 @@ module.exports = function(grunt){
 
         grunt.log.writeln('Getting EC2 description for %s instance...', chalk.cyan(name));
 
-        exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], { pipe: false }, print);
-
-        function print (stdout) {
-            var result = JSON.parse(stdout);
-            var instances = _.pluck(result.Reservations, 'Instances');
-            var flat = _.flatten(instances);
-
-            _.each(flat, prettyprint.instance);
-
-            done();
-        }
+        exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], done);
     });
 };
