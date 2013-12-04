@@ -11,7 +11,7 @@ function prepare (options, ready, done) {
 
     var c = new Connection();
 
-    c.on('ready', ready);
+    c.on('ready', ready.bind(null, c));
     c.on('close', done);
 
     if (options.fatal !== false) {
@@ -39,6 +39,8 @@ function exec (c, command, options, done) {
 
     options = options || {};
 
+    grunt.verbose.writeln('exec() on `%s`', command);
+
     c.exec(command, { pty: true }, function (err, stream) {
         if (err) { return blown(err); }
 
@@ -48,7 +50,7 @@ function exec (c, command, options, done) {
             if (extended === 'stderr') {
                 grunt.log.write(chalk.yellow(out));
             } else {
-                grunt.log.write(out);
+                grunt.log.write(options.chalk ? chalk[options.chalk](out) : out);
             }
         });
 
@@ -69,10 +71,63 @@ function exec (c, command, options, done) {
         if (options.fatal !== false) {
             grunt.fatal.apply(grunt, args);
         } else {
-            grunt.log.error.call(grunt.log, args);
+            grunt.log.writeln.call(grunt.log, args);
             done();
         }
     }
+}
+
+function stream (c) {
+
+    var busy = true;
+    var commands = [];
+
+    function enqueue (command) {
+        commands.push(command);
+        dequeue();
+    }
+
+    function dequeue () {
+        if (busy) { return; }
+
+        var command = commands.shift();
+        if (command) {
+            busy = true;
+        } else {
+            return;
+        }
+
+        exec(c, command, { fatal: false }, pwd.bind(null, next));
+    }
+
+    function pwd (done) {
+        exec(c, 'pwd', { fatal: false, chalk: 'magenta' }, prompt);
+
+        function prompt () {
+            var message = chalk.cyan('> ');
+
+            if (commands.length) {
+                message += util.format('(%s queued command(s) pending)', chalk.magenta(commands.length))
+            );
+
+            grunt.log.write(message);
+            done();
+        }
+    }
+
+    function next () {
+        busy = false;
+        dequeue();
+    }
+
+    pwd(next);
+
+    return {
+        get busy () { return busy; },
+        commands: commands,
+        enqueue: enqueue,
+        dequeue: dequeue
+    };
 }
 
 function api (commands, options, done) {
@@ -103,5 +158,6 @@ function api (commands, options, done) {
 
 api.connect = prepare;
 api.exec = exec;
+api.stream = stream;
 
 module.exports = api;
