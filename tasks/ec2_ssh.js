@@ -1,6 +1,5 @@
 'use strict';
 
-var util = require('util');
 var chalk = require('chalk');
 var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
