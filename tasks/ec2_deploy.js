@@ -46,20 +46,20 @@ module.exports = function(grunt){
             return pattern.replace('%NODE_ENV%', name);
         }
 
-        function iif (value, cmd) {
-            return conf(value) ? cmd : [];
-        }
-
         var verbosity = conf('VERBOSITY_NPM');
         var steps = [{
             rsync: rsync
         }, [
-            util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions),
-            util.format('sudo npm --prefix %s install --production --loglevel %s', dest, verbosity),
+            util.format('sudo rm -rf `ls -t %s | tail -n +11`', versions)
+        ], workflow.if_not('NPM_INSTALL_DISABLED', [
+            util.format('sudo npm --prefix %s install --production --loglevel %s', dest, verbosity)
+        ], workflow.if_has('NPM_REBUILD', [
+            'sudo npm rebuild'
+        ], [
             util.format('sudo ln -sfn %s %s', dest, target),
             commands.pm2_reload(),
             commands.pm2_start(name)
-        ], iif('NGINX_ENABLED', [
+        ], workflow.if_has('NGINX_ENABLED', [
             'sudo nginx -s reload'
         ])];
 

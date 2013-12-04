@@ -73,35 +73,37 @@ If you're confident enough, you can use the tool with just those options. Here i
 Variable Name|Purpose
 ---|---
 `"AWS_DEFAULT_REGION"`|Passed to the CLI directly, defaults to `"us-east-1"`
+`"AWS_ELB_NAME"`|The default Elastic Load Balancer you want to use with `ec2_elb_attach` and `ec2_elb_detach`.
 `"AWS_IMAGE_ID"`|Used when creating a new instance with the `ec2_create_instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
 `"AWS_INSTANCE_TYPE"`|The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
+`"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
 `"AWS_SECURITY_GROUP"`|The security group used for new instances. You'll have to create this one yourself.
 `"AWS_SSH_USER"`|The user used to SSH into the instance when setting it up for the first time, after creating it.
-`"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
-`"AWS_ELB_NAME"`|The default Elastic Load Balancer you want to use with `ec2_elb_attach` and `ec2_elb_detach`.
-`"SSH_KEYS_FOLDER"`|The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.
-`"PROJECT_ID"`|Just an identifier for your project, in case you're hosting multiple ones, for some stupid reason, in the same instance. Defaults to `ec2`. This is used when creating folders inside the instance.
-`"RSYNC_EXCLUDES"`|An array of file patterns to explicitly exclude during deploys. The `%NODE_ENV%` string will be replaced by the name tag. Unset by default.
-`"RSYNC_EXCLUDE_FROM"`|Relative path to an rsync exclusion patterns file. These are used to exclude files from being uploaded to the server during `rsync` on deploys. Defaults to ignoring `.git` and `node_modules`.
-`"RSYNC_INCLUDES"`|An array of file patterns to explicitly include during deploys. The `%NODE_ENV%` string will be replaced by the name tag. Useful for uploading environment configuration.
-`"RSYNC_INCLUDE_FROM"`|Relative path to an rsync inclusion patterns file. These are used to include files for upload to the server during `rsync` on deploys. Unset by default.
-`"NODE_SCRIPT"`|The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to your `cwd`.
+`"ELASTIC_IP"`|Assign an AWS Elastic IP to new instances, and release it when terminating them. Defaults to `true`.
+`"ENV"`| Provided as a JSON object. Variables to set in the local environment before the app starts. Useful for setting up DB credentials for example.
 `"NGINX_ENABLED"`|Whether to install and use `nginx`. If installed, the Node application **must** listen on port `NGINX_PROXY_PORT`. Keep in mind that since we're going to use `pm2` to spin up a cluster, a single port won't be an issue anyways.
 `"NGINX_PROXY_PORT"`|This is the port where `nginx` will proxy requests to, when it won't handle them by itself. This is the same port you'll want to use to listen with your Node application.
 `"NGINX_SERVER_NAME"`|The server name for your static server, for example: `bevacqua.io`.
-`"NGINX_STATIC_ROOT"`|The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
 `"NGINX_STATIC_ERRORS"`|The relative path to your error HTML views folder root. For example `bin/views/error`.
+`"NGINX_STATIC_ROOT"`|The relative path to your static folder root, for example: `bin/public`. Used to serve static assets through `nginx`.
 `"NGINX_USER"`|The user to configure and run `nginx` with.
 `"NGINX_WORKERS"`|The amount of workers processes used by `nginx`.
-`"SSL_ENABLED"`|Enables SSL configuration on `nginx`. Learn [how to set it up](https://konklone.com/post/switch-to-https-now-for-free) for free.
+`"NODE_SCRIPT"`|The path to your script. Defaults to `app.js`, as in `node app.js`. Relative to your `cwd`.
+`"NPM_INSTALL_DISABLED"`|If `true`, won't `npm install --production` after deployments
+`"NPM_REBUILD"`|If `true`, will `npm rebuild` after deployments
+`"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth). Requires you to setup `grunt-pagespeed` locally, in your own `Gruntfile.js`.
+`"PROJECT_ID"`|Just an identifier for your project, in case you're hosting multiple ones, for some stupid reason, in the same instance. Defaults to `ec2`. This is used when creating folders inside the instance.
+`"RSYNC_EXCLUDE_FROM"`|Relative path to an rsync exclusion patterns file. These are used to exclude files from being uploaded to the server during `rsync` on deploys. Defaults to ignoring `.git` and `node_modules`.
+`"RSYNC_EXCLUDES"`|An array of file patterns to explicitly exclude during deploys. The `%NODE_ENV%` string will be replaced by the name tag. Unset by default.
+`"RSYNC_INCLUDE_FROM"`|Relative path to an rsync inclusion patterns file. These are used to include files for upload to the server during `rsync` on deploys. Unset by default.
+`"RSYNC_INCLUDES"`|An array of file patterns to explicitly include during deploys. The `%NODE_ENV%` string will be replaced by the name tag. Useful for uploading environment configuration.
+`"SSH_KEYS_FOLDER"`|The relative path to a folder where you want to use with tasks that create SSH key-pairs. It doesn't need to exist, `mkdir -p` will take care of that. This defaults to a folder inside this package, which is pretty lame if you want to look at the key-pairs yourself. Although you _shouldn't need to_, I've got you covered.
 `"SSL_CERTIFICATE"`|Relative path to your unified SSL certificate.
 `"SSL_CERTIFICATE_KEY"`|Relative path to your private certificate key.
+`"SSL_ENABLED"`|Enables SSL configuration on `nginx`. Learn [how to set it up](https://konklone.com/post/switch-to-https-now-for-free) for free.
 `"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
-`"PAGESPEED_API_KEY"`|If provided, will run [Google PageSpeed insights](https://developers.google.com/speed/docs/insights/) on every deployment. Get [**an API Key here**](https://developers.google.com/speed/docs/insights/v1/getting_started#auth). Requires you to setup `grunt-pagespeed` locally, in your own `Gruntfile.js`.
-`"ELASTIC_IP"`|Assign an AWS Elastic IP to new instances, and release it when terminating them. Defaults to `true`.
-`"ENV"`| Provided as a JSON object. Variables to set in the local environment before the app starts. Useful for setting up DB credentials for example.
-`"VERBOSITY_RSYNC"`|Determines the output verbosity for `rsync`. Possible values limited to `'v'`, `'vv'`, and `'vvv'`. Defaults to `''` (not verbose at all, my friend).
 `"VERBOSITY_NPM"`|Determines the output verbosity for `npm` during deployments, values are limited to `loglevel` option values for `npm`. Defaults to `info`, just like `npm` does.
+`"VERBOSITY_RSYNC"`|Determines the output verbosity for `rsync`. Possible values limited to `'v'`, `'vv'`, and `'vvv'`. Defaults to `''` (not verbose at all, my friend).
 
 # Tasks
 
