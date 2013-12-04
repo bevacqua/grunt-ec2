@@ -63,7 +63,7 @@ module.exports = function(grunt){
             'sudo nginx -s reload'
         ])];
 
-        workflow(steps, name, function () {
+        workflow(steps, { name: name }, function () {
             sshCredentials(name, function (c) {
                 log(c);
             });
@@ -90,7 +90,7 @@ module.exports = function(grunt){
                 'tail -3 /var/log/nginx/error.log',
                 'sudo pm2 flush',
                 'sudo pm2 list'
-            ], name, done);
+            ], { name: name }, done);
         }
     });
 };

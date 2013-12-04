@@ -62,7 +62,7 @@ module.exports = function (grunt){
         if (enabled) {
             grunt.log.writeln('Configuring %s server...', chalk.cyan('nginx'));
 
-            workflow([nginxConf()], name, done);
+            workflow([nginxConf()], { name: name }, done);
 
         } else {
             grunt.log.writeln('%s server is disabled, skipping.', chalk.cyan('nginx'));

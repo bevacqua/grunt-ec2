@@ -1,3 +1,10 @@
+# 0.6.0
+
+**BREAKING**
+
+- `ec2_ssh` renamed as `ec2_ssh_text`
+- `ec2_ssh` is a new command that enables interactive `ssh` on the instance, saving you the step to copy and paste the command
+
 # 0.5.0 Spring Cleaning
 
 - `ec2_elb_attach:name:elb?` attaches an instance to an ELB

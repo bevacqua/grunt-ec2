@@ -2,12 +2,12 @@
 
 var util = require('util');
 var chalk = require('chalk');
-var sshCredentials = require('./lib/sshCredentials.js');
+var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_ssh', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function(name){
+    grunt.registerTask('ec2_ssh_text', 'Establishes an `ssh` connection to the instance, letting you work on it directly', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -19,18 +19,11 @@ module.exports = function(grunt){
 
         var done = this.async();
 
-        sshCredentials(name, function (c) {
-            if (!c) {
-                grunt.fatal('This instance is refusing SSH connections for now');
-            }
+        ssh.prepare({ name: name }, function (c) {
 
-            var command = util.format('ssh -o StrictHostKeyChecking=no -i %s %s@%s', c.privateKeyFile, c.username, c.host);
+            grunt.log.writeln('Connection established!');
 
-            grunt.log.writeln('Connect to the %s instance using:', chalk.cyan(c.id));
-            grunt.log.writeln(chalk.blue(command));
-
-            done();
-        });
+        }, done);
 
     });
 };

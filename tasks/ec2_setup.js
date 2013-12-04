@@ -73,7 +73,7 @@ module.exports = function(grunt){
             ];
         }
 
-        workflow(steps, name, next);
+        workflow(steps, { name: name }, next);
 
         function next () {
             grunt.log.writeln('Enqueued task for %s configuration.', chalk.cyan('nginx'));

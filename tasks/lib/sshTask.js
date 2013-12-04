@@ -32,7 +32,7 @@ module.exports = function (grunt) {
                         task.command :
                         task.command.call(null, name);
 
-                    ssh([command], name, done);
+                    ssh([command], { name: name }, done);
                 });
             });
         }

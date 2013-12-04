@@ -1,39 +1,36 @@
 'use strict';
 
-var chalk = require('chalk');
 var util = require('util');
+var chalk = require('chalk');
 var sshCredentials = require('./lib/sshCredentials.js');
-var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function(grunt){
 
-    grunt.registerTask('ec2_version', 'Get the version number currently deployed to EC2', function(name){
+    grunt.registerTask('ec2_ssh_text', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function(name){
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_version:name')
+                'e.g: ' + chalk.yellow('grunt ec2_ssh_text:name')
             ].join('\n'));
         }
 
         var done = this.async();
 
         sshCredentials(name, function (c) {
-
             if (!c) {
                 grunt.fatal('This instance is refusing SSH connections for now');
             }
 
-            grunt.log.writeln('Querying %s to get current version number over ssh...', chalk.cyan(c.id));
+            var command = util.format('ssh -o StrictHostKeyChecking=no -i %s %s@%s', c.privateKeyFile, c.username, c.host);
 
-            var current = conf('SRV_CURRENT');
-            var commands = [
-                util.format('readlink -f %s | sed -e "s/.*v\\///"', current)
-            ];
+            grunt.log.writeln('Connect to the %s instance using:', chalk.cyan(c.id));
+            grunt.log.writeln(chalk.blue(command));
 
-            ssh(commands, { name: name }, done);
+            done();
         });
+
     });
 };

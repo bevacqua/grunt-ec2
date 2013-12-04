@@ -18,7 +18,7 @@ function iif_not (value, commands) {
     return conf(value) ? [] : commands;
 }
 
-var api = function (steps, name, done, fatal) {
+var api = function (steps, options, done) {
     var i = 0;
 
     grunt.verbose.writeln('Following a workflow with %s steps', chalk.cyan(steps.length));
@@ -29,21 +29,21 @@ var api = function (steps, name, done, fatal) {
 
         var r = step.rsync;
         if (r) {
-            ssh([ util.format('sudo mkdir -p %s', r.dest) ], name, transfer, fatal);
+            ssh([ util.format('sudo mkdir -p %s', r.dest) ], options, transfer);
         } else {
             var commands = _.flatten(step);
-            ssh(commands, name, next, fatal);
+            ssh(commands, options, next);
         }
 
         function transfer () {
-            rsync(name, r, move);
+            rsync(options.name, r, move);
         }
 
         function move () {
             var parent = path.relative(path.dirname(r.local), r.local);
             var remoteSync = r.remote + '/' + parent;
 
-            ssh([ util.format('sudo cp -r %s/* %s', remoteSync, r.dest) ], name, next, fatal);
+            ssh([ util.format('sudo cp -r %s/* %s', remoteSync, r.dest) ], options, next);
         }
     }, done);
 
