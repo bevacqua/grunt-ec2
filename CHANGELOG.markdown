@@ -5,6 +5,8 @@
 - ELB is optional, if not found, default value `"AWS_ELB_NAME"` is used
 - `ec2_list_addresses` lists IP addresses and instances assigned to them
 - `ec2_assign_existing_address:id:ip` assigns an IP address to an instance without allocating a new one
+- `"NPM_INSTALL_DISABLED"` option won't `npm install --production` after deploys if `true`
+- `"NPM_REBUILD"` option will `npm rebuild` after deploys if `true`
 
 Fixes
 
