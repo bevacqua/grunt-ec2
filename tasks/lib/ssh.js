@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var grunt = require('grunt');
 var chalk = require('chalk');
+var util = require('util');
 var Connection = require('ssh2');
 var sshCredentials = require('./sshCredentials.js');
 
@@ -107,8 +108,8 @@ function stream (c) {
             var message = chalk.cyan('> ');
 
             if (commands.length) {
-                message += util.format('(%s queued command(s) pending)', chalk.magenta(commands.length))
-            );
+                message += util.format('(%s queued command(s) pending)', chalk.magenta(commands.length));
+            }
 
             grunt.log.write(message);
             done();
