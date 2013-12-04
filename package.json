@@ -32,10 +32,10 @@
     "chalk": "0.3.0",
     "fs-extra": "0.8.1",
     "grunt": "0.4.1",
-    "lodash": "2.3.0",
+    "lodash": "2.4.1",
     "mkdirp": "0.3.5",
     "moment": "2.4.0",
-    "mustache": "0.7.3",
+    "mustache": "0.8.0",
     "ssh2": "0.2.14"
   },
   "devDependencies": {

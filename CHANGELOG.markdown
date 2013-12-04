@@ -6,6 +6,10 @@
 - `ec2_list_addresses` lists IP addresses and instances assigned to them
 - `ec2_assign_existing_address:id:ip` assigns an IP address to an instance without allocating a new one
 
+Fixes
+
+- Pass cygwin-style local paths to `rsync` on Windows
+
 **BREAKING**
 
 - `ec2_list` now lists instances in one liners containing important information
