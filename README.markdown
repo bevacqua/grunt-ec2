@@ -144,15 +144,15 @@ grunt ec2_shutdown:teddy
 
 ![ec2-shutdown.png][2]
 
-## List running EC2 instances `ec2_list`
+## List running EC2 instances `ec2_list_json`
 
-Returns a JSON list of running EC2 instances. Defaults to filtering by `running` state. You can use `ec2_list:all` to remove the filter, or pick another `instance-state-name` to filter by.
+Returns a JSON list of running EC2 instances. Defaults to filtering by `running` state. You can use `ec2_list_json:all` to remove the filter, or pick another `instance-state-name` to filter by.
 
 ![ec2-list.png][5]
 
 ## Describe an instance with `ec2_lookup`
 
-Similar to `ec2_list`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2_lookup:staging`.
+Similar to `ec2_list_json`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2_lookup:staging`.
 
 ## Get an SSH connection command for an instance `ec2_ssh:name`
 
@@ -211,7 +211,7 @@ Task and Target(s)|Purpose
 `ec2_elb_attach:instance-name:elb-name?`|Attaches an instance to an ELB
 `ec2_elb_detach:instance-name:elb-name?`|Detaches an instance from an ELB
 `ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
-`ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter
+`ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter.
 `ec2_list_json:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints results in JSON
 `ec2_logs_nginx_access:name`|Gets `nginx` access logs
 `ec2_logs_nginx_error:name`|Gets `nginx` error logs
@@ -247,5 +247,5 @@ Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitH
   [2]: http://i.imgur.com/U0gN4ax.png "Shutting down an instance through Grunt"
   [3]: http://i.imgur.com/CSRhe2b.png "Launching an instance single-handedly using Grunt"
   [4]: http://i.imgur.com/0yH3E5k.png "Deploy from your command-line!"
-  [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list`"
+  [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list_json`"
   [6]: https://api.flattr.com/button/flattr-badge-large.png
