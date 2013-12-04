@@ -41,7 +41,7 @@ module.exports = function(grunt){
 
                 var relative = path.relative(cwd, file);
 
-                grunt.log.writeln('Deleted ' + chalk.red(relative));
+                grunt.log.ok('Deleted ' + chalk.red(relative));
                 next();
             });
         }

@@ -20,7 +20,7 @@ module.exports = function(grunt){
 
         ssh.prepare({ name: name }, function (c) {
 
-            grunt.log.writeln('Connection established!');
+            grunt.log.ok('Connection established!');
 
         }, done);
 

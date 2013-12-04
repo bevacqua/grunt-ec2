@@ -23,7 +23,7 @@ module.exports = function(grunt){
             var instances = _.pluck(result.Reservations, 'Instances');
             var flat = _.flatten(instances);
 
-            console.log('Found %s EC2 Instance(s)', flat.length);
+            grunt.log.ok('Found %s EC2 Instance(s)', flat.length);
 
             _.each(flat, prettyprint.instance);
 

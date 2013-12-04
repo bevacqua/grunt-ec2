@@ -32,7 +32,7 @@ module.exports = function(grunt){
 
             sshCredentials(name, function (c) {
                 if (!c) {
-                    grunt.log.writeln('%s Waiting for DNS to warm up, retrying in 3s...', now());
+                    grunt.log.error('%s Waiting for DNS to warm up, retrying in 3s...', now());
                     wait(waitForDNS);
                     return;
                 }
@@ -52,7 +52,7 @@ module.exports = function(grunt){
             var connection = ssh.connect({ name: name, fatal: false }, noop, noop);
 
             connection.on('error', function () {
-                grunt.log.writeln('%s Connection refused, retrying in 3s...', now());
+                grunt.log.error('%s Connection refused, retrying in 3s...', now());
                 wait(waitForSSH);
             });
 

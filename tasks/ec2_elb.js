@@ -37,7 +37,7 @@ module.exports = function (grunt) {
             exec('aws elb %s --load-balancer-name %s --instances %s', [
                 map[action], balancer, name
             ], function () {
-                grunt.log.writeln('Done! Instance %sed.', action);
+                grunt.log.ok('Done! Instance %sed.', action);
                 done();
             });
         });
