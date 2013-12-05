@@ -73,45 +73,12 @@ function interactive (c, options) {
 
     options = options || {};
 
-    var busy = true;
-    var commands = [];
     var shell;
 
-    function enqueue (command) {
-        commands.push(command);
-        dequeue();
-    }
-
-    function dequeue () {
-        if (busy) { return; }
-
-        var command = commands.shift();
-        if (command) {
-            busy = true;
-        } else {
-            return;
-        }
-
-        (options.dequeued || function () {})();
-        write(command, {}, next);
-    }
-
-    function next () {
-        busy = false;
-        dequeue();
-    }
-
-    function kill (done) {
-        if (shell && busy) {
-            cancel(done);
-        } else {
-            done();
-        }
-    }
-
     function cancel (done) {
-        shell.once('close', done);
-        shell.end();
+        console.log('SIGHUP!');
+        c.signal('HUP');
+        c.once('data', done);
     }
 
     function ready (err, stream) {
@@ -119,13 +86,10 @@ function interactive (c, options) {
 
         shell = stream;
         shell.on('data', read.bind(null, options.chalk));
-
-        next();
     }
 
     function write (command, options, done) {
         shell.write(command + '\n');
-
         done();
     }
 
@@ -136,11 +100,8 @@ function interactive (c, options) {
     c.shell(ready);
 
     return {
-        get busy () { return busy; },
-        commands: commands,
-        enqueue: enqueue,
-        dequeue: dequeue,
-        kill: kill
+        write: write,
+        cancel: cancel
     };
 }
 

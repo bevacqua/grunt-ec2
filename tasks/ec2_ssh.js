@@ -23,17 +23,18 @@ module.exports = function(grunt){
             grunt.log.ok('Connection established! Use ctrl+c twice to exit ssh session');
 
             var allowed = false;
-            var interactive = ssh.interactive(c, {
-                dequeued: dequeued
-            });
+            var interactive = ssh.interactive(c);
 
             process.stdin.resume();
-            process.stdin.on('data', interactive.enqueue);
+            process.stdin.on('data', function (data) {
+                allowed = false;
+                interactive.write(data);
+            });
 
             process.on('SIGINT', function() {
                 if (!allowed) {
 
-                    interactive.kill(function () {
+                    interactive.cancel(function () {
                         grunt.log.write('\nEnter %s again to exit session\n%s',
                             chalk.red('ctrl+c'),
                             chalk.cyan('» ')
@@ -54,10 +55,6 @@ module.exports = function(grunt){
                     }
                 });
             });
-
-            function dequeued () {
-                allowed = false;
-            }
 
         }, done);
 
