@@ -74,7 +74,7 @@ function interactive (c, options) {
     options = options || {};
 
     var shell;
-    var cancelled = false;
+    var aborting = false;
 
     c.shell(ready);
 
@@ -86,40 +86,39 @@ function interactive (c, options) {
         shell = stream;
         shell.on('data', read.bind(null, options.chalk));
         shell.on('error', fatal);
-        shell.on('exit', exit);
+        shell.on('exit', exitCommand);
 
         resume();
     }
 
     function resume () {
         process.stdin.resume();
-        process.stdin.on('data', shell.write);
+        process.stdin.on('data', write);
         process.on('SIGINT', sigint);
+    }
+
+    function write (data) {
+        aborting = false;
+        shell.write(data);
     }
 
     function sigint () {
         if (!shell) { return; }
-        if (!cancelled) {
-            cancelled = true;
+        if (aborting) { return exit(); }
 
-            cancel();
+        aborting = true;
 
-            grunt.log.write('\nEnter %s again to exit session\n%s',
-                chalk.red('ctrl+c'),
-                chalk.cyan('» ')
-            );
-        }
+        shell.write('\x03'); // SIGINT
 
-        process.once('SIGINT', function() {
-            if (cancelled) {
-                exit();
-            }
-        });
+        grunt.log.write('\nEnter %s again to exit session\n%s',
+            chalk.red('ctrl+c'),
+            chalk.cyan('» ')
+        );
     }
 
-    function cancel () {
-        if (shell) {
-            shell.write('\x03'); // SIGINT
+    function exitCommand (code) {
+        if (code !== null) {
+            exit();
         }
     }
 
