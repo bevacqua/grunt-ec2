@@ -74,53 +74,75 @@ function interactive (c, options) {
     options = options || {};
 
     var shell;
-    var queue = [];
+    var cancelled = false;
 
-    function cancel (then) {
-        if (shell) {
-            shell.once('data', then);
-            shell.write('\x03'); // SIGINT
-        }
-    }
+    c.shell(ready);
 
     function ready (err, stream) {
         if (err) { grunt.fatal('Connection error.\n\n',  err); }
 
+        grunt.log.ok('Connection established! Use ctrl+c twice to exit ssh session');
+
         shell = stream;
         shell.on('data', read.bind(null, options.chalk));
+        shell.on('error', fatal);
+        shell.on('exit', exit);
 
-        while (queue.length) {
-            write(queue.shift());
-        }
+        resume();
     }
 
-    function write (command) {
+    function resume () {
+        process.stdin.resume();
+        process.stdin.on('data', shell.write);
+        process.on('SIGINT', sigint);
+    }
+
+    function sigint () {
+        if (!shell) { return; }
+        if (!cancelled) {
+            cancelled = true;
+
+            cancel();
+
+            grunt.log.write('\nEnter %s again to exit session\n%s',
+                chalk.red('ctrl+c'),
+                chalk.cyan('» ')
+            );
+        }
+
+        process.once('SIGINT', function() {
+            if (cancelled) {
+                exit();
+            }
+        });
+    }
+
+    function cancel () {
         if (shell) {
-            shell.write(command + '\n');
-        } else {
-            queue.push(command);
+            shell.write('\x03'); // SIGINT
         }
     }
 
-    c.on('error', function(err) {
+    function exit () {
+        grunt.log.writeln();
+        grunt.log.ok('Exiting ssh session...');
+        c.end();
+
+        shell = void 0;
+    }
+
+    function fatal (err) {
         grunt.fatal('Connection error.\n\n',  err);
-    });
-
-    c.shell(ready);
-
-    return {
-        write: write,
-        cancel: cancel
-    };
+    }
 }
 
 function read (chalkType, data, type) {
-    var out = String(data);
+    var stdout = String(data);
 
     if (type === 'stderr') {
-        grunt.log.write(chalk.yellow(out));
+        grunt.log.write(chalk.yellow(stdout));
     } else {
-        grunt.log.write(chalkType ? chalk[chalkType](out) : out);
+        grunt.log.write(chalkType ? chalk[chalkType](stdout) : stdout);
     }
 }
 

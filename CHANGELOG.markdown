@@ -1,3 +1,10 @@
+# 0.6.1 Hot Sauce
+
+Fixes
+
+- Typing <kbd>ctrl</kbd>+<kbd>c</kbd> once kills the active command in the remote `ssh` session. Typing <kbd>ctrl</kbd>+<kbd>c</kbd> again ends the task
+- Fixed issues when typing `exit` into the `ssh` interactive session
+
 # 0.6.0 Super Sweet Hacker
 
 Known Issues
