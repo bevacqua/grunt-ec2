@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var grunt = require('grunt');
 var chalk = require('chalk');
-var util = require('util');
 var Connection = require('ssh2');
 var sshCredentials = require('./sshCredentials.js');
 
@@ -76,7 +75,6 @@ function interactive (c, options) {
 
     var busy = true;
     var commands = [];
-    var cancel;
     var shell;
 
     function enqueue (command) {
@@ -95,22 +93,7 @@ function interactive (c, options) {
         }
 
         (options.dequeued || function () {})();
-        write(command, {}, pwd.bind(null, next));
-    }
-
-    function pwd (done) {
-        write('pwd', { chalk: 'magenta' }, prompt);
-
-        function prompt () {
-            var message = chalk.cyan('» ');
-
-            if (commands.length) {
-                message += util.format('(%s queued command(s) pending)', chalk.magenta(commands.length));
-            }
-
-            grunt.log.write(message);
-            done();
-        }
+        write(command, {}, next);
     }
 
     function next () {
@@ -119,47 +102,37 @@ function interactive (c, options) {
     }
 
     function kill (done) {
-        if (cancel && busy) {
+        if (shell && busy) {
             cancel(done);
         } else {
             done();
         }
     }
 
+    function cancel (done) {
+        shell.once('close', done);
+        shell.end();
+    }
+
     function ready (err, stream) {
-        console.log('ready...');
-        if (err) { console.log('Stream :: error :: '+  err); }
+        if (err) { grunt.fatal('Connection error.\n\n',  err); }
+
         shell = stream;
         shell.on('data', read.bind(null, options.chalk));
+
+        next();
     }
 
     function write (command, options, done) {
-        grunt.log.writeln(options.chalk ? chalk[options.chalk](command) : command);
-        shell.write(command);
+        shell.write(command + '\n');
 
-        // TODO: done when finished.
         done();
     }
 
-    c.on('connect', function() {
-        console.log('Connection :: connect');
-    });
-    c.on('ready', function() {
-        console.log('Connection :: ready');
-    });
-    c.on('banner', function(message, lang) {
-        console.log('Connection :: banner', lang);
-        console.log(message);
-    });
     c.on('error', function(err) {
-        console.log('Connection :: error :: ' + err);
+        grunt.fatal('Connection error.\n\n',  err);
     });
-    c.on('end', function() {
-        console.log('Connection :: end');
-    });
-    c.on('close', function(had_error) {
-        console.log('Connection :: close', had_error);
-    });
+
     c.shell(ready);
 
     return {
