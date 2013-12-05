@@ -45,16 +45,7 @@ function exec (c, command, options, done) {
     c.exec(command, { pty: true }, function (err, stream) {
         if (err) { return blown(err); }
 
-        stream.on('data', function (data, extended) {
-            var out = String(data);
-
-            if (extended === 'stderr') {
-                grunt.log.write(chalk.yellow(out));
-            } else {
-                grunt.log.write(options.chalk ? chalk[options.chalk](out) : out);
-            }
-        });
-
+        stream.on('data', read.bind(null, options.chalk));
         stream.on('exit', function (code) {
 
             if (code !== 0) {
@@ -65,10 +56,6 @@ function exec (c, command, options, done) {
 
         });
 
-        options.cancel = function (done) {
-            stream.once('close', done);
-            stream.end();
-        };
     });
 
     function blown () {
@@ -83,13 +70,14 @@ function exec (c, command, options, done) {
     }
 }
 
-function stream (c, options) {
+function interactive (c, options) {
 
     options = options || {};
 
     var busy = true;
     var commands = [];
-    var latest;
+    var cancel;
+    var shell;
 
     function enqueue (command) {
         commands.push(command);
@@ -106,14 +94,12 @@ function stream (c, options) {
             return;
         }
 
-        latest = { fatal: false };
         (options.dequeued || function () {})();
-        exec(c, command, latest, pwd.bind(null, next));
+        write(command, {}, pwd.bind(null, next));
     }
 
     function pwd (done) {
-        latest = { fatal: false, chalk: 'magenta' };
-        exec(c, 'pwd', latest, prompt);
+        write('pwd', { chalk: 'magenta' }, prompt);
 
         function prompt () {
             var message = chalk.cyan('» ');
@@ -133,14 +119,48 @@ function stream (c, options) {
     }
 
     function kill (done) {
-        if (latest && latest.cancel && busy) {
-            latest.cancel(done);
+        if (cancel && busy) {
+            cancel(done);
         } else {
             done();
         }
     }
 
-    pwd(next);
+    function ready (err, stream) {
+        console.log('ready...');
+        if (err) { console.log('Stream :: error :: '+  err); }
+        shell = stream;
+        shell.on('data', read.bind(null, options.chalk));
+    }
+
+    function write (command, options, done) {
+        grunt.log.writeln(options.chalk ? chalk[options.chalk](command) : command);
+        shell.write(command);
+
+        // TODO: done when finished.
+        done();
+    }
+
+    c.on('connect', function() {
+        console.log('Connection :: connect');
+    });
+    c.on('ready', function() {
+        console.log('Connection :: ready');
+    });
+    c.on('banner', function(message, lang) {
+        console.log('Connection :: banner', lang);
+        console.log(message);
+    });
+    c.on('error', function(err) {
+        console.log('Connection :: error :: ' + err);
+    });
+    c.on('end', function() {
+        console.log('Connection :: end');
+    });
+    c.on('close', function(had_error) {
+        console.log('Connection :: close', had_error);
+    });
+    c.shell(ready);
 
     return {
         get busy () { return busy; },
@@ -149,6 +169,16 @@ function stream (c, options) {
         dequeue: dequeue,
         kill: kill
     };
+}
+
+function read (chalkType, data, type) {
+    var out = String(data);
+
+    if (type === 'stderr') {
+        grunt.log.write(chalk.yellow(out));
+    } else {
+        grunt.log.write(chalkType ? chalk[chalkType](out) : out);
+    }
 }
 
 function api (commands, options, done) {
@@ -179,6 +209,6 @@ function api (commands, options, done) {
 
 api.connect = prepare;
 api.exec = exec;
-api.stream = stream;
+api.interactive = interactive;
 
 module.exports = api;
