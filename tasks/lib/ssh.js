@@ -76,9 +76,10 @@ function interactive (c, options) {
     var shell;
     var queue = [];
 
-    function cancel () {
+    function cancel (then) {
         if (shell) {
-            shell.signal('INT');
+            shell.once('data', then);
+            shell.write('\x03'); // SIGINT
         }
     }
 
