@@ -88,9 +88,8 @@ function interactive (c, options) {
         shell.on('data', read.bind(null, options.chalk));
     }
 
-    function write (command, options, done) {
+    function write (command) {
         shell.write(command + '\n');
-        done();
     }
 
     c.on('error', function(err) {
