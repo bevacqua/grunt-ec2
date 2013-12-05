@@ -2,7 +2,7 @@
 
 Known Issues
 
-- Changing directories under `ec2_ssh` is unsupported at the moment
+- Terminating commands over `ssh` using the interactive `ec2_ssh` task is unsupported at the moment: You have to leave the session in order to terminate the program. This is being worked on.
 
 Fixes
 
