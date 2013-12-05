@@ -2,7 +2,7 @@
 
 Known Issues
 
-- Terminating commands over `ssh` using the interactive `ec2_ssh` task is unsupported at the moment: You have to leave the session in order to terminate the program. This is being worked on.
+- Terminating commands with a `SIGINT` signal (typing <kbd>ctrl</kbd>+<kbd>c</kbd>) over `ssh` using the interactive `ec2_ssh` task is unsupported at the moment: You have to leave the session in order to terminate the program. _This is being addressed._
 
 Fixes
 
