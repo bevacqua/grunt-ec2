@@ -74,11 +74,12 @@ function interactive (c, options) {
     options = options || {};
 
     var shell;
+    var queue = [];
 
-    function cancel (done) {
-        console.log('SIGHUP!');
-        c.signal('HUP');
-        c.once('data', done);
+    function cancel () {
+        if (shell) {
+            shell.signal('INT');
+        }
     }
 
     function ready (err, stream) {
@@ -86,10 +87,18 @@ function interactive (c, options) {
 
         shell = stream;
         shell.on('data', read.bind(null, options.chalk));
+
+        while (queue.length) {
+            write(queue.shift());
+        }
     }
 
     function write (command) {
-        shell.write(command + '\n');
+        if (shell) {
+            shell.write(command + '\n');
+        } else {
+            queue.push(command);
+        }
     }
 
     c.on('error', function(err) {

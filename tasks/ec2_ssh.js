@@ -34,14 +34,13 @@ module.exports = function(grunt){
             process.on('SIGINT', function() {
                 if (!allowed) {
 
-                    interactive.cancel(function () {
+                    interactive.cancel();
+
+                    process.nextTick(function () {
                         grunt.log.write('\nEnter %s again to exit session\n%s',
                             chalk.red('ctrl+c'),
                             chalk.cyan('» ')
                         );
-                    });
-
-                    process.nextTick(function () {
                         allowed = true;
                     });
                 }
