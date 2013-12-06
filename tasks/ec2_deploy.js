@@ -27,9 +27,6 @@ module.exports = function(grunt){
         var v = grunt.config('pkg.version');
         var dest = util.format(version, v);
         var local = process.cwd();
-        if (local.match(':')) {
-            local = local.replace(/\\/g, '/').replace(/^(\w)\:/, '\/$1');
-        }
 
         var rsync = {
             name: 'v' + v,
