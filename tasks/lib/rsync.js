@@ -22,14 +22,6 @@ module.exports = function(name, opts, done){
         var exclude = clud(opts.excludes, 'exclude');
         var excludeFrom = cludFrom(opts.excludeFrom, 'exclude');
 
-        /*
-        // adjust local path on Windows
-        var local = opts.local;
-        if (local.match(':')) {
-            local = local.replace(/\\/g, '/').replace(/^(\w)\:/, '\/$1');
-        }
-        */
-
         grunt.log.writeln('Deploying %s to %s using rsync over ssh...', chalk.blue(opts.name), chalk.cyan(c.id));
 
         var args = ['a', 'z'];

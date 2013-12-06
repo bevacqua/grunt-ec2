@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git://github.com/bevacqua/grunt-ec2.git"
   },
-  "version": "0.6.1a",
+  "version": "0.6.2",
   "licenses": "MIT",
   "keywords": [
     "gruntplugin",

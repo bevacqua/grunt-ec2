@@ -1,3 +1,9 @@
+# 0.6.2 Broken Windows
+
+Fixes
+
+- Local `rsync` path is now `.`, rather than `process.cwd()`, helping fix an issue on Windows.
+
 # 0.6.1 Hot Sauce
 
 Fixes
