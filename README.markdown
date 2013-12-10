@@ -1,4 +1,4 @@
-# grunt-ec2 [![Build Status](https://travis-ci.org/bevacqua/grunt-ec2.png?branch=master)](https://travis-ci.org/bevacqua/grunt-ec2) [![Dependency Status](https://gemnasium.com/bevacqua/grunt-ec2.png)](https://gemnasium.com/bevacqua/grunt-ec2) [![help me on gittip](http://gbindex.ssokolow.com/img/gittip-43x20.png)](https://www.gittip.com/bevacqua/)
+# grunt-ec2 [![Build Status](https://travis-ci.org/bevacqua/grunt-ec2.png?branch=master)](https://travis-ci.org/bevacqua/grunt-ec2) [![Dependency Status](https://gemnasium.com/bevacqua/grunt-ec2.png)](https://gemnasium.com/bevacqua/grunt-ec2) [![help me on gittip](http://gbindex.ssokolow.com/img/gittip-43x20.png)](https://www.gittip.com/bevacqua/) [![help me on gittip](http://gbindex.ssokolow.com/img/gittip-43x20.png)](https://www.gittip.com/bevacqua/)
 
 > Grunt tasks to create, terminate, and deploy Node applications to AWS EC2 instances, then proxy with nginx
 
