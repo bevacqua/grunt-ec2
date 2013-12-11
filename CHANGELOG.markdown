@@ -1,3 +1,9 @@
+# 0.6.3 Quicksand
+
+Fixes
+
+- Fixed issue with remote `rsync` path resolving to something ending with `//*`, causing various issues.
+
 # 0.6.2 Broken Windows
 
 Fixes

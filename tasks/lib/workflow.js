@@ -41,7 +41,7 @@ var api = function (steps, options, done) {
 
         function move () {
             var parent = path.relative(path.dirname(r.local), r.local);
-            var remoteSync = r.remote + '/' + parent;
+            var remoteSync = util.format('%s%s', r.remote, parent ? '/' + parent : '');
 
             ssh([ util.format('sudo cp -r %s/* %s', remoteSync, r.dest) ], options, next);
         }
