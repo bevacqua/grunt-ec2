@@ -229,7 +229,7 @@ Task and Target(s)|Purpose
 `ec2_node_restart:name`|Restarts app using `pm2 restart all`
 `ec2_node_start:name`|Starts app using parameterized `pm2 start`
 `ec2_node_stop:name`|Stops app using `pm2 stop all`
-`ec2_pagespeed`|Requests the Google PageSpeed API, prints insights
+`ec2_pagespeed:ip`|Requests the Google PageSpeed API, prints insights
 `ec2_reboot:name`|Reboots the EC2 instance
 `ec2_release_address:ip`|Releases an IP address
 `ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
