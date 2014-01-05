@@ -1,3 +1,8 @@
+# 0.7.1 Overly Dependant Package
+
+- Update dependencies to edge versions
+- Use `~` in dependency versions
+
 # 0.7.0 Rooster Tornado
 
 - Differentiate logging from AWS API requests (`aws`) and commands executed (`cmd`)
