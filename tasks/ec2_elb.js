@@ -34,8 +34,6 @@ module.exports = function (grunt) {
                 ].join('\n'));
             }
 
-            grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
-
             var cmd = map[action];
             var balancer = elb || conf('AWS_ELB_NAME');
             var names = _.toArray(arguments);
@@ -44,6 +42,8 @@ module.exports = function (grunt) {
                 LoadBalancerName: balancer,
                 Instances: [name]
             };
+
+            grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
 
             aws.log('aws elb %s --load-balancer-name %s --instances %s', cmd.cli, balancer, name);
             aws.elb[cmd.sdk](params, function () {
