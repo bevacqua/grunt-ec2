@@ -1,6 +1,7 @@
 # 0.7.0 Rooster Tornado
 
-- Stop using `aws-cli` in favor of the native `aws-sdk` API
+- Stopped using `aws-cli` in favor of the native `aws-sdk` API
+- Installing `pip` and `aws-cli` isn't necessary anymore
 
 # 0.6.3 Quicksand
 
