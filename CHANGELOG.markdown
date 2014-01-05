@@ -1,9 +1,15 @@
 # 0.7.0 Rooster Tornado
 
-- Stopped using `aws-cli` in favor of the native `aws-sdk` API
 - Differentiate logging from AWS API requests (`aws`) and commands executed (`cmd`)
-- Installing `pip` and `aws-cli` isn't necessary anymore
+
+Fixes
+
 - Fixed issues in `ec2_elb_attach` and `ec2_elb_detach` tasks
+
+**BREAKING**
+
+- Stopped using `aws-cli` in favor of the native `aws-sdk` API
+- Installing `pip` and `aws-cli` isn't necessary anymore
 
 # 0.6.3 Quicksand
 
