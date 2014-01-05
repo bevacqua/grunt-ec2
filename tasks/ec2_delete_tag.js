@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
@@ -19,7 +19,12 @@ module.exports = function (grunt) {
         grunt.log.writeln('Removing EC2 instance name tag from %s...', chalk.cyan(id));
 
         var done = this.async();
+        var params = {
+            resources: [id],
+            tags: [{ Key: 'Name' }]
+        };
 
-        exec('aws ec2 delete-tags --resources %s --tags Key=Name', [id], done);
+        aws.log('ec2 delete-tags --resources %s --tags Key=Name', id);
+        aws.ec2.deleteTags(params, done);
     });
 };

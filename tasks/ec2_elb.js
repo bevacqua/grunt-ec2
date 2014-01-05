@@ -4,12 +4,18 @@ var _ = require('lodash');
 var chalk = require('chalk');
 var util = require('util');
 var conf  = require('./lib/conf.js');
-var exec  = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 
 module.exports = function (grunt) {
     var map = {
-        attach: 'register-instances-with-load-balancer',
-        detach: 'deregister-instances-from-load-balancer'
+        attach: {
+            cli: 'register-instances-with-load-balancer',
+            sdk: 'registerInstancesWithLoadBalancer'
+        },
+        detach: {
+            cli: 'deregister-instances-from-load-balancer',
+            sdk: 'deregisterInstancesFromLoadBalancer'
+        }
     };
 
     function register (action) {
@@ -28,15 +34,19 @@ module.exports = function (grunt) {
                 ].join('\n'));
             }
 
+            grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
+
+            var cmd = map[action];
             var balancer = elb || conf('AWS_ELB_NAME');
             var names = _.toArray(arguments);
             var done = this.async();
+            var params = {
+                LoadBalancerName: balancer,
+                Instances: [name]
+            };
 
-            grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
-
-            exec('aws elb %s --load-balancer-name %s --instances %s', [
-                map[action], balancer, name
-            ], function () {
+            aws.log('aws elb %s --load-balancer-name %s --instances %s', cmd.cli, balancer, name);
+            aws.elb[cmd.sdk](params, function () {
                 grunt.log.ok('Done! Instance %sed.', action);
                 done();
             });

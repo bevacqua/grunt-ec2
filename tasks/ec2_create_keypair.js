@@ -4,6 +4,7 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 var cwd = process.cwd();
 
@@ -35,9 +36,13 @@ module.exports = function (grunt) {
 
             grunt.log.writeln('Uploading public key %s to EC2...', chalk.cyan(pubKey));
 
-            exec('aws ec2 import-key-pair --public-key-material %s --key-name %s', [
-                'file://' + pubKey, name
-            ], done);
+            var params = {
+                PublicKeyMaterial: 'file://' + pubKey,
+                KeyName: name
+            };
+
+            aws.log('ec2 import-key-pair --public-key-material %s --key-name %s', 'file://' + pubKey, name);
+            aws.ec2.importKeyPair(params, done);
 
         }
     });

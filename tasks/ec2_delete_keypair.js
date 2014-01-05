@@ -1,9 +1,10 @@
 'use strict';
 
+var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 var cwd = process.cwd();
 
@@ -22,16 +23,21 @@ module.exports = function (grunt) {
         grunt.log.writeln('Deleting EC2 Key Pair named %s...', chalk.red(name));
 
         var done = this.async();
+        var params = {
+            keyName: name
+        };
 
-        exec('aws ec2 delete-key-pair --key-name %s', [name], removeFromDisk);
+        aws.log('ec2 delete-key-pair --key-name %s', name);
+        aws.ec2.deleteKeyPair(params, removeFromDisk);
 
         function removeFromDisk () {
             var dir = conf('SSH_KEYS_FOLDER');
             var file = path.join(dir, name + '.pem');
 
-            removeFile(file, function () {
-                removeFile(file + '.pub', done);
-            });
+            async.parallel([
+                async.apply(removeFile, file),
+                async.apply(removeFile, file + '.pub')
+            ], done);
 
         }
 

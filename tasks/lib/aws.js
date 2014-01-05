@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var util = require('util');
 var chalk = require('chalk');
 var grunt = require('grunt');
 var AWS = require('aws-sdk');
@@ -34,7 +35,8 @@ function fetch (service) {
 
 module.exports = {
     get ec2 () { return fetch('EC2'); },
-    log: function (command) {
+    log: function () {
+        var command = util.format.apply(null, _.toArray(arguments));
         grunt.log.writeln(chalk.underline.yellow('[aws]'), chalk.magenta(command));
     },
     capture: function (then) {
