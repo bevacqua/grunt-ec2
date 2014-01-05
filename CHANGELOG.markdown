@@ -1,6 +1,6 @@
 # 0.7.0 Rooster Tornado
 
-- Switched from Python's `aws-cli` to Node's `aws-sdk`
+- Stop using `aws-cli` in favor of the native `aws-sdk` API
 
 # 0.6.3 Quicksand
 
