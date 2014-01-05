@@ -22,7 +22,7 @@ module.exports = function (grunt) {
 
         var taskName = 'ec2_elb_' + action;
         var capitalized = action[0].toUpperCase() + action.substr(1);
-        var description = util.format('%s instances to an AWS ELB load balancer');
+        var description = util.format('%s instances to an AWS ELB load balancer', capitalized);
 
         grunt.registerTask(taskName, description, function (name, elb) {
             conf.init(grunt);
