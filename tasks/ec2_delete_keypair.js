@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 
         var done = this.async();
         var params = {
-            keyName: name
+            KeyName: name
         };
 
         aws.log('ec2 delete-key-pair --key-name %s', name);

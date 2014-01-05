@@ -20,11 +20,11 @@ module.exports = function (grunt) {
 
         var done = this.async();
         var params = {
-            resources: [id],
-            tags: [{ Key: 'Name', Value: name }]
+            Resources: [id],
+            Tags: [{ Key: 'Name', Value: name }]
         };
 
         aws.log('ec2 create-tags --resources %s --tags Key=Name,Value=%s', id, name);
-        aws.ec2.createTags(params, aws.capture(done));
+        aws.ec2.createTags(params, aws.capture('Instance tagged as %s', name, done));
     });
 };

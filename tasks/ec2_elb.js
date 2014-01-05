@@ -46,10 +46,7 @@ module.exports = function (grunt) {
             grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
 
             aws.log('aws elb %s --load-balancer-name %s --instances %s', cmd.cli, balancer, name);
-            aws.elb[cmd.sdk](params, aws.capture(function () {
-                grunt.log.ok('Done! Instance %sed.', action);
-                done();
-            }));
+            aws.elb[cmd.sdk](params, aws.capture('Done! Instance %sed.', action, done));
         });
     }
 

@@ -39,13 +39,19 @@ module.exports = {
         var command = util.format.apply(null, _.toArray(arguments));
         grunt.log.writeln(chalk.underline.yellow('[aws]'), chalk.magenta(command));
     },
-    capture: function (then) {
+    capture: function () {
+        var args = _.toArray(arguments);
+        var then = args.pop();
+
         return function (err) {
             if (err) {
                 return grunt.fatal([
                     'Request to the AWS API failed with an error.',
                     err.stack || err
                 ].join('\n'));
+            }
+            if (args.length) {
+                grunt.log.ok(util.format.apply(null, args));
             }
             then.apply(null, _.toArray(arguments).slice(1));
         };

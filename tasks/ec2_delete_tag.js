@@ -20,8 +20,8 @@ module.exports = function (grunt) {
 
         var done = this.async();
         var params = {
-            resources: [id],
-            tags: [{ Key: 'Name' }]
+            Resources: [id],
+            Tags: [{ Key: 'Name' }]
         };
 
         aws.log('ec2 delete-tags --resources %s --tags Key=Name', id);

@@ -23,13 +23,14 @@ module.exports = function (grunt) {
         var params = {
             ImageId: conf('AWS_IMAGE_ID'),
             InstanceType: conf('AWS_INSTANCE_TYPE'),
-            Count: 1,
+            MinCount: 1,
+            MaxCount: 1,
             KeyName: name,
             SecurityGroups: [conf('AWS_SECURITY_GROUP')]
         };
         var cmd = 'ec2 run-instances --image-id %s --instance-type %s --count %s --key-name %s --security-groups %s';
-        aws.log(cmd, params.ImageId, params.InstanceType, params.Count, params.KeyName, params.SecurityGroups[0]);
-        aws.ec2(params, aws.capture(next));
+        aws.log(cmd, params.ImageId, params.InstanceType, params.MinCount, params.KeyName, params.SecurityGroups[0]);
+        aws.ec2.runInstances(params, aws.capture(next));
 
         function next (result) {
             var elastic = conf('ELASTIC_IP');
@@ -42,6 +43,7 @@ module.exports = function (grunt) {
                 tasks.push('ec2_assign_address:' + id);
             }
 
+            grunt.log.ok('Instance requested, initializing...');
             grunt.task.run(tasks);
             done();
         }
