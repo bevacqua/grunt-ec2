@@ -27,7 +27,7 @@ module.exports = function (grunt) {
 
             grunt.log.writeln('Rebooting EC2 instance %s...', chalk.magenta(id));
             aws.log('ec2 reboot-instances --instance-ids %s', id);
-            aws.ec2.rebootInstances(params, aws.capture(done));
+            aws.ec2.rebootInstances(params, aws.capture('Instance rebooted successfully', done));
         });
     });
 };

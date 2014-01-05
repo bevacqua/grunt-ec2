@@ -35,6 +35,7 @@ function fetch (service) {
 
 module.exports = {
     get ec2 () { return fetch('EC2'); },
+    get elb () { return fetch('ELB'); },
     log: function () {
         var command = util.format.apply(null, _.toArray(arguments));
         grunt.log.writeln(chalk.underline.yellow('[aws]'), chalk.magenta(command));

@@ -24,6 +24,6 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 release-address --public-ip %s', ip);
-        aws.ec2.releaseAddress(params, aws.capture(done));
+        aws.ec2.releaseAddress(params, aws.capture('IP address released.', done));
     });
 };

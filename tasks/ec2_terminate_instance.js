@@ -24,6 +24,6 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 terminate-instances --instance-ids %s', id);
-        aws.ec2.terminateInstances(params, aws.capture(done));
+        aws.ec2.terminateInstances(params, aws.capture('Instance terminated.', done));
     });
 };

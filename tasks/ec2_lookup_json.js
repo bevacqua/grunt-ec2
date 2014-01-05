@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var chalk = require('chalk');
 var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
@@ -24,6 +25,13 @@ module.exports = function (grunt) {
         grunt.log.writeln('Getting EC2 description for %s instance...', chalk.cyan(name));
 
         aws.log('ec2 describe-instances --filters Name=tag:Name,Values=%s', name);
-        aws.ec2.describeInstances(params, aws.capture(done));
+        aws.ec2.describeInstances(params, aws.capture(function (result) {
+            var instances = _.pluck(result.Reservations, 'Instances');
+            var flat = _.flatten(instances);
+
+            console.log(JSON.stringify(flat, null, 2));
+
+            done();
+        }));
     });
 };

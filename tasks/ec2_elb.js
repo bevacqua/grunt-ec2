@@ -5,6 +5,7 @@ var chalk = require('chalk');
 var util = require('util');
 var conf  = require('./lib/conf.js');
 var aws = require('./lib/aws.js');
+var lookup = require('./lib/lookup.js');
 
 module.exports = function (grunt) {
     var map = {
@@ -29,24 +30,32 @@ module.exports = function (grunt) {
 
             if (arguments.length === 0) {
                 grunt.fatal([
-                    'You should provide an instance name. ELB name parameter is optional.',
+                    'You should provide an instance name.',
                     'e.g: ' + chalk.yellow(util.format('grunt %s:instance-name:elb-name?', taskName))
                 ].join('\n'));
             }
 
-            var cmd = map[action];
-            var balancer = elb || conf('AWS_ELB_NAME');
-            var names = _.toArray(arguments);
             var done = this.async();
-            var params = {
-                LoadBalancerName: balancer,
-                Instances: [name]
-            };
+            var balancer = elb || conf('AWS_ELB_NAME');
+            if (balancer === void 0) {
+                grunt.fatal([
+                    'You should set the ELB name as option AWS_ELB_NAME, or pass it into the task.',
+                    'e.g: ' + chalk.yellow(util.format('grunt %s:instance-name:elb-name?', taskName))
+                ].join('\n'));
+            }
 
-            grunt.log.writeln('%sing %s instances', capitalized, chalk.cyan(names.join(' ')));
+            lookup(name, function (instance) {
+                var cmd = map[action];
+                var params = {
+                    LoadBalancerName: balancer,
+                    Instances: [{ InstanceId: instance.InstanceId }]
+                };
 
-            aws.log('aws elb %s --load-balancer-name %s --instances %s', cmd.cli, balancer, name);
-            aws.elb[cmd.sdk](params, aws.capture('Done! Instance %sed.', action, done));
+                grunt.log.writeln('%sing %s instance with %s ELB', capitalized, chalk.cyan(name), chalk.cyan(balancer));
+
+                aws.log('elb %s --load-balancer-name %s --instances %s', cmd.cli, balancer, name);
+                aws.elb[cmd.sdk](params, aws.capture('Done! Instance %sed.', action, done));
+            });
         });
     }
 

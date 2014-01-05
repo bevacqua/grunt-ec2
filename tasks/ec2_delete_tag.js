@@ -25,6 +25,6 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 delete-tags --resources %s --tags Key=Name', id);
-        aws.ec2.deleteTags(params, aws.capture(done));
+        aws.ec2.deleteTags(params, aws.capture('Name tag removed.', done));
     });
 };
