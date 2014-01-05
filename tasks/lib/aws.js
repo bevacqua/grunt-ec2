@@ -1,4 +1,7 @@
+'use strict';
+
 var _ = require('lodash');
+var chalk = require('chalk');
 var grunt = require('grunt');
 var AWS = require('aws-sdk');
 var conf = require('./conf.js');
@@ -8,6 +11,7 @@ var components = {};
 function configure () {
 
     if (configured) { return; }
+
     configured = true;
 
     var credentials = {
@@ -30,6 +34,9 @@ function fetch (service) {
 
 module.exports = {
     get ec2 () { return fetch('EC2'); },
+    log: function (command) {
+        grunt.log.writeln(chalk.underline.yellow('[aws]'), chalk.magenta(command));
+    },
     capture: function (then) {
         return function (err) {
             if (err) {
