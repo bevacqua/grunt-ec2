@@ -29,23 +29,23 @@
   },
   "dependencies": {
     "async": "~0.2.9",
+    "aws-sdk": "~2.0.0-rc5",
     "chalk": "~0.4.0",
     "fs-extra": "~0.8.1",
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "lodash": "~2.4.1",
     "mkdirp": "~0.3.5",
     "moment": "~2.5.0",
     "mustache": "~0.8.1",
-    "ssh2": "~0.2.15",
-    "aws-sdk": "~2.0.0-rc5"
+    "ssh2": "~0.2.15"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "0.7.1",
-    "jshint-stylish": "0.1.4",
-    "load-grunt-tasks": "0.2.0"
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "jshint-stylish": "~0.1.5",
+    "load-grunt-tasks": "~0.2.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.2"
   }
 }
