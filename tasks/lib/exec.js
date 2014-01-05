@@ -6,7 +6,7 @@ var util = require('util');
 var exec = require('child_process').exec;
 var conf = require('./conf.js');
 
-module.exports = function(command, args, opts, done){
+module.exports = function (command, args, opts, done) {
 
     if (arguments.length < 3) {
         throw new Error('exec(command, args[, opts], done) improperly invoked.');

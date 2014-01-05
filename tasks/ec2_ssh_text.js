@@ -5,9 +5,9 @@ var chalk = require('chalk');
 var sshCredentials = require('./lib/sshCredentials.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_ssh_text', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function(name){
+    grunt.registerTask('ec2_ssh_text', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

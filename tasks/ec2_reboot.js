@@ -5,9 +5,9 @@ var exec = require('./lib/exec.js');
 var lookup = require('./lib/lookup.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_reboot', 'Reboots the EC2 instance', function(name){
+    grunt.registerTask('ec2_reboot', 'Reboots the EC2 instance', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

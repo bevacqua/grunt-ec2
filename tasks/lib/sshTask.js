@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     return {
         register: function (task) {
 
-            grunt.registerTask(task.name, task.description, function(name){
+            grunt.registerTask(task.name, task.description, function (name) {
                 conf.init(grunt);
 
                 if (arguments.length === 0) {

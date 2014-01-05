@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
     var sshTask = require('./lib/sshTask.js')(grunt);
     var tasks = [
         { name: 'ec2_nginx_reload', command: 'sudo nginx -s reload', description: 'Reloads `nginx`' },

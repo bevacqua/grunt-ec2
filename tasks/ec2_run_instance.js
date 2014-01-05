@@ -5,9 +5,9 @@ var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_run_instance', 'Spins up an EC2 instance, gives a name tag and assigns an IP', function(name){
+    grunt.registerTask('ec2_run_instance', 'Spins up an EC2 instance, gives a name tag and assigns an IP', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

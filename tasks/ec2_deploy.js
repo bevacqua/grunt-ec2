@@ -8,9 +8,9 @@ var workflow = require('./lib/workflow.js');
 var ssh = require('./lib/ssh.js');
 var sshCredentials = require('./lib/sshCredentials.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_deploy', 'Deploys to the instance using `rsync`, reloads `pm2` and `nginx`', function(name){
+    grunt.registerTask('ec2_deploy', 'Deploys to the instance using `rsync`, reloads `pm2` and `nginx`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

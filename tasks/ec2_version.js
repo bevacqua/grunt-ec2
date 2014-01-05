@@ -6,9 +6,9 @@ var sshCredentials = require('./lib/sshCredentials.js');
 var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_version', 'Get the version number currently deployed to EC2', function(name){
+    grunt.registerTask('ec2_version', 'Get the version number currently deployed to EC2', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

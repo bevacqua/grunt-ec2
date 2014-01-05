@@ -4,9 +4,9 @@ var chalk = require('chalk');
 var ssh = require('./lib/ssh.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_ssh', 'Establishes an `ssh` connection to the instance, you can emit commands to your EC2 instance', function(name){
+    grunt.registerTask('ec2_ssh', 'Establishes an `ssh` connection to the instance, you can emit commands to your EC2 instance', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

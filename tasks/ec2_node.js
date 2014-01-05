@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var commands = require('./lib/commands.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
     var sshTask = require('./lib/sshTask.js')(grunt);
     var tasks = [
         { name: 'ec2_node_list', command: 'sudo pm2 list', description: 'Returns output for `pm2 list`' },

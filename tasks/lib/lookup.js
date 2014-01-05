@@ -5,13 +5,13 @@ var grunt = require('grunt');
 var chalk = require('chalk');
 var exec = require('./exec.js');
 
-module.exports = function(name, done){
+module.exports = function (name, done) {
 
     grunt.log.writeln('Looking up EC2 instances named %s...', chalk.cyan(name));
 
     exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], { pipe: false }, parse);
 
-    function parse(stdout){
+    function parse(stdout) {
         var result = JSON.parse(stdout);
         var instances = _.pluck(result.Reservations, 'Instances');
         var flat = _.flatten(instances);

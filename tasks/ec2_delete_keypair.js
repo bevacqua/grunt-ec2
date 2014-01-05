@@ -7,9 +7,9 @@ var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
 var cwd = process.cwd();
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_delete_keypair', 'Removes the remote and the local copies of the RSA key', function(name){
+    grunt.registerTask('ec2_delete_keypair', 'Removes the remote and the local copies of the RSA key', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -29,14 +29,14 @@ module.exports = function(grunt){
             var dir = conf('SSH_KEYS_FOLDER');
             var file = path.join(dir, name + '.pem');
 
-            removeFile(file, function(){
+            removeFile(file, function () {
                 removeFile(file + '.pub', done);
             });
 
         }
 
         function removeFile (file, next) {
-            fs.remove(file, function(err){
+            fs.remove(file, function (err) {
                 if (err) { grunt.warn(err); }
 
                 var relative = path.relative(cwd, file);

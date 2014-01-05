@@ -4,9 +4,9 @@ var chalk = require('chalk');
 var exec = require('./lib/exec.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_assign_existing_address', function(id,ip){
+    grunt.registerTask('ec2_assign_existing_address', function (id,ip) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
