@@ -22,12 +22,13 @@ module.exports = function (grunt) {
         var done = this.async();
 
         aws.log('ec2 allocate-address');
-        aws.ec2.allocateAddress({}, aws.capture('Allocated IP address %s', chalk.cyan(ip), assign));
+        aws.ec2.allocateAddress({}, aws.capture(assign));
 
         function assign (result) {
             var ip = result.PublicIp;
             var assignment = util.format('ec2_assign_existing_address:%s:%s', id, ip);
 
+            grunt.log.ok('Allocated IP address %s', chalk.cyan(ip));
             grunt.task.run(assignment);
             done();
         }

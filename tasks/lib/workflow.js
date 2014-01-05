@@ -47,7 +47,7 @@ function api (steps, options, done) {
         }
     }, done);
 
-};
+}
 
 api.if_has = iif;
 api.if_not = iif_not;
