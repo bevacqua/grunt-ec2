@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
@@ -17,9 +17,13 @@ module.exports = function (grunt) {
         }
 
         var done = this.async();
+        var params = {
+            Filters: [{ Name: 'tag:Name', Values: [name] }]
+        };
 
         grunt.log.writeln('Getting EC2 description for %s instance...', chalk.cyan(name));
 
-        exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], done);
+        aws.log('ec2 describe-instances --filters Name=tag:Name,Values=%s', name);
+        aws.ec2.describeInstances(params, aws.capture(done));
     });
 };

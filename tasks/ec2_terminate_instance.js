@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
@@ -19,7 +19,11 @@ module.exports = function (grunt) {
         grunt.log.writeln('Shutting down EC2 instance %s...', chalk.red(id));
 
         var done = this.async();
+        var params = {
+            InstanceIds: [id]
+        };
 
-        exec('aws ec2 terminate-instances --instance-ids %s', [id], done);
+        aws.log('ec2 terminate-instances --instance-ids %s', id);
+        aws.ec2.terminateInstances(params, aws.capture(done));
     });
 };

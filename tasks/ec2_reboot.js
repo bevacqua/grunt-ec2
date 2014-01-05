@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var lookup = require('./lib/lookup.js');
 var conf = require('./lib/conf.js');
 
@@ -21,9 +21,13 @@ module.exports = function (grunt) {
 
         lookup(name, function (instance) {
             var id = instance.InstanceId;
+            var params = {
+                InstanceIds: [id]
+            };
 
             grunt.log.writeln('Rebooting EC2 instance %s...', chalk.magenta(id));
-            exec('aws ec2 reboot-instances --instance-ids %s', [id], done);
+            aws.log('ec2 reboot-instances --instance-ids %s', id);
+            aws.ec2.rebootInstances(params, aws.capture(done));
         });
     });
 };

@@ -42,8 +42,7 @@ module.exports = function (grunt) {
             };
 
             aws.log('ec2 import-key-pair --public-key-material %s --key-name %s', 'file://' + pubKey, name);
-            aws.ec2.importKeyPair(params, done);
-
+            aws.ec2.importKeyPair(params, aws.capture(done));
         }
     });
 };

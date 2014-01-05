@@ -25,6 +25,6 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 associate-address --instance-id %s --public-ip %s', id, ip);
-        aws.ec2.associateAddress(params, done);
+        aws.ec2.associateAddress(params, aws.capture(done));
     });
 };

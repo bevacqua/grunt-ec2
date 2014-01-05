@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 delete-key-pair --key-name %s', name);
-        aws.ec2.deleteKeyPair(params, removeFromDisk);
+        aws.ec2.deleteKeyPair(params, aws.capture(removeFromDisk));
 
         function removeFromDisk () {
             var dir = conf('SSH_KEYS_FOLDER');

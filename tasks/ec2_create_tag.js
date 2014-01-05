@@ -25,6 +25,6 @@ module.exports = function (grunt) {
         };
 
         aws.log('ec2 create-tags --resources %s --tags Key=Name,Value=%s', id, name);
-        aws.ec2.createTags(params, done);
+        aws.ec2.createTags(params, aws.capture(done));
     });
 };

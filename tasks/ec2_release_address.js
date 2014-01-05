@@ -1,7 +1,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
@@ -19,7 +19,11 @@ module.exports = function (grunt) {
         grunt.log.writeln('Releasing Elastic IP Address %s...', chalk.red(ip));
 
         var done = this.async();
+        var params = {
+            PublicIp: ip
+        };
 
-        exec('aws ec2 release-address --public-ip %s', [ip], done);
+        aws.log('ec2 release-address --public-ip %s', ip);
+        aws.ec2.releaseAddress(params, aws.capture(done));
     });
 };
