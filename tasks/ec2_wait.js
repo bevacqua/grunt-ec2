@@ -14,9 +14,9 @@ function wait (fn, duration) {
     setTimeout(fn, (duration || 3) * 1000);
 }
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_wait', 'Waits for an instance to report a public DNS and be accessible through `ssh`', function(name){
+    grunt.registerTask('ec2_wait', 'Waits for an instance to report a public DNS and be accessible through `ssh`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

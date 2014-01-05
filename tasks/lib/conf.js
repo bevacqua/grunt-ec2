@@ -19,7 +19,7 @@ Config.prototype.init = function (grunt) {
     grunt.config.requires('ec2');
     grunt.config.requires('pkg.version');
 
-    var defaults = require('../../cfg/defaults.json');
+    var defaults = require('../../dat/defaults.json');
     var user = grunt.config('ec2');
 
     if (typeof user === 'string') {
@@ -40,7 +40,7 @@ Config.prototype.defaults = function () {
     d(_, 'NODE_SCRIPT', 'app.js');
 
     df(_, 'SSH_KEYS_FOLDER', '../../private');
-    df(_, 'RSYNC_EXCLUDE_FROM', '../../cfg/defaults.rsyncignore');
+    df(_, 'RSYNC_EXCLUDE_FROM', '../../dat/defaults.rsyncignore');
 
     _.SRV_ROOT = util.format('/srv/apps/%s', _.PROJECT_ID);
 

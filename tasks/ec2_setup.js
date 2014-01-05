@@ -5,9 +5,9 @@ var chalk = require('chalk');
 var conf = require('./lib/conf.js');
 var workflow = require('./lib/workflow.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_setup', 'Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`', function(name){
+    grunt.registerTask('ec2_setup', 'Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

@@ -1,12 +1,12 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_assign_existing_address', function(id,ip){
+    grunt.registerTask('ec2_assign_existing_address', function (id,ip) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
@@ -16,10 +16,15 @@ module.exports = function(grunt){
             ].join('\n'));
         }
 
-        var done = this.async();
-
         grunt.log.writeln('Associating EC2 instance %s to IP %s', chalk.cyan(id), chalk.cyan(ip));
 
-        exec('aws ec2 associate-address --instance-id %s --public-ip %s', [id, ip], done);
+        var done = this.async();
+        var params = {
+            InstanceId: id,
+            PublicIp: ip
+        };
+
+        aws.log('ec2 associate-address --instance-id %s --public-ip %s', id, ip);
+        aws.ec2.associateAddress(params, aws.capture('Instance associated with public IP.', done));
     });
 };

@@ -1,15 +1,18 @@
 'use strict';
 
+var async = require('async');
+var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var chalk = require('chalk');
 var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 var cwd = process.cwd();
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_create_keypair', 'Generates an RSA key pair and uploads the public key to AWS', function(name){
+    grunt.registerTask('ec2_create_keypair', 'Generates an RSA key pair and uploads the public key to AWS', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -23,22 +26,37 @@ module.exports = function(grunt){
         var absolute = conf('SSH_KEYS_FOLDER');
         var relative = conf('SSH_KEYS_RELATIVE');
         var file = path.join(relative, name + '.pem');
-        var pubKey = path.relative(cwd, file + '.pub');
+        var pubKeyFile = path.relative(cwd, file + '.pub');
+        var pubKey;
 
         mkdirp.sync(absolute);
 
         grunt.log.writeln('Generating key pair named %s...', chalk.cyan(name));
 
-        exec('ssh-keygen -t rsa -b 2048 -N "" -f %s', [file], upload);
+        async.series([
+            async.apply(exec, 'ssh-keygen -t rsa -b 2048 -N "" -f %s', [file]),
+            async.apply(load),
+            async.apply(upload)
+        ], done);
 
-        function upload () {
+        function load (next) {
+            fs.readFile(pubKeyFile, function (err, data) {
+                pubKey = data.toString('base64');
+                next(err);
+            });
+        }
 
-            grunt.log.writeln('Uploading public key %s to EC2...', chalk.cyan(pubKey));
+        function upload (next) {
 
-            exec('aws ec2 import-key-pair --public-key-material %s --key-name %s', [
-                'file://' + pubKey, name
-            ], done);
+            grunt.log.writeln('Uploading public key %s to EC2...', chalk.cyan(pubKeyFile));
 
+            var params = {
+                PublicKeyMaterial: pubKey,
+                KeyName: name
+            };
+
+            aws.log('ec2 import-key-pair --public-key-material %s --key-name %s', 'file://' + pubKeyFile, name);
+            aws.ec2.importKeyPair(params, aws.capture('Upload successful.', next));
         }
     });
 };

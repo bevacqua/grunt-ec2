@@ -4,9 +4,9 @@ var chalk = require('chalk');
 var lookup = require('./lib/lookup.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_shutdown', 'Terminates an instance, deleting its associated key-pair, IP address, and name tag', function(name){
+    grunt.registerTask('ec2_shutdown', 'Terminates an instance, deleting its associated key-pair, IP address, and name tag', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {

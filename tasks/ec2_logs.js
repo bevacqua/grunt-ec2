@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
     var sshTask = require('./lib/sshTask.js')(grunt);
     var tasks = [
         { name: 'ec2_logs_node', command: 'sudo pm2 flush', description: 'Gets `pm2` logs' },

@@ -3,9 +3,9 @@
 var chalk = require('chalk');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_launch', 'Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up', function(name){
+    grunt.registerTask('ec2_launch', 'Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up', function (name) {
         conf.init(grunt);
 
         grunt.log.writeln('Queuing creation tasks for instance %s...', chalk.cyan(name));

@@ -8,7 +8,7 @@ var mustache = require('mustache');
 var conf = require('./lib/conf.js');
 var workflow = require('./lib/workflow.js');
 
-module.exports = function (grunt){
+module.exports = function (grunt) {
 
     grunt.registerTask('ec2_nginx_configure', 'Installs `nginx` if necessary, updates its configuration files', function (name) {
         conf.init(grunt);
@@ -24,7 +24,7 @@ module.exports = function (grunt){
 
         function nginxTemplate (name, where) {
             var remote = util.format('%s/%s.conf', conf('SRV_ROOT'), name);
-            var local = path.resolve(__dirname, util.format('../cfg/%s.conf', name));
+            var local = path.resolve(__dirname, util.format('../dat/%s.conf', name));
             var template = fs.readFileSync(local, { encoding: 'utf8' });
             var data = mustache.render(template, conf());
             var escaped = data

@@ -18,7 +18,7 @@ function iif_not (value, commands) {
     return conf(value) ? [] : commands;
 }
 
-var api = function (steps, options, done) {
+function api (steps, options, done) {
     var i = 0;
 
     grunt.verbose.writeln('Following a workflow with %s steps', chalk.cyan(steps.length));
@@ -47,7 +47,7 @@ var api = function (steps, options, done) {
         }
     }, done);
 
-};
+}
 
 api.if_has = iif;
 api.if_not = iif_not;

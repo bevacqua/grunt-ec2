@@ -2,12 +2,12 @@
 
 var util = require('util');
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_assign_address', 'Allocates an IP and assigns it to your instance', function(id){
+    grunt.registerTask('ec2_assign_address', 'Allocates an IP and assigns it to your instance', function (id) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -21,13 +21,14 @@ module.exports = function(grunt){
 
         var done = this.async();
 
-        exec('aws ec2 allocate-address', [], { pipe: false }, next);
+        aws.log('ec2 allocate-address');
+        aws.ec2.allocateAddress({}, aws.capture(assign));
 
-        function next (stdout) {
-            var result = JSON.parse(stdout);
+        function assign (result) {
             var ip = result.PublicIp;
             var assignment = util.format('ec2_assign_existing_address:%s:%s', id, ip);
 
+            grunt.log.ok('Allocated IP address %s', chalk.cyan(ip));
             grunt.task.run(assignment);
             done();
         }

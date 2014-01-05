@@ -6,7 +6,7 @@ var util = require('util');
 var exec = require('child_process').exec;
 var conf = require('./conf.js');
 
-module.exports = function(command, args, opts, done){
+module.exports = function (command, args, opts, done) {
 
     if (arguments.length < 3) {
         throw new Error('exec(command, args[, opts], done) improperly invoked.');
@@ -24,7 +24,7 @@ module.exports = function(command, args, opts, done){
         cfg.maxBuffer = opts.buffer;
     }
 
-    grunt.log.writeln(chalk.underline(chalk.yellow('[cmd]')), chalk.magenta(cmd));
+    grunt.log.writeln(chalk.underline.yellow('[cmd]'), chalk.magenta(cmd));
 
     var proc = exec(cmd, cfg, callback);
 

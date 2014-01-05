@@ -18,7 +18,7 @@ function prepare (options, ready, done) {
         c.on('error', grunt.fatal);
     }
 
-    sshCredentials(options.name, function(credentials) {
+    sshCredentials(options.name, function (credentials) {
 
         if (!credentials) {
             grunt.fatal('This instance is refusing SSH connections for now');
@@ -163,7 +163,7 @@ function api (commands, options, done) {
 
         var command = commands.shift();
 
-        grunt.log.writeln(chalk.underline(chalk.yellow('[ssh]')), chalk.magenta(command));
+        grunt.log.writeln(chalk.underline.yellow('[ssh]'), chalk.magenta(command));
 
         exec(c, command, next);
     }

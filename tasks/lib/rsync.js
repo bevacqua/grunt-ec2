@@ -7,7 +7,7 @@ var exec = require('./exec.js');
 var conf = require('./conf.js');
 var sshCredentials = require('./sshCredentials.js');
 
-module.exports = function(name, opts, done){
+module.exports = function (name, opts, done) {
 
     sshCredentials(name, function (c) {
 

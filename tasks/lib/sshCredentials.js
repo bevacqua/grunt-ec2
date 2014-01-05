@@ -9,7 +9,7 @@ var cache = {};
 module.exports = function (name, done) {
 
     if (name in cache) { // prevent redundant lookups.
-        return process.nextTick(function(){
+        return process.nextTick(function () {
             done(cache[name]);
         });
     }

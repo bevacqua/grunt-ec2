@@ -2,13 +2,13 @@
 
 var _ = require('lodash');
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 var prettyprint = require('./lib/prettyprint.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_lookup', 'Gets instance filtered by name tag', function(name){
+    grunt.registerTask('ec2_lookup', 'Gets instance filtered by name tag', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
@@ -19,13 +19,16 @@ module.exports = function(grunt){
         }
 
         var done = this.async();
+        var params = {
+            Filters: [{ Name: 'tag:Name', Values: [name] }]
+        };
 
         grunt.log.writeln('Getting EC2 description for %s instance...', chalk.cyan(name));
 
-        exec('aws ec2 describe-instances --filters Name=tag:Name,Values=%s', [name], { pipe: false }, print);
+        aws.log('ec2 describe-instances --filters Name=tag:Name,Values=%s', name);
+        aws.ec2.describeInstances(params, aws.capture(print));
 
-        function print (stdout) {
-            var result = JSON.parse(stdout);
+        function print (result) {
             var instances = _.pluck(result.Reservations, 'Instances');
             var flat = _.flatten(instances);
 

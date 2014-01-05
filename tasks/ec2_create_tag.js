@@ -1,12 +1,12 @@
 'use strict';
 
 var chalk = require('chalk');
-var exec = require('./lib/exec.js');
+var aws = require('./lib/aws.js');
 var conf = require('./lib/conf.js');
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_create_tag', 'Tags an instance with the provided name', function(id, name){
+    grunt.registerTask('ec2_create_tag', 'Tags an instance with the provided name', function (id, name) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
@@ -19,7 +19,12 @@ module.exports = function(grunt){
         grunt.log.writeln('Naming EC2 instance %s as %s', chalk.cyan(id), chalk.cyan(name));
 
         var done = this.async();
+        var params = {
+            Resources: [id],
+            Tags: [{ Key: 'Name', Value: name }]
+        };
 
-        exec('aws ec2 create-tags --resources %s --tags Key=Name,Value=%s', [id, name], done);
+        aws.log('ec2 create-tags --resources %s --tags Key=Name,Value=%s', id, name);
+        aws.ec2.createTags(params, aws.capture('Instance tagged as %s', name, done));
     });
 };
