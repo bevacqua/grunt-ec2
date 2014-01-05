@@ -24,7 +24,7 @@ module.exports = function (command, args, opts, done) {
         cfg.maxBuffer = opts.buffer;
     }
 
-    grunt.log.writeln(chalk.underline(chalk.yellow('[cmd]')), chalk.magenta(cmd));
+    grunt.log.writeln(chalk.underline.yellow('[cmd]'), chalk.magenta(cmd));
 
     var proc = exec(cmd, cfg, callback);
 

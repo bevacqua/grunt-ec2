@@ -163,7 +163,7 @@ function api (commands, options, done) {
 
         var command = commands.shift();
 
-        grunt.log.writeln(chalk.underline(chalk.yellow('[ssh]')), chalk.magenta(command));
+        grunt.log.writeln(chalk.underline.yellow('[ssh]'), chalk.magenta(command));
 
         exec(c, command, next);
     }
