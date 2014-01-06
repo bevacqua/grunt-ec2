@@ -1,3 +1,7 @@
+# 0.7.2 Grunt Basics
+
+- Revert from Grunt `@0.4.2` to using `@0.4.1`
+
 # 0.7.1 Overly Dependant Package
 
 - Update dependencies to edge versions
