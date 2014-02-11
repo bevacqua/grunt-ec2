@@ -1,3 +1,12 @@
+# 0.8.0
+
+- Added `ec2_rename_tag:old:replacement` to rename an instance
+- Added `ec2_pm2_update` task to run `npm update -g pm2` on the instance
+
+Fixes
+
+- Fixed issue during deploys, when nginx isn't enabled
+
 # 0.7.2 Grunt Basics
 
 - Revert from Grunt `@0.4.2` to using `@0.4.1`

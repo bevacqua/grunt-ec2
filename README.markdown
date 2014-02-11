@@ -199,6 +199,7 @@ Task and Target(s)|Purpose
 `ec2_create_tag:id:name`|Tags an instance with the provided name
 `ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
 `ec2_delete_tag:id`|Deletes the associated name tag for an instance
+`ec2_rename_tag:old:replacement`|Tags an instance using a different name
 `ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
 `ec2_elb_attach:instance-name:elb-name?`|Attaches an instance to an ELB
 `ec2_elb_detach:instance-name:elb-name?`|Detaches an instance from an ELB
@@ -222,6 +223,7 @@ Task and Target(s)|Purpose
 `ec2_node_start:name`|Starts app using parameterized `pm2 start`
 `ec2_node_stop:name`|Stops app using `pm2 stop all`
 `ec2_pagespeed:ip`|Requests the Google PageSpeed API, prints insights
+`ec2_pm2_update:name`|Updates `pm2` on an instance, using `npm update -g pm2`
 `ec2_reboot:name`|Reboots the EC2 instance
 `ec2_release_address:ip`|Releases an IP address
 `ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
