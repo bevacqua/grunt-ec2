@@ -176,14 +176,14 @@ grunt ec2_deploy:teddy
 
 ![ec2-deploy.png][4]
 
-## Deploy to multiple EC2 instances `ec2_deploy_multiple`
+## Deploy to multiple EC2 instances `ec2_deploy_many`
 
 Queries EC2 for instances that match the given name and deploys to each on using `ec2_deploy`.
 
 Example:
 
 ```shell
-grunt ec2_deploy_multiple:teddy*
+grunt ec2_deploy_many:teddy*
 ```
 
 ## Reboot an instance with `ec2_reboot`
@@ -211,6 +211,7 @@ Task and Target(s)|Purpose
 `ec2_delete_tag:id`|Deletes the associated name tag for an instance
 `ec2_rename_tag:old:replacement`|Tags an instance using a different name
 `ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+`ec2_deploy_many:name`|Gets instances filtered by name tag and deploys to the instance using `rsync`, reloads `pm2` and `nginx`
 `ec2_elb_attach:instance-name:elb-name?`|Attaches an instance to an ELB
 `ec2_elb_detach:instance-name:elb-name?`|Detaches an instance from an ELB
 `ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
