@@ -1,4 +1,8 @@
-# 0.8.0
+# 0.8.1 Many Deploy, So EC2
+
+- Added `ec2_deploy_many` to deploy to multiple EC2 instances
+
+# 0.8.0 Mystery Sailor
 
 - Added `ec2_rename_tag:old:replacement` to rename an instance
 - Added `ec2_pm2_update` task to run `npm update -g pm2` on the instance
