@@ -176,6 +176,16 @@ grunt ec2_deploy:teddy
 
 ![ec2-deploy.png][4]
 
+## Deploy to multiple EC2 instances `ec2_deploy_multiple`
+
+Queries EC2 for instances that match the given name and deploys to each on using `ec2_deploy`.
+
+Example:
+
+```shell
+grunt ec2_deploy_multiple:teddy*
+```
+
 ## Reboot an instance with `ec2_reboot`
 
 Reboots the instance by the specified name.
