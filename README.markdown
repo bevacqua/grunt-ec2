@@ -65,8 +65,8 @@ If you're confident enough, you can use the tool with just those options. Here i
 Variable Name|Purpose
 ---|---
 `"AWS_DEFAULT_REGION"`|Passed to the CLI directly, defaults to `"us-east-1"`
-`"AWS_ELB_NAME"`|The default Elastic Load Balancer you want to use with `ec2_elb_attach` and `ec2_elb_detach`.
-`"AWS_IMAGE_ID"`|Used when creating a new instance with the `ec2_create_instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
+`"AWS_ELB_NAME"`|The default Elastic Load Balancer you want to use with `ec2-elb-attach` and `ec2-elb-detach`.
+`"AWS_IMAGE_ID"`|Used when creating a new instance with the `ec2-create-instance` task. Defaults to the `"ami-c30360aa"` [Ubuntu AMI](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)").
 `"AWS_INSTANCE_TYPE"`|The magnitude for our instance. Defaults to `"t1.micro"`. Used when creating instances.
 `"AWS_RSYNC_USER"`|The user to SSH into the instance when deploying through `rsync`.
 `"AWS_SECURITY_GROUP"`|The security group used for new instances. You'll have to create this one yourself.
@@ -101,7 +101,7 @@ Variable Name|Purpose
 
 Although this package exposes quite a few different tasks, here are the ones you'll want to be using directly.
 
-## Launch an EC2 instance `ec2_launch:name`
+## Launch an EC2 instance `ec2-launch:name`
 
 Launches an instance and sets it up.
 
@@ -115,12 +115,12 @@ Launches an instance and sets it up.
 #### Example:
 
 ```shell
-grunt ec2_launch:teddy
+grunt ec2-launch:teddy
 ```
 
 ![ec2-launch.png][3]
 
-## Shutdown an EC2 instance `ec2_shutdown:name`
+## Shutdown an EC2 instance `ec2-shutdown:name`
 
 Terminates an instance and deletes related objects
 
@@ -131,32 +131,32 @@ Terminates an instance and deletes related objects
 #### Example:
 
 ```shell
-grunt ec2_shutdown:teddy
+grunt ec2-shutdown:teddy
 ```
 
 ![ec2-shutdown.png][2]
 
-## List running EC2 instances `ec2_list_json`
+## List running EC2 instances `ec2-list-json`
 
-Returns a JSON list of running EC2 instances. Defaults to filtering by `running` state. You can use `ec2_list_json:all` to remove the filter, or pick another `instance-state-name` to filter by.
+Returns a JSON list of running EC2 instances. Defaults to filtering by `running` state. You can use `ec2-list-json:all` to remove the filter, or pick another `instance-state-name` to filter by.
 
 ![ec2-list.png][5]
 
-## Describe an instance with `ec2_lookup`
+## Describe an instance with `ec2-lookup`
 
-Similar to `ec2_list_json`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2_lookup:staging`.
+Similar to `ec2-list-json`, but lets you get the properties of an instance by name, rather than state. Try it with `grunt ec2-lookup:staging`.
 
-## Get an SSH connection command for an instance `ec2_ssh_text:name`
+## Get an SSH connection command for an instance `ec2-ssh-text:name`
 
 Gives you a command you can copy and paste to connect to an EC2 instance through SSH. Useful to get down and dirty.
 
 ```shell
-grunt ec2_ssh_text:teddy
+grunt ec2-ssh-text:teddy
 ```
 
 ![ec2-ssh.png][1]
 
-## Deploy to an EC2 instance `ec2_deploy`
+## Deploy to an EC2 instance `ec2-deploy`
 
 Deploys to a running EC2 instance using `rsync` over SSH.
 
@@ -171,22 +171,22 @@ Deploys to a running EC2 instance using `rsync` over SSH.
 Example:
 
 ```shell
-grunt ec2_deploy:teddy
+grunt ec2-deploy:teddy
 ```
 
 ![ec2-deploy.png][4]
 
-## Deploy to multiple EC2 instances `ec2_deploy_many`
+## Deploy to multiple EC2 instances `ec2-deploy-many`
 
-Queries EC2 for instances that match the given name and deploys to each on using `ec2_deploy`.
+Queries EC2 for instances that match the given name and deploys to each on using `ec2-deploy`.
 
 Example:
 
 ```shell
-grunt ec2_deploy_many:teddy*
+grunt ec2-deploy-many:teddy*
 ```
 
-## Reboot an instance with `ec2_reboot`
+## Reboot an instance with `ec2-reboot`
 
 Reboots the instance by the specified name.
 
@@ -196,55 +196,55 @@ Reboots the instance by the specified name.
 Example:
 
 ```shell
-grunt ec2_reboot:teddy
+grunt ec2-reboot:teddy
 ```
 
 # Complete Task Reference
 
 Task and Target(s)|Purpose
 ---|---
-`ec2_assign_address:id`|Allocates an IP and assigns it to your instance
-`ec2_assign_existing_address:id:ip`|Assigns an IP address to an instance without allocating a new one
-`ec2_create_keypair:name`|Generates an RSA key pair and uploads the public key to AWS
-`ec2_create_tag:id:name`|Tags an instance with the provided name
-`ec2_delete_keypair:name`|Removes the remote and the local copies of the RSA key
-`ec2_delete_tag:id`|Deletes the associated name tag for an instance
-`ec2_rename_tag:old:replacement`|Tags an instance using a different name
-`ec2_deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
-`ec2_deploy_many:name`|Gets instances filtered by name tag and deploys to the instance using `rsync`, reloads `pm2` and `nginx`
-`ec2_elb_attach:instance-name:elb-name?`|Attaches an instance to an ELB
-`ec2_elb_detach:instance-name:elb-name?`|Detaches an instance from an ELB
-`ec2_launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
-`ec2_list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter.
-`ec2_list_json:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints results in JSON
-`ec2_logs_nginx_access:name`|Gets `nginx` access logs
-`ec2_logs_nginx_error:name`|Gets `nginx` error logs
-`ec2_logs_node:name`|Gets `pm2` logs
-`ec2_lookup:name`|Gets instance filtered by name tag
-`ec2_lookup_json:name`|Gets instance filtered by name tag. Prints results in JSON
-`ec2_nginx_configure:name`|Installs `nginx` if necessary, updates its configuration files
-`ec2_nginx_reload:name`|Reloads `nginx`
-`ec2_nginx_restart:name`|Restarts `nginx`
-`ec2_nginx_start:name`|Starts `nginx`
-`ec2_nginx_stop:name`|Stops `nginx`
-`ec2_node_list:name`|Returns output for `pm2 list`
-`ec2_node_monit:name`|Runs `pm2 monit`
-`ec2_node_reload:name`|Reloads app using `pm2 reload all`
-`ec2_node_restart:name`|Restarts app using `pm2 restart all`
-`ec2_node_start:name`|Starts app using parameterized `pm2 start`
-`ec2_node_stop:name`|Stops app using `pm2 stop all`
-`ec2_pagespeed:ip`|Requests the Google PageSpeed API, prints insights
-`ec2_pm2_update:name`|Updates `pm2` on an instance, using `npm update -g pm2`
-`ec2_reboot:name`|Reboots the EC2 instance
-`ec2_release_address:ip`|Releases an IP address
-`ec2_run_instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
-`ec2_setup:name`|Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`
-`ec2_shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
-`ec2_ssh:name`|Establishes an `ssh` connection to the instance, you can emit commands to your EC2 instance
-`ec2_ssh_text:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
-`ec2_terminate_instance:id`|Terminates an instance
-`ec2_version:name`|Get the version number currently deployed to EC2
-`ec2_wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
+`ec2-assign-address:id`|Allocates an IP and assigns it to your instance
+`ec2-assign-existing-address:id:ip`|Assigns an IP address to an instance without allocating a new one
+`ec2-create-keypair:name`|Generates an RSA key pair and uploads the public key to AWS
+`ec2-create-tag:id:name`|Tags an instance with the provided name
+`ec2-delete-keypair:name`|Removes the remote and the local copies of the RSA key
+`ec2-delete-tag:id`|Deletes the associated name tag for an instance
+`ec2-rename-tag:old:replacement`|Tags an instance using a different name
+`ec2-deploy:name`|Deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+`ec2-deploy-many:name`|Gets instances filtered by name tag and deploys to the instance using `rsync`, reloads `pm2` and `nginx`
+`ec2-elb-attach:instance-name:elb-name?`|Attaches an instance to an ELB
+`ec2-elb-detach:instance-name:elb-name?`|Detaches an instance from an ELB
+`ec2-launch:name`|Creates a new instance, giving it a key-pair, a name tag, and an IP. Then sets it up
+`ec2-list:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter.
+`ec2-list-json:state`|Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints results in JSON
+`ec2-logs-nginx-access:name`|Gets `nginx` access logs
+`ec2-logs-nginx-error:name`|Gets `nginx` error logs
+`ec2-logs-node:name`|Gets `pm2` logs
+`ec2-lookup:name`|Gets instance filtered by name tag
+`ec2-lookup-json:name`|Gets instance filtered by name tag. Prints results in JSON
+`ec2-nginx-configure:name`|Installs `nginx` if necessary, updates its configuration files
+`ec2-nginx-reload:name`|Reloads `nginx`
+`ec2-nginx-restart:name`|Restarts `nginx`
+`ec2-nginx-start:name`|Starts `nginx`
+`ec2-nginx-stop:name`|Stops `nginx`
+`ec2-node-list:name`|Returns output for `pm2 list`
+`ec2-node-monit:name`|Runs `pm2 monit`
+`ec2-node-reload:name`|Reloads app using `pm2 reload all`
+`ec2-node-restart:name`|Restarts app using `pm2 restart all`
+`ec2-node-start:name`|Starts app using parameterized `pm2 start`
+`ec2-node-stop:name`|Stops app using `pm2 stop all`
+`ec2-pagespeed:ip`|Requests the Google PageSpeed API, prints insights
+`ec2-pm2-update:name`|Updates `pm2` on an instance, using `npm update -g pm2`
+`ec2-reboot:name`|Reboots the EC2 instance
+`ec2-release-address:ip`|Releases an IP address
+`ec2-run-instance:name`|Spins up an EC2 instance, gives a name tag and assigns an IP
+`ec2-setup:name`|Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2-nginx-configure`
+`ec2-shutdown:name`|Terminates an instance, deleting its associated key-pair, IP address, and name tag
+`ec2-ssh:name`|Establishes an `ssh` connection to the instance, you can emit commands to your EC2 instance
+`ec2-ssh-text:name`|Displays a verbose command with which you can establish an `ssh` connection to the instance
+`ec2-terminate-instance:id`|Terminates an instance
+`ec2-version:name`|Get the version number currently deployed to EC2
+`ec2-wait:id`|Waits for an instance to report a public DNS and be accessible through `ssh`
 
 ## Feedback
 
@@ -254,5 +254,5 @@ Enjoy it. Submit any [issues](https://github.com/bevacqua/grunt-ec2/issues "GitH
   [2]: http://i.imgur.com/U0gN4ax.png "Shutting down an instance through Grunt"
   [3]: http://i.imgur.com/CSRhe2b.png "Launching an instance single-handedly using Grunt"
   [4]: http://i.imgur.com/0yH3E5k.png "Deploy from your command-line!"
-  [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2_list_json`"
+  [5]: http://i.imgur.com/ecFsa4b.png "List all instances with `grunt ec2-list-json`"
   [6]: https://api.flattr.com/button/flattr-badge-large.png

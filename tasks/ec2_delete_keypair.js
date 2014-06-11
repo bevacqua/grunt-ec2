@@ -10,13 +10,13 @@ var cwd = process.cwd();
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_delete_keypair', 'Removes the remote and the local copies of the RSA key', function (name) {
+    grunt.registerTask('ec2-delete-keypair', 'Removes the remote and the local copies of the RSA key', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide a key pair name.',
-                'e.g: ' + chalk.yellow('grunt ec2_delete_keypair:name')
+                'e.g: ' + chalk.yellow('grunt ec2-delete-keypair:name')
             ].join('\n'));
         }
 

@@ -8,7 +8,7 @@ var prettyprint = require('./lib/prettyprint.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_list', 'Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter', function (state) {
+    grunt.registerTask('ec2-list', 'Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter', function (state) {
         conf.init(grunt);
 
         var done = this.async();

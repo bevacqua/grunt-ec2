@@ -12,13 +12,13 @@ var cwd = process.cwd();
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_create_keypair', 'Generates an RSA key pair and uploads the public key to AWS', function (name) {
+    grunt.registerTask('ec2-create-keypair', 'Generates an RSA key pair and uploads the public key to AWS', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide a key pair name.',
-                'e.g: ' + chalk.yellow('grunt ec2_create_keypair:name')
+                'e.g: ' + chalk.yellow('grunt ec2-create-keypair:name')
             ].join('\n'));
         }
 

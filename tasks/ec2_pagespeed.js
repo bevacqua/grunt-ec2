@@ -6,13 +6,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_pagespeed', 'Requests the Google PageSpeed API, prints insights', function (ip) {
+    grunt.registerTask('ec2-pagespeed', 'Requests the Google PageSpeed API, prints insights', function (ip) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an IP, or domain.',
-                'e.g: ' + chalk.yellow('grunt ec2_pagespeed:ip')
+                'e.g: ' + chalk.yellow('grunt ec2-pagespeed:ip')
             ].join('\n'));
         }
 

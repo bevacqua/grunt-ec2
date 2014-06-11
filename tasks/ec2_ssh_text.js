@@ -7,13 +7,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_ssh_text', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function (name) {
+    grunt.registerTask('ec2-ssh-text', 'Displays a verbose command with which you can establish an `ssh` connection to the instance', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_ssh_text:name')
+                'e.g: ' + chalk.yellow('grunt ec2-ssh-text:name')
             ].join('\n'));
         }
 

@@ -7,13 +7,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_deploy_many', 'Deploys multiple Instances', function (name) {
+    grunt.registerTask('ec2-deploy-many', 'Deploys multiple Instances', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_deploy_many:name')
+                'e.g: ' + chalk.yellow('grunt ec2-deploy-many:name')
             ].join('\n'));
         }
 
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
             grunt.log.writeln('Deploying to instances: %s', chalk.cyan(instanceNames));
 
             for (var j = 0; j < instanceNames.length; j++) {
-                grunt.task.run('ec2_deploy:' + instanceNames[i]);
+                grunt.task.run('ec2-deploy:' + instanceNames[i]);
             }
 
             done();

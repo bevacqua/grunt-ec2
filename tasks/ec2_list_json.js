@@ -7,7 +7,7 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_list_json', 'Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints JSON results', function (state) {
+    grunt.registerTask('ec2-list-json', 'Lists instances filtered by state. Defaults to `running` filter, use `all` to disable filter. Prints JSON results', function (state) {
         conf.init(grunt);
 
         var done = this.async();

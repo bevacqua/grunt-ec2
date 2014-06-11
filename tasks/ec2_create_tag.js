@@ -6,13 +6,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_create_tag', 'Tags an instance with the provided name', function (id, name) {
+    grunt.registerTask('ec2-create-tag', 'Tags an instance with the provided name', function (id, name) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
             grunt.fatal([
                 'You should provide an id, and the name you want to give to the instance.',
-                'e.g: ' + chalk.yellow('grunt ec2_create_tag:id:name')
+                'e.g: ' + chalk.yellow('grunt ec2-create-tag:id:name')
             ].join('\n'));
         }
 

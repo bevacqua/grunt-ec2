@@ -10,13 +10,13 @@ var sshCredentials = require('./lib/sshCredentials.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_deploy', 'Deploys to the instance using `rsync`, reloads `pm2` and `nginx`', function (name) {
+    grunt.registerTask('ec2-deploy', 'Deploys to the instance using `rsync`, reloads `pm2` and `nginx`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_deploy:name')
+                'e.g: ' + chalk.yellow('grunt ec2-deploy:name')
             ].join('\n'));
         }
 
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
             var url = util.format('%s://%s/', scheme, c.ip);
             var text = chalk.magenta(url);
 
-            grunt.task.run('ec2_pagespeed:' + c.ip);
+            grunt.task.run('ec2-pagespeed:' + c.ip);
 
             grunt.log.writeln('You can access the instance via %s on %s', scheme.toUpperCase(), text);
             grunt.log.write('Will tail nginx error logs and flush pm2 logs in 5s.');

@@ -7,13 +7,13 @@ var workflow = require('./lib/workflow.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_setup', 'Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2_nginx_configure`', function (name) {
+    grunt.registerTask('ec2-setup', 'Sets up port forwarding, installs `rsync`, `node`, and `pm2`, enqueues `ec2-nginx-configure`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_setup:name')
+                'e.g: ' + chalk.yellow('grunt ec2-setup:name')
             ].join('\n'));
         }
 
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
 
         function next () {
             grunt.log.writeln('Enqueued task for %s configuration.', chalk.cyan('nginx'));
-            grunt.task.run('ec2_nginx_configure:' + name);
+            grunt.task.run('ec2-nginx-configure:' + name);
             done();
         }
     });

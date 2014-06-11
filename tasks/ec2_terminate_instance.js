@@ -6,13 +6,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_terminate_instance', 'Terminates an instance', function (id) {
+    grunt.registerTask('ec2-terminate-instance', 'Terminates an instance', function (id) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance id.',
-                'e.g: ' + chalk.yellow('grunt ec2_terminate_instance:id')
+                'e.g: ' + chalk.yellow('grunt ec2-terminate-instance:id')
             ].join('\n'));
         }
 

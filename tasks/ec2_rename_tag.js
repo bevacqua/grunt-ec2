@@ -7,13 +7,13 @@ var lookup = require('./lib/lookup.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_rename_tag', 'Renames the associated name tag for an instance', function (old, replacement) {
+    grunt.registerTask('ec2-rename-tag', 'Renames the associated name tag for an instance', function (old, replacement) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_rename_tag:old:replacement')
+                'e.g: ' + chalk.yellow('grunt ec2-rename-tag:old:replacement')
             ].join('\n'));
         }
 

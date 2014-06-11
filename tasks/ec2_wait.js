@@ -16,13 +16,13 @@ function wait (fn, duration) {
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_wait', 'Waits for an instance to report a public DNS and be accessible through `ssh`', function (name) {
+    grunt.registerTask('ec2-wait', 'Waits for an instance to report a public DNS and be accessible through `ssh`', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_wait:name')
+                'e.g: ' + chalk.yellow('grunt ec2-wait:name')
             ].join('\n'));
         }
 

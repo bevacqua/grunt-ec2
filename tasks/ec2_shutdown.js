@@ -6,13 +6,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_shutdown', 'Terminates an instance, deleting its associated key-pair, IP address, and name tag', function (name) {
+    grunt.registerTask('ec2-shutdown', 'Terminates an instance, deleting its associated key-pair, IP address, and name tag', function (name) {
         conf.init(grunt);
 
         if (arguments.length === 0) {
             grunt.fatal([
                 'You should provide an instance name.',
-                'e.g: ' + chalk.yellow('grunt ec2_shutdown:name')
+                'e.g: ' + chalk.yellow('grunt ec2-shutdown:name')
             ].join('\n'));
         }
 
@@ -23,13 +23,13 @@ module.exports = function (grunt) {
             var id = instance.InstanceId;
             var ip = instance.PublicIpAddress;
             var tasks = [
-                'ec2_terminate_instance:' + id,
-                'ec2_delete_keypair:' + name,
-                'ec2_delete_tag:' + id
+                'ec2-terminate-instance:' + id,
+                'ec2-delete-keypair:' + name,
+                'ec2-delete-tag:' + id
             ];
 
             if (elastic) {
-                tasks.push('ec2_release_address:' + ip);
+                tasks.push('ec2-release-address:' + ip);
             }
 
             grunt.log.writeln('Queuing termination task for instance %s...', chalk.red(id));

@@ -6,13 +6,13 @@ var conf = require('./lib/conf.js');
 
 module.exports = function (grunt) {
 
-    grunt.registerTask('ec2_assign_existing_address', function (id,ip) {
+    grunt.registerTask('ec2-assign-existing-address', function (id,ip) {
         conf.init(grunt);
 
         if (arguments.length < 2) {
             grunt.fatal([
                 'You should provide an instance id and the IP you want to assign to it.',
-                'e.g: ' + chalk.yellow('grunt ec2_assign_existing_address:id:ip')
+                'e.g: ' + chalk.yellow('grunt ec2-assign-existing-address:id:ip')
             ].join('\n'));
         }
 

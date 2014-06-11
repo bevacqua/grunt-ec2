@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
     function register (action) {
 
-        var taskName = 'ec2_elb_' + action;
+        var taskName = 'ec2-elb-' + action;
         var capitalized = action[0].toUpperCase() + action.substr(1);
         var description = util.format('%s instances to an AWS ELB load balancer', capitalized);
 
