@@ -58,6 +58,8 @@ Config.prototype.defaults = function () {
     _.VERBOSITY_NPM = verify(_.VERBOSITY_NPM, 'silent win error warn verbose silly'.split(' '), 'info');
     _.VERBOSITY_RSYNC = verify(_.VERBOSITY_RSYNC, 'v vv vvv'.split(' '), '');
 
+    _.PM2_INSTANCES_COUNT = _.PM2_INSTANCES_COUNT || 2;
+
     if (_.SSL_ENABLED) {
         _.SSL_CERTIFICATE_DIRECTORY = path.resolve(cwd, _.SSL_CERTIFICATE_DIRECTORY);
         _.NGINX_SSL_CERTIFICATE = path.join(_.SRV_CERT, _.SSL_CERTIFICATE);
