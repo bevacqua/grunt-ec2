@@ -1,3 +1,7 @@
+# 0.9.1 Hatchery Express
+
+- Introduced ability to set process count in `pm2`
+
 # 0.9.0 Very Breaking
 
 - Changed `_` to `-` in task names
