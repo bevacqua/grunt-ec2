@@ -96,6 +96,7 @@ Variable Name|Purpose
 `"SSL_STRICT"`|Whether to send a `Strict-Transport-Security` header.
 `"VERBOSITY_NPM"`|Determines the output verbosity for `npm` during deployments, values are limited to `loglevel` option values for `npm`. Defaults to `info`, just like `npm` does.
 `"VERBOSITY_RSYNC"`|Determines the output verbosity for `rsync`. Possible values limited to `'v'`, `'vv'`, and `'vvv'`. Defaults to `''` (not verbose at all, my friend).
+ `"PM2_INSTANCES_COUNT"`| Set number processes to start with pm2. default is 2 and valid values are integers or 'max' for setting the maximum processes depending on avaible CPUs
 
 # Tasks
 
