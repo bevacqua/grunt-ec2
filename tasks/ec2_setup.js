@@ -60,8 +60,8 @@ module.exports = function (grunt) {
             'sudo apt-get install nodejs -y'
         ], [ // pm2
             'sudo apt-get install make g++ -y',
-            'sudo npm install -g pm2',
-            'sudo pm2 startup'
+            'sudo npm install -g pm2 --unsafe-perm',
+            'sudo pm2 startup ubuntu'
         ]];
 
         function forwardPort(from, to) {
