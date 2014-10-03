@@ -1,3 +1,7 @@
+# 0.9.2 Crucible of Worlds
+
+- Fixed `pm2` startup script
+
 # 0.9.1 Hatchery Express
 
 - Introduced ability to set process count in `pm2`
