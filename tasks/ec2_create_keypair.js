@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 
         function load (next) {
             fs.readFile(pubKeyFile, function (err, data) {
-                pubKey = data.toString('base64');
+                pubKey = data.toString(); // https://github.com/postrednik - remove of 'base64' parameter to fix the key-import to AWS
                 next(err);
             });
         }
